@@ -1,8 +1,6 @@
 package com.interview.thenewyorktimes.di
 
-import androidx.lifecycle.SavedStateHandle
 import com.interview.thenewyorktimes.data.repository.StoriesRepository
-import com.interview.thenewyorktimes.ui.home.HomeViewModel
 import com.interview.thenewyorktimes.ui.home.StoriesViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -36,5 +34,4 @@ var repoModule = module {
 
 var viewModelModule = module {
     viewModel { StoriesViewModel(get()) }
-    viewModel { (state: SavedStateHandle) -> HomeViewModel(handle = state, get()) }
 }

@@ -63,7 +63,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabContentStart="56dp"
-            app:tabIndicatorAnimationDuration="2000"
+            app:tabIndicatorAnimationDuration="1500"
             app:tabIndicatorHeight="3dp"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabBarTextStyle" />

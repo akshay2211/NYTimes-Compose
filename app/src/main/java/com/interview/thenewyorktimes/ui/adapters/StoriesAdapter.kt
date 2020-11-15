@@ -41,7 +41,7 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
             var customHeight = 0
 
 
-            holder.itemView.visibility = if (it.url.isNullOrEmpty()) {
+            holder.itemView.story_card.visibility = if (it.url.isNullOrEmpty()) {
                 View.GONE
             } else {
                 Log.e("check ----X-- ", "$customHeight  ${it.title} ${it.height / it.width}")

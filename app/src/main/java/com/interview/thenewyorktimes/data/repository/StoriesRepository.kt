@@ -10,6 +10,7 @@ import com.interview.thenewyorktimes.data.local.AppDatabase
 //import com.interview.thenewyorktimes.data.local.AppDatabase
 import com.interview.thenewyorktimes.data.remote.ApiList
 import com.interview.thenewyorktimes.model.BaseData
+import com.interview.thenewyorktimes.model.Bookmarks
 import com.interview.thenewyorktimes.model.Results
 import com.interview.thenewyorktimes.utility.LiveDataCollection
 import com.interview.thenewyorktimes.utility.NetworkState
@@ -26,9 +27,7 @@ import kotlin.coroutines.CoroutineContext
  */
 
 /**
- * in [StoriesRepository] the paged lists retrieved from remote api is first stored in local database
- * and then emited to the UI via Live data, API's are called by the [CustomBoundaryCallback] when all local data is
- * used.
+ * in [StoriesRepository] the lists retrieved from remote api is first stored in local database
  */
 class StoriesRepository(
     var context: Context,
@@ -38,7 +37,7 @@ class StoriesRepository(
 ) {
 
     /**
-     * Inserts the response into the database while also assigning position indices to items.
+     * Inserts the response into the database.
      */
     private fun insertResultIntoDb(section: String, body: BaseData?) {
 
@@ -47,16 +46,20 @@ class StoriesRepository(
                 Log.e("check ", "iterations of stories $section ${it.title} ")
                 var height = 0
                 var width = 0
-                if (it.multimedia.get(0) != null) {
-                    height = it.multimedia.get(0).height
-                    width = it.multimedia.get(0).width
+                var urlMain = ""
+                var urlThumb = ""
+                if (!it.multimedia.isNullOrEmpty()) {
+                    height = it.multimedia[0].height
+                    width = it.multimedia[0].width
+                    urlMain = it.multimedia[0].url ?: ""
+                    urlThumb = it.multimedia[2].url ?: ""
                 }
 
                 Results(
                     it.title,
-                    it.multimedia.get(0).url ?: "",
+                    urlMain,
                     it.published_date,
-                    it.multimedia.get(2).url ?: "",
+                    urlThumb,
                     section,
                     height,
                     width
@@ -64,11 +67,9 @@ class StoriesRepository(
             }
             Log.e("check ", "size of stories ${stories.size} ${list.size}")
             db.runInTransaction {
-                CoroutineScope(this.coroutineContext).launch {
-                    list.forEach {
-                        db.resultsDao().insert(it)
-                    }
 
+                CoroutineScope(this.coroutineContext).launch {
+                    db.resultsDao().insert(list)
                 }
             }
         }
@@ -99,44 +100,7 @@ class StoriesRepository(
         return networkState
     }
 
-    /*
 
- fun getImgurPosts(search_content: String = "", i: Int): LiveDataCollection<Images> {
-
-     val boundaryCallback = CustomBoundaryCallback(
-         context = context,
-         apiList = apiList,
-         searchedContent = search_content,
-         coroutineContext = coroutineContext,
-         handleResponse = this::insertResultIntoDb,
-         ioExecutor = Executors.newSingleThreadExecutor(),
-         networkPageSize = i
-     )
-     // we are using a mutable live data to trigger refresh requests which eventually calls
-     // refresh method and gets a new live data. Each refresh request by the user becomes a newly
-     // dispatched data in refreshTrigger
-     val refreshTrigger = MutableLiveData<Unit>()
-     val refreshState = refreshTrigger.switchMap {
-         refresh(search_content)
-     }
-     val livePagedList = db.imagesDao().postsBySearchContents(search_content).toLiveData(
-         pageSize = i,
-         boundaryCallback = boundaryCallback
-     )
-
-     return LiveDataCollection(
-         pagedList = livePagedList,
-         networkState = boundaryCallback.networkState,
-         retry = {
-             boundaryCallback.helper.retryAllFailed()
-         },
-         refresh = {
-             refreshTrigger.value = null
-         },
-         refreshState = refreshState
-     )
- }
-*/
     fun getStories(type: String): LiveDataCollection<Results> {
         var dao = db.resultsDao()
 
@@ -179,6 +143,20 @@ class StoriesRepository(
         )
     }
 
+    fun storeBookMark(results: Results): Unit {
+        CoroutineScope(this.coroutineContext).launch {
+            return@launch db.bookmarksDao().insert(bookmark = Bookmarks().apply {
+                title = results.title
+                url = results.url
+                published_date = results.published_date
+                url_thumb = results.url_thumb
+                type = results.type
+                height = results.height
+                width = results.width
+                id = results.id
+            })
+        }
+    }
 
 }
 

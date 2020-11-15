@@ -13,12 +13,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/story_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/mtrl_card_spacing"
             android:clickable="true"
-            android:focusable="true"
-            android:minHeight="@dimen/cat_card_rich_media_demo_min_height">
+            android:focusable="true">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/stories_iv"

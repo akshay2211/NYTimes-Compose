@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.interview.thenewyorktimes.R
+import com.interview.thenewyorktimes.model.Results
 import com.interview.thenewyorktimes.ui.adapters.StoriesAdapter
 import com.interview.thenewyorktimes.utility.GlideRequests
 import kotlinx.android.synthetic.main.stories_page.view.*
@@ -48,12 +50,26 @@ class ScreenSlidePageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var data = liveViewModel.getStories(param1 ?: "")
         data.pagedList.observe(requireActivity(), Observer {
-            view.recycler_view.adapter = StoriesAdapter(it, param1 ?: "", glideRequests)
+            view.recycler_view.adapter = StoriesAdapter(it, param1 ?: "", glideRequests).apply {
+                onStoriesClick = object : StoriesAdapter.OnStoriesClick {
+                    override fun bookmarkMethod(results: Results) {
+                        liveViewModel.bookmark(results)
+                        Snackbar.make(
+                            view.main_container,
+                            R.string.bookmarked_done,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+
+                    override fun openDetailsPage(results: Results) {
+
+                    }
+                }
+            }
         })
         data.networkState.observe(requireActivity(), Observer {
 
         })
-        //
 
     }
 }
