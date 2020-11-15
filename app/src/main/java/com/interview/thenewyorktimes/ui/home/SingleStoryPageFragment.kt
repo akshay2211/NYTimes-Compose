@@ -11,7 +11,9 @@ import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.model.Results
 import com.interview.thenewyorktimes.ui.adapters.StoriesAdapter
 import com.interview.thenewyorktimes.utility.GlideRequests
+import com.interview.thenewyorktimes.utility.State
 import com.interview.thenewyorktimes.utility.startSinglePageActivity
+import kotlinx.android.synthetic.main.loading_error_layout.view.*
 import kotlinx.android.synthetic.main.stories_page.view.*
 import org.koin.android.ext.android.inject
 
@@ -68,8 +70,26 @@ class ScreenSlidePageFragment : Fragment() {
                 }
             }
         })
-        data.networkState.observe(requireActivity(), Observer {
-
+        data.networkState.observe(requireActivity(), {
+            when (it.State) {
+                State.RUNNING -> {
+                    view.loading.visibility = View.VISIBLE
+                    view.loading_view.visibility = View.VISIBLE
+                    view.recycler_view.visibility = View.GONE
+                    view.error_layout.visibility = View.GONE
+                }
+                State.SUCCESS -> {
+                    view.loading.visibility = View.GONE
+                    view.recycler_view.visibility = View.VISIBLE
+                }
+                State.FAILED -> {
+                    view.loading.visibility = View.VISIBLE
+                    view.recycler_view.visibility = View.GONE
+                    view.loading_view.visibility = View.GONE
+                    view.error_layout.visibility = View.VISIBLE
+                    view.error_text.text = it.msg
+                }
+            }
         })
 
     }

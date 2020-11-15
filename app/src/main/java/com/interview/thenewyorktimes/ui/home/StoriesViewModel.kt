@@ -15,10 +15,18 @@ import kotlin.coroutines.CoroutineContext
 class StoriesViewModel(val storiesRepo: StoriesRepository) : ViewModel() {
     fun getStories(type: String) = storiesRepo.getStories(type)
     fun bookmark(results: Results) = storiesRepo.storeBookMark(results)
+
 }
 
 fun AppDatabase.deleteBookmark(id: Int, coroutineContext: CoroutineContext) {
     CoroutineScope(coroutineContext).async {
         this@deleteBookmark.bookmarksDao().deleteById(id)
     }
+}
+
+fun AppDatabase.deleteAll(coroutineContext: CoroutineContext) {
+    CoroutineScope(coroutineContext).async {
+        this@deleteAll.resultsDao().deleteTable()
+    }
+
 }
