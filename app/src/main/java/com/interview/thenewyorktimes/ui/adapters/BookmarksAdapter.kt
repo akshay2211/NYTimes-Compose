@@ -83,7 +83,7 @@ class BookmarksAdapter(var glideRequests: GlideRequests) :
                 View.VISIBLE
             }
             holder.itemView.title.text = it.title ?: ""
-            glideRequests.load(it.url ?: "")
+            glideRequests.load(it.url_large ?: "")
                 .placeholder(ColorDrawable(Color.GRAY))
                 .error(ColorDrawable(Color.GRAY))
                 .thumbnail(

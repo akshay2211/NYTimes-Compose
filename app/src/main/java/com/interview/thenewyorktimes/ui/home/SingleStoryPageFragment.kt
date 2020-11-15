@@ -11,6 +11,7 @@ import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.model.Results
 import com.interview.thenewyorktimes.ui.adapters.StoriesAdapter
 import com.interview.thenewyorktimes.utility.GlideRequests
+import com.interview.thenewyorktimes.utility.startSinglePageActivity
 import kotlinx.android.synthetic.main.stories_page.view.*
 import org.koin.android.ext.android.inject
 
@@ -62,7 +63,7 @@ class ScreenSlidePageFragment : Fragment() {
                     }
 
                     override fun openDetailsPage(results: Results) {
-
+                        requireActivity().startSinglePageActivity(result = results)
                     }
                 }
             }

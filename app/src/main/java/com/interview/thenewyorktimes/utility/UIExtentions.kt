@@ -1,16 +1,21 @@
 package com.interview.thenewyorktimes.utility
 
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
 import android.text.format.DateUtils
 import android.view.View
 import android.view.Window
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.interview.thenewyorktimes.ui.settings.SettingsActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,26 +30,6 @@ fun BottomNavigationView.setNavigation(navController: NavController) {
         this,
         navController
     )
-    /*this.setOnNavigationItemSelectedListener { item ->
-        Log.e("nav", "${navController.currentDestination?.label}")
-        when (item.itemId) {
-            R.id.page_1 -> {
-                if (navController.currentDestination?.label?.equals("fragment_bookmark") == true)
-                    navController.popBackStack()
-                Log.e("click ", "one")
-                // Respond to navigation item 1 click
-                true
-            }
-            R.id.page_2 -> {
-                if (navController.currentDestination?.label?.equals("fragment_home") == true)
-                    navController.navigate(R.id.action_homeFragment_to_bookmarkFragment)
-                Log.e("click ", "two")
-                // Respond to navigation item 2 click
-                true
-            }
-            else -> false
-        }
-    }*/
 }
 
 
@@ -100,4 +85,33 @@ fun String?.timeAgo(): CharSequence? {
         Calendar.getInstance().timeInMillis,
         DateUtils.MINUTE_IN_MILLIS
     )
+}
+
+/**
+ * extension [startSettingsActivity] starts [SettingsActivity]
+ */
+fun Context.startSettingsActivity() {
+    startActivity(Intent(this, SettingsActivity::class.java))
+}
+
+/**
+ * extension [setupTheme] calls the [AppCompatDelegate] methods which
+ * setup the theme whenever the configuration is changed
+ */
+fun SharedPreferences?.setupTheme(key: String?, resources: Resources) {
+    var value = this?.getString(key, "3")
+    val def = if (resources.configuration.uiMode and
+        Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    ) {
+        AppCompatDelegate.MODE_NIGHT_YES
+
+    } else {
+        AppCompatDelegate.MODE_NIGHT_NO
+    }
+
+    when (value) {
+        "2" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        else -> AppCompatDelegate.setDefaultNightMode(def)
+    }
 }

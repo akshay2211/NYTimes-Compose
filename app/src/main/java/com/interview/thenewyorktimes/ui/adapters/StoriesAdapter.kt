@@ -55,7 +55,7 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
             Log.e("check ------- ", "$customHeight  ${it.title}")
             holder.itemView.title.text = it.title ?: ""
             holder.itemView.time.text = it.published_date.timeAgo()
-            glideRequests.load(it.url ?: "")
+            glideRequests.load(it.url_large ?: "")
                 .placeholder(ColorDrawable(Color.GRAY))
                 .error(ColorDrawable(Color.GRAY))
                 .thumbnail(
@@ -85,6 +85,7 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         init {
             view.bookmark_icon.setOnClickListener(this)
+            view.story_card.setOnClickListener(this)
             view.setOnClickListener(this)
         }
 

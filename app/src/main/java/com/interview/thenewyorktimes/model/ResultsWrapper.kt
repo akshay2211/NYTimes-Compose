@@ -1,5 +1,6 @@
 package com.interview.thenewyorktimes.model
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ResultsWrapper(
@@ -7,7 +8,7 @@ data class ResultsWrapper(
     var title: String? = "",
     var url: String? = "",
     var published_date: String? = "",
-    var abstract: String? = "",
+    @SerializedName("abstract") var abstract_text: String? = "",
     var multimedia: ArrayList<Images>
 
 ) : Serializable

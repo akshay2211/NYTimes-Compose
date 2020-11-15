@@ -1,7 +1,13 @@
 package com.interview.thenewyorktimes.utility
 
 import android.content.Context
+import android.content.Intent
 import android.util.DisplayMetrics
+import android.util.Log
+import androidx.fragment.app.FragmentActivity
+import com.interview.thenewyorktimes.model.Bookmarks
+import com.interview.thenewyorktimes.model.Results
+import com.interview.thenewyorktimes.ui.singlepage.SingleActivity
 import okhttp3.ResponseBody
 import org.json.JSONObject
 
@@ -72,5 +78,31 @@ fun Int.getDesiredHeight(width: Int = ScreenDimensions.WidthPX, actualWidth: Int
     return (this * width) / actualWidth
 }
 
+fun FragmentActivity.startSinglePageActivity(
+    result: Results? = null,
+    bookmarks: Bookmarks? = null
+) {
+    var bookmark = if (result == null && bookmarks == null) {
+        throw NullPointerException("Both the objects con not be null")
+    } else result?.resultsToBookmarks() ?: bookmarks
+    Log.e("bookmark", "check startSinglePageActivity  ${bookmark?.title}  hi")
+    startActivity(Intent(this, SingleActivity::class.java).apply { putExtra("bookmark", bookmark) })
+}
 
+
+fun Results.resultsToBookmarks(): Bookmarks {
+    Log.e("bookmark", "check Results  ${this.title}  resultsToBookmarks")
+    return Bookmarks().apply {
+        this.title = this@resultsToBookmarks.title
+        this.url = this@resultsToBookmarks.url
+        this.published_date = this@resultsToBookmarks.published_date
+        this.url_thumb = this@resultsToBookmarks.url_thumb
+        this.url_large = this@resultsToBookmarks.url_large
+        this.type = this@resultsToBookmarks.type
+        this.height = this@resultsToBookmarks.height
+        this.width = this@resultsToBookmarks.width
+        this.id = this@resultsToBookmarks.id
+        this.abstract_text = this@resultsToBookmarks.abstract_text
+    }
+}
 

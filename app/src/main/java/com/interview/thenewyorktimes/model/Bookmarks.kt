@@ -13,9 +13,11 @@ data class Bookmarks(
     var url: String? = "",
     var published_date: String? = "",
     var url_thumb: String? = "",
+    var url_large: String? = "",
     var type: String? = "",
     var height: Int = 0,
-    var width: Int = 0
+    var width: Int = 0,
+    @SerializedName("abstract") var abstract_text: String? = ""
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")

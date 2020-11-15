@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">The NewYork Times</string>
+    <string name="home_title">Home</string>
+    <string name="bookmarks_title">Bookmarks</string>
+    <string name="internet_error">Internet Not Available</string>
+
+    <!-- Rich Media Demo Strings -->
+    <string name="cat_card_rich_media_view_title">Title goes here</string>
+    <string name="cat_card_rich_media_image_view_description">Card Image</string>
+    <string name="bookmarked_done">Story is bookmarked</string>
+    <string name="delete_post_title">Remove Bookmark</string>
+    <string name="confirm_to_delete">Kindly press ok to remove this story from your bookmarks</string>
+    <string name="story_title">Story</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="title_preference" translatable="false">Theme Selections</string>
+    <string name="dialog_title_preference" translatable="false">Select Theme</string>
+    <string name="cache_summary" translatable="false">Clear all stored values in local database</string>
+    <string name="cache_title" translatable="false">Clear Storage</string>
+    <string name="main_image">main image</string>
+    <string name="divider">divider</string>
+
+    <string-array name="entries">
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+
+</resources>

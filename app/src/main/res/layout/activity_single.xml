@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.singlepage.SingleActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/headingBackgroundColor">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/quicksand_semibold"
+                android:gravity="center"
+                android:text="@string/story_title"
+                android:textColor="@color/headingColor"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|left"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_left" />
+        </FrameLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/story_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mtrl_card_spacing"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/stories_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/cat_card_rich_media_image_view_description"
+                android:minHeight="180dp"
+                android:scaleType="fitXY"
+                app:backgroundTint="@color/material_on_surface_emphasis_medium"
+                app:backgroundTintMode="add" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/cat_card_double_spacing"
+            android:paddingBottom="@dimen/cat_card_single_spacing">
+
+            <TextView
+                android:id="@+id/title_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/cat_card_single_spacing"
+                android:fontFamily="@font/quicksand_semibold"
+                android:textColor="@color/headingColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/time_page"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/time_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_regular"
+                android:singleLine="true"
+                android:textColor="@color/headingColor"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/abstract_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <TextView
+                android:id="@+id/abstract_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/cat_card_single_spacing"
+                android:fontFamily="@font/quicksand_regular"
+                android:maxLines="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/cat_card_triple_spacing"
+            android:layout_marginBottom="@dimen/cat_card_single_spacing"
+            android:background="?attr/dividerHorizontal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/externalLink"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="@dimen/cat_card_single_spacing"
+            android:layout_marginRight="@dimen/cat_card_single_spacing"
+            android:fontFamily="@font/quicksand_semibold"
+            android:text="Open in Browser" />
+
+
+    </LinearLayout>
+</ScrollView>

@@ -1,5 +1,6 @@
 package com.interview.thenewyorktimes.data.repository
 
+//import com.interview.thenewyorktimes.data.local.AppDatabase
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,14 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.data.local.AppDatabase
-//import com.interview.thenewyorktimes.data.local.AppDatabase
 import com.interview.thenewyorktimes.data.remote.ApiList
 import com.interview.thenewyorktimes.model.BaseData
-import com.interview.thenewyorktimes.model.Bookmarks
 import com.interview.thenewyorktimes.model.Results
 import com.interview.thenewyorktimes.utility.LiveDataCollection
 import com.interview.thenewyorktimes.utility.NetworkState
 import com.interview.thenewyorktimes.utility.extractMessage
+import com.interview.thenewyorktimes.utility.resultsToBookmarks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
@@ -57,12 +57,14 @@ class StoriesRepository(
 
                 Results(
                     it.title,
-                    urlMain,
+                    it.url,
                     it.published_date,
                     urlThumb,
+                    urlMain,
                     section,
                     height,
-                    width
+                    width,
+                    it.abstract_text
                 )
             }
             Log.e("check ", "size of stories ${stories.size} ${list.size}")
@@ -145,16 +147,7 @@ class StoriesRepository(
 
     fun storeBookMark(results: Results): Unit {
         CoroutineScope(this.coroutineContext).launch {
-            return@launch db.bookmarksDao().insert(bookmark = Bookmarks().apply {
-                title = results.title
-                url = results.url
-                published_date = results.published_date
-                url_thumb = results.url_thumb
-                type = results.type
-                height = results.height
-                width = results.width
-                id = results.id
-            })
+            return@launch db.bookmarksDao().insert(results.resultsToBookmarks())
         }
     }
 

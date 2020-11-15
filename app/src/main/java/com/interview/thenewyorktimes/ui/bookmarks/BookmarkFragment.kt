@@ -1,7 +1,6 @@
 package com.interview.thenewyorktimes.ui.bookmarks
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.interview.thenewyorktimes.model.Bookmarks
 import com.interview.thenewyorktimes.ui.adapters.BookmarksAdapter
 import com.interview.thenewyorktimes.ui.home.deleteBookmark
 import com.interview.thenewyorktimes.utility.GlideRequests
+import com.interview.thenewyorktimes.utility.startSinglePageActivity
 import kotlinx.android.synthetic.main.fragment_bookmark.view.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
@@ -46,11 +46,10 @@ class BookmarkFragment : Fragment() {
         view.recycler_view_bookmarks.adapter = BookmarksAdapter(glideRequests).apply {
             onBookmarkItemClick = object : BookmarksAdapter.OnBookmarkItemClick {
                 override fun openBookmark(bookmarks: Bookmarks) {
-                    Log.e("open", "bookmarks")
+                    requireActivity().startSinglePageActivity(bookmarks = bookmarks)
                 }
 
                 override fun deleteBookmark(bookmarks: Bookmarks) {
-                    Log.e("delete", "bookmarks")
                     MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.delete_post_title)
                         .setMessage(R.string.confirm_to_delete)
                         .setPositiveButton(

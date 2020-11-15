@@ -31,20 +31,9 @@ interface ResultsDao {
 
     @Query("DELETE FROM results_table WHERE type = :type")
     fun deleteBySectionType(type: String)
-    /*
-     @Query("SELECT MAX(indexInResponse) FROM images_table WHERE search_content = :search_content")
-     fun getNextIndexInSearch(search_content: String): Int
 
-
-     @Query("SELECT MAX(pageNumber) FROM images_table WHERE search_content = :search_content")
-     fun getNextPageInSearch(search_content: String): Int
-
-     @Query("DELETE FROM images_table WHERE search_content = :search_content")
-     fun deleteBySearchContents(search_content: String)
-
-     @Query("DELETE FROM images_table")
-     suspend fun deleteTable()
- */
+    @Query("DELETE FROM results_table")
+    suspend fun deleteTable()
 
 }
 
@@ -58,4 +47,7 @@ interface BookmarksDao {
 
     @Query("DELETE FROM bookmarks_table WHERE id = :id")
     suspend fun deleteById(id: Int)
+
+    @Query("DELETE FROM bookmarks_table")
+    suspend fun deleteTable()
 }

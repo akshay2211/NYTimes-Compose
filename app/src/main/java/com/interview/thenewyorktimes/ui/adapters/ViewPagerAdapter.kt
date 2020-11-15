@@ -9,7 +9,7 @@ import com.interview.thenewyorktimes.ui.home.ScreenSlidePageFragment
  * Created by akshay on 15,November,2020
  * akshay2211@github.io
  */
-class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(
+class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(
     fm,
     BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {

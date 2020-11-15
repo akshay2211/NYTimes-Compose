@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.interview.thenewyorktimes.R
-import com.interview.thenewyorktimes.ui.adapters.ScreenSlidePagerAdapter
+import com.interview.thenewyorktimes.ui.adapters.ViewPagerAdapter
+import com.interview.thenewyorktimes.utility.startSettingsActivity
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
@@ -21,8 +22,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setup(view: View) {
-        view.viewPager.adapter = ScreenSlidePagerAdapter(childFragmentManager)
+        view.viewPager.adapter = ViewPagerAdapter(childFragmentManager)
         view.tabLayout.setupWithViewPager(view.viewPager)
+        view.options.setOnClickListener { requireActivity().startSettingsActivity() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
