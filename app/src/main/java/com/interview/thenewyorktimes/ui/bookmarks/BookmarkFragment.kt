@@ -17,7 +17,10 @@ import kotlinx.android.synthetic.main.fragment_bookmark.view.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-
+/**
+ * [BookmarkFragment] contains the list of bookmarks
+ * locally stored in database
+ * */
 class BookmarkFragment : Fragment() {
     val db by inject<AppDatabase>()
     private val glideRequests by inject<GlideRequests>()

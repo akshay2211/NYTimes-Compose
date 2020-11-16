@@ -53,7 +53,7 @@ fun getDb(context: Context): AppDatabase {
     return synchronized(context) {
         Room.databaseBuilder(
             context,
-            AppDatabase::class.java, "database-userdata"
+            AppDatabase::class.java, "database-stories"
         ).build()
     }
 }

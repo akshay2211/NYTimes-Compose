@@ -12,6 +12,10 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * [SettingsFragment] androidx Preference fragment which drives
+ * by the preference.xml in the xml package
+ * */
 class SettingsFragment : PreferenceFragmentCompat() {
     private val coroutineContext by inject<CoroutineContext>()
     private val db by inject<AppDatabase>()

@@ -17,6 +17,11 @@ import com.interview.thenewyorktimes.utility.GlideRequests
 import com.interview.thenewyorktimes.utility.ScreenDimensions
 import kotlinx.android.synthetic.main.bookmark_row.view.*
 
+/**
+ * Created by akshay on 15,November,2020
+ * akshay2211@github.io
+ */
+
 class BookmarksAdapter(var glideRequests: GlideRequests) :
     RecyclerView.Adapter<BookmarksAdapter.ViewHolder>() {
     val list = ArrayList<Bookmarks>()

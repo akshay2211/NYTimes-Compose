@@ -14,6 +14,7 @@ import retrofit2.http.Query
  */
 interface ApiList {
     //https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=yourkey
+
     @GET("{section}.json")
     suspend fun getStories(
         @Path("section") section: String = "home",

@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.activity_single.*
 import org.koin.android.ext.android.inject
 
 
+/**
+ * [SingleActivity] is used to show full detail for the stories
+ * provided in HomeFragment and BookmarkFragment
+ * */
 class SingleActivity : AppCompatActivity() {
     private val glideRequests by inject<GlideRequests>()
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -11,6 +11,10 @@ import com.interview.thenewyorktimes.utility.setUpStatusNavigationBarColors
 import com.interview.thenewyorktimes.utility.setupTheme
 import kotlinx.android.synthetic.main.activity_settings.*
 
+/**
+ * [SettingsActivity] container of preference fragment
+ * provide lifecycle activity for preference manipulations
+ * */
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {

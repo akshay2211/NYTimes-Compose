@@ -13,6 +13,10 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(
     fm,
     BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {
+    /**
+     *  adding only few to keep network calls on check
+     *  can be done dynamically via storing list in preference and limiting the selection count
+     */
     private var headings = arrayOf(
         "Movies",
         "Food",

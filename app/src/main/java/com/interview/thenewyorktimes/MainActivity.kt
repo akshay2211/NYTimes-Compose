@@ -9,7 +9,10 @@ import com.interview.thenewyorktimes.utility.isDarkThemeOn
 import com.interview.thenewyorktimes.utility.setNavigation
 import com.interview.thenewyorktimes.utility.setUpStatusNavigationBarColors
 import kotlinx.android.synthetic.main.activity_main.*
-
+/**
+ * [MainActivity] first activity for user interaction
+ * contains multiple fragments and TabLayout for its navigation
+ * */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

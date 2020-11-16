@@ -10,6 +10,7 @@ import com.interview.thenewyorktimes.model.Results
  * akshay2211@github.io
  */
 
+//basic database creation with its Dao classes
 @Database(entities = [Results::class, Bookmarks::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun resultsDao(): ResultsDao

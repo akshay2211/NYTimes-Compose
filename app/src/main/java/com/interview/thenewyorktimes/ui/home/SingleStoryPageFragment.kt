@@ -22,6 +22,7 @@ import org.koin.android.ext.android.inject
  */
 private const val ARG_PARAM1 = "param1"
 
+
 class ScreenSlidePageFragment : Fragment() {
     val glideRequests by inject<GlideRequests>()
     private val liveViewModel by inject<StoriesViewModel>()

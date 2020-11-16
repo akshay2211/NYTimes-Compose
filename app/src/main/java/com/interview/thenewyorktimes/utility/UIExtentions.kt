@@ -27,13 +27,16 @@ import java.util.*
  * akshay2211@github.io
  */
 
+/**
+ * extension [setNavigation] is a mediator
+ * to interact between [BottomNavigationView] and [NavController]
+ */
 fun BottomNavigationView.setNavigation(navController: NavController) {
     NavigationUI.setupWithNavController(
         this,
         navController
     )
 }
-
 
 /**
  * extension [setUpStatusNavigationBarColors] to setup color codes
@@ -75,6 +78,9 @@ fun Context.isDarkThemeOn(): Boolean {
 
 }
 
+/**
+ *  retrieves the formated time as name [timeAgo] suggests
+ */
 fun String?.timeAgo(): CharSequence? {
     if (this.isNullOrEmpty()) {
         return ""
@@ -118,6 +124,7 @@ fun SharedPreferences?.setupTheme(key: String?, resources: Resources) {
     }
 }
 
+// Checks if Network is available
 fun Context.isNetworkAvailable(): Boolean {
     val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return !ConnectivityManagerCompat.isActiveNetworkMetered(cm)

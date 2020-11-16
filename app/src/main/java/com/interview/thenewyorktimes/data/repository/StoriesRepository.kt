@@ -2,9 +2,7 @@ package com.interview.thenewyorktimes.data.repository
 
 //import com.interview.thenewyorktimes.data.local.AppDatabase
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.switchMap
 import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.data.local.AppDatabase
 import com.interview.thenewyorktimes.data.remote.ApiList
@@ -76,30 +74,6 @@ class StoriesRepository(
     }
 
 
-    fun refresh(search_content: String): LiveData<NetworkState> {
-        val networkState = MutableLiveData<NetworkState>()
-        networkState.value = NetworkState.LOADING
-        CoroutineScope(this.coroutineContext).launch {
-            try {
-
-
-                var response = apiList.getStories(search_content)
-                if (!response.isSuccessful) {
-                    var error = response.errorBody()
-                    networkState.value = NetworkState.error(error?.extractMessage())
-                } else {
-                    db.resultsDao().deleteBySectionType(search_content)
-                    insertResultIntoDb(search_content, response.body())
-                    // since we are in bg thread now, post the result.
-                    networkState.postValue(NetworkState.LOADED)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        return networkState
-    }
-
 
     fun getStories(type: String): LiveDataCollection<Results> {
         var dao = db.resultsDao()
@@ -129,17 +103,10 @@ class StoriesRepository(
                 }
             }
         }
-        val refreshTrigger = MutableLiveData<Unit>()
-        val refreshState = refreshTrigger.switchMap {
-            refresh(type)
-        }
+
         return LiveDataCollection(
             pagedList = dao.storiesByType(type),
-            networkState = networkState,
-            refresh = {
-                refreshTrigger.value = null
-            },
-            refreshState = refreshState
+            networkState = networkState
         )
     }
 

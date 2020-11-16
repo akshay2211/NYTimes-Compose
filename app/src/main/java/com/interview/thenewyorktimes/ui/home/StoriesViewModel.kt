@@ -29,5 +29,4 @@ fun AppDatabase.deleteAll(coroutineContext: CoroutineContext) {
     CoroutineScope(coroutineContext).async {
         this@deleteAll.resultsDao().deleteTable()
     }
-
 }

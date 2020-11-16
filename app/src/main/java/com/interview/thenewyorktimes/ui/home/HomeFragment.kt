@@ -18,6 +18,10 @@ import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
 
+/**
+ * [HomeFragment] container of view pager
+ * contains pull to refresh layer
+ * */
 class HomeFragment : Fragment() {
     private val db by inject<AppDatabase>()
     private val coroutineContext by inject<CoroutineContext>()
