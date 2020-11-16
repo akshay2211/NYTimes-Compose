@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/mtrl_card_spacing"
         android:clickable="true"
-        android:elevation="0dp"
         android:focusable="true"
         app:cardBackgroundColor="@color/headingColor"
         app:cardElevation="0dp"
@@ -34,6 +33,7 @@
 
         <ImageView
             android:id="@+id/gradient_iv"
+            android:contentDescription="@string/image_desc"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
@@ -45,14 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:fontFamily="@font/quicksand_semibold"
             android:gravity="center"
             android:lines="1"
             android:padding="12dp"
-            android:text="hello"
+            android:text=""
             android:textColor="@android:color/white"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
 
     </com.google.android.material.card.MaterialCardView>

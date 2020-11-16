@@ -24,13 +24,14 @@
                 android:gravity="center"
                 android:text="@string/story_title"
                 android:textColor="@color/headingColor"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/back"
+                android:layout_gravity="center_vertical|start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|left"
+                android:contentDescription="@string/image_desc"
                 android:padding="12dp"
                 android:src="@drawable/ic_arrow_left" />
         </FrameLayout>
@@ -87,7 +88,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/abstract_text"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
+                app:layout_constraintTop_toBottomOf="@+id/title_page" />
 
             <TextView
                 android:id="@+id/abstract_text"
@@ -98,7 +99,7 @@
                 android:maxLines="2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time" />
+                app:layout_constraintTop_toBottomOf="@+id/time_page" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -115,11 +116,10 @@
             style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:layout_marginEnd="@dimen/cat_card_single_spacing"
-            android:layout_marginRight="@dimen/cat_card_single_spacing"
             android:fontFamily="@font/quicksand_semibold"
-            android:text="Open in Browser" />
+            android:text="@string/open_in_browser" />
 
 
     </LinearLayout>

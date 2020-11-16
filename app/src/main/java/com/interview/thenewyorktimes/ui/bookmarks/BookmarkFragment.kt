@@ -54,7 +54,7 @@ class BookmarkFragment : Fragment() {
                         .setMessage(R.string.confirm_to_delete)
                         .setPositiveButton(
                             android.R.string.ok
-                        ) { dialog, which ->
+                        ) { _, _ ->
                             db.deleteBookmark(bookmarks.id, coroutineContext)
                         }.setNegativeButton(android.R.string.cancel, null).show()
                 }

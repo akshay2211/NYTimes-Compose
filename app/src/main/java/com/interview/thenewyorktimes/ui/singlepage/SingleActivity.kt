@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -29,15 +28,11 @@ class SingleActivity : AppCompatActivity() {
             ContextCompat.getColor(this, R.color.background)
         )
         setContentView(R.layout.activity_single)
-        Log.e("bookmark", "check header")
         setup()
-        Log.e("bookmark", "check footer")
     }
 
     private fun setup() {
         var bookmarks = intent.getSerializableExtra("bookmark") as Bookmarks?
-        Log.e("bookmark", "check body start")
-        Log.e("bookmark", "check ${bookmarks?.title}")
         bookmarks?.let {
             var customHeight = 0
 
@@ -51,7 +46,6 @@ class SingleActivity : AppCompatActivity() {
                 stories_iv.requestLayout()
                 View.VISIBLE
             }
-            Log.e("check ------- ", "$customHeight  ${it.title}")
             title_page.text = it.title ?: ""
             abstract_text.text = it.abstract_text ?: ""
             time_page.text = it.published_date.timeAgo()
@@ -71,7 +65,6 @@ class SingleActivity : AppCompatActivity() {
             val url = it.url
 
             externalLink.setOnClickListener {
-                Log.e("check ", "-->  ${url}")
                 startActivity(Intent(Intent.ACTION_VIEW).apply {
                     data = Uri.parse(url)
                 })

@@ -2,7 +2,6 @@ package com.interview.thenewyorktimes.ui.adapters
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.stories_row.view.*
 class StoriesAdapter(var list: List<Results>, var name: String, var glideRequests: GlideRequests) :
     RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     interface OnStoriesClick {
-        fun bookmarkMethod(results: Results)
+        fun bookmarkMethod(results: Results, adapterPosition: Int)
         fun openDetailsPage(results: Results)
     }
 
@@ -50,7 +49,6 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
             holder.itemView.story_card.visibility = if (it.url.isNullOrEmpty()) {
                 View.GONE
             } else {
-                Log.e("check ----X-- ", "$customHeight  ${it.title} ${it.height / it.width}")
                 customHeight = (it.height).getDesiredHeight(actualWidth = it.width)
                 holder.itemView.stories_iv.layoutParams.apply {
                     height = customHeight
@@ -58,7 +56,6 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
                 holder.itemView.stories_iv.requestLayout()
                 View.VISIBLE
             }
-            Log.e("check ------- ", "$customHeight  ${it.title}")
             holder.itemView.title.text = it.title ?: ""
             holder.itemView.time.text = it.published_date.timeAgo()
             glideRequests.load(it.url_large ?: "")
@@ -98,7 +95,7 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
         override fun onClick(v: View?) {
             var results = list[adapterPosition]
             if (v?.id == R.id.bookmark_icon) {
-                onStoriesClick.bookmarkMethod(results)
+                onStoriesClick.bookmarkMethod(results, adapterPosition)
                 return
             }
             onStoriesClick.openDetailsPage(results)

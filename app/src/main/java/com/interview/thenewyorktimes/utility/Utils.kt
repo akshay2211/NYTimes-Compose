@@ -3,7 +3,6 @@ package com.interview.thenewyorktimes.utility
 import android.content.Context
 import android.content.Intent
 import android.util.DisplayMetrics
-import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.interview.thenewyorktimes.model.Bookmarks
 import com.interview.thenewyorktimes.model.Results
@@ -75,7 +74,11 @@ val Int.dp: Int
         .toInt()
 
 fun Int.getDesiredHeight(width: Int = ScreenDimensions.WidthPX, actualWidth: Int): Int {
-    return (this * width) / actualWidth
+    return if (actualWidth == 0) {
+        0
+    } else {
+        (this * width) / actualWidth
+    }
 }
 
 fun FragmentActivity.startSinglePageActivity(
@@ -85,13 +88,11 @@ fun FragmentActivity.startSinglePageActivity(
     var bookmark = if (result == null && bookmarks == null) {
         throw NullPointerException("Both the objects con not be null")
     } else result?.resultsToBookmarks() ?: bookmarks
-    Log.e("bookmark", "check startSinglePageActivity  ${bookmark?.title}  hi")
     startActivity(Intent(this, SingleActivity::class.java).apply { putExtra("bookmark", bookmark) })
 }
 
 
 fun Results.resultsToBookmarks(): Bookmarks {
-    Log.e("bookmark", "check Results  ${this.title}  resultsToBookmarks")
     return Bookmarks().apply {
         this.title = this@resultsToBookmarks.title
         this.url = this@resultsToBookmarks.url

@@ -80,8 +80,8 @@ fun String?.timeAgo(): CharSequence? {
         return ""
     }
     //2020-11-14T05:00:17-05:00
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
-    var date = inputFormat.parse(this)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH)
+    var date = inputFormat.parse(this) ?: Date()
     return DateUtils.getRelativeTimeSpanString(
         date.time,
         Calendar.getInstance().timeInMillis,

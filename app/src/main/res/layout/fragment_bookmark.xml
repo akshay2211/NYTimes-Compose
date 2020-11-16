@@ -7,7 +7,6 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="@dimen/cardview_default_elevation"
         android:fitsSystemWindows="true"
         app:elevation="@dimen/cardview_default_elevation">
 
@@ -28,13 +27,14 @@
                 android:gravity="center"
                 android:text="@string/bookmarks_title"
                 android:textColor="@color/headingColor"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/back"
+                android:layout_gravity="center_vertical|start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|left"
+                android:contentDescription="@string/image_desc"
                 android:padding="12dp"
                 android:src="@drawable/ic_arrow_left" />
 

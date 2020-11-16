@@ -19,13 +19,14 @@
             android:gravity="center"
             android:text="@string/settings_title"
             android:textColor="@color/headingColor"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/back"
+            android:layout_gravity="center_vertical|start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:contentDescription="@string/image_desc"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_left" />
     </FrameLayout>

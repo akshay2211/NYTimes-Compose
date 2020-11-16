@@ -2,7 +2,6 @@ package com.interview.thenewyorktimes.data.repository
 
 //import com.interview.thenewyorktimes.data.local.AppDatabase
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
@@ -44,7 +43,6 @@ class StoriesRepository(
 
         body!!.results.let { stories ->
             var list = stories.map {
-                Log.e("check ", "iterations of stories $section ${it.title} ")
                 var height = 0
                 var width = 0
                 var urlMain = ""
@@ -68,7 +66,6 @@ class StoriesRepository(
                     it.abstract_text
                 )
             }
-            Log.e("check ", "size of stories ${stories.size} ${list.size}")
             db.runInTransaction {
 
                 CoroutineScope(this.coroutineContext).launch {
@@ -108,9 +105,7 @@ class StoriesRepository(
         var dao = db.resultsDao()
 
         val networkState = MutableLiveData<NetworkState>()
-        Log.e("work on ", "first")
         CoroutineScope(this.coroutineContext).launch {
-            Log.e("work on ", "second")
             if (dao.getCount(type) == 0) {
                 networkState.postValue(NetworkState.LOADING)
                 try {
@@ -134,7 +129,6 @@ class StoriesRepository(
                 }
             }
         }
-        Log.e("work on ", "third")
         val refreshTrigger = MutableLiveData<Unit>()
         val refreshState = refreshTrigger.switchMap {
             refresh(type)

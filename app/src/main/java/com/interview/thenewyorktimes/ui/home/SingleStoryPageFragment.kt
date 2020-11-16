@@ -54,7 +54,11 @@ class ScreenSlidePageFragment : Fragment() {
         data.pagedList.observe(requireActivity(), {
             view.recycler_view.adapter = StoriesAdapter(it, param1 ?: "", glideRequests).apply {
                 onStoriesClick = object : StoriesAdapter.OnStoriesClick {
-                    override fun bookmarkMethod(results: Results) {
+                    override fun bookmarkMethod(results: Results, adapterPosition: Int) {
+                        /**
+                         * bookmarks are stored local database
+                         * both in stories and in bookmarks table
+                         * */
                         liveViewModel.bookmark(results) {
                             requireActivity().runOnUiThread {
                                 Snackbar.make(
@@ -66,6 +70,7 @@ class ScreenSlidePageFragment : Fragment() {
                                     },
                                     Snackbar.LENGTH_LONG
                                 ).show()
+                                view.recycler_view.scrollToPosition(adapterPosition)
                             }
                         }
 

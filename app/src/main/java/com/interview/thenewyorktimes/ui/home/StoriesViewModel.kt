@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
  * Created by akshay on 15,November,2020
  * akshay2211@github.io
  */
-class StoriesViewModel(val storiesRepo: StoriesRepository) : ViewModel() {
+class StoriesViewModel(private val storiesRepo: StoriesRepository) : ViewModel() {
     fun getStories(type: String) = storiesRepo.getStories(type)
     fun bookmark(results: Results, result: (Boolean) -> Unit) =
         storiesRepo.storeBookMark(results, result)
