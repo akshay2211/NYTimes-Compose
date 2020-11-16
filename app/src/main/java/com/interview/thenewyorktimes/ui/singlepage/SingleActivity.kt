@@ -76,7 +76,7 @@ class SingleActivity : AppCompatActivity() {
                     data = Uri.parse(url)
                 })
             }
+            back.setOnClickListener { finish() }
         }
-
     }
 }

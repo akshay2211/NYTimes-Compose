@@ -14,7 +14,8 @@ import kotlin.coroutines.CoroutineContext
  */
 class StoriesViewModel(val storiesRepo: StoriesRepository) : ViewModel() {
     fun getStories(type: String) = storiesRepo.getStories(type)
-    fun bookmark(results: Results) = storiesRepo.storeBookMark(results)
+    fun bookmark(results: Results, result: (Boolean) -> Unit) =
+        storiesRepo.storeBookMark(results, result)
 
 }
 

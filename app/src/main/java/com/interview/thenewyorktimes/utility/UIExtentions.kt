@@ -6,11 +6,13 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import android.text.format.DateUtils
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.net.ConnectivityManagerCompat
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
@@ -114,4 +116,9 @@ fun SharedPreferences?.setupTheme(key: String?, resources: Resources) {
         "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         else -> AppCompatDelegate.setDefaultNightMode(def)
     }
+}
+
+fun Context.isNetworkAvailable(): Boolean {
+    val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return !ConnectivityManagerCompat.isActiveNetworkMetered(cm)
 }

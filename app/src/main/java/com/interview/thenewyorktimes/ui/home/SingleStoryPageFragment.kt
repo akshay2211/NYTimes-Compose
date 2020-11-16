@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.model.Results
@@ -52,16 +51,24 @@ class ScreenSlidePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var data = liveViewModel.getStories(param1 ?: "")
-        data.pagedList.observe(requireActivity(), Observer {
+        data.pagedList.observe(requireActivity(), {
             view.recycler_view.adapter = StoriesAdapter(it, param1 ?: "", glideRequests).apply {
                 onStoriesClick = object : StoriesAdapter.OnStoriesClick {
                     override fun bookmarkMethod(results: Results) {
-                        liveViewModel.bookmark(results)
-                        Snackbar.make(
-                            view.main_container,
-                            R.string.bookmarked_done,
-                            Snackbar.LENGTH_LONG
-                        ).show()
+                        liveViewModel.bookmark(results) {
+                            requireActivity().runOnUiThread {
+                                Snackbar.make(
+                                    view.main_container,
+                                    if (it) {
+                                        R.string.bookmarked_done
+                                    } else {
+                                        R.string.bookmarked_removed
+                                    },
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
                     }
 
                     override fun openDetailsPage(results: Results) {

@@ -14,12 +14,12 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(
     BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {
     private var headings = arrayOf(
-        "movies",
-        "food",
-        "automobiles",
-        "books",
-        "travel",
-        "business"//, "food", "health", "home", "insider", "magazine", "movies", "nyregion", "obituaries", "opinion", "politics", "realestate", "science", "sports", "sundayreview", "technology", "theater", "t-magazine", "travel", "upshot", "us", "world"
+        "Movies",
+        "Food",
+        "Automobiles",
+        "Books",
+        "Travel",
+        "Business"//, "food", "health", "home", "insider", "magazine", "movies", "nyregion", "obituaries", "opinion", "politics", "realestate", "science", "sports", "sundayreview", "technology", "theater", "t-magazine", "travel", "upshot", "us", "world"
     )
 
     override fun getCount(): Int = headings.size

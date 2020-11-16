@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="@dimen/cardview_default_elevation"
@@ -13,7 +12,6 @@
         app:elevation="@dimen/cardview_default_elevation">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/background"
@@ -44,7 +42,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.interview.thenewyorktimes.utility.CustomSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
@@ -88,5 +86,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
         </LinearLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.interview.thenewyorktimes.utility.CustomSwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

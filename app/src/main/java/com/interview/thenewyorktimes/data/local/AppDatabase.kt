@@ -29,6 +29,9 @@ interface ResultsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(images: List<Results>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(images: Results)
+
     @Query("DELETE FROM results_table WHERE type = :type")
     fun deleteBySectionType(type: String)
 
@@ -41,6 +44,9 @@ interface ResultsDao {
 interface BookmarksDao {
     @Query("SELECT * FROM bookmarks_table ORDER BY id ASC")
     fun getBookmarks(): LiveData<List<Bookmarks>>
+
+    @Query("SELECT * FROM bookmarks_table WHERE id = :id")
+    fun getBookmarksById(id: Int): Bookmarks?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(bookmark: Bookmarks)

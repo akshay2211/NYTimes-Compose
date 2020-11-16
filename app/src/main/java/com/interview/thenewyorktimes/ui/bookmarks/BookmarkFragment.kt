@@ -20,7 +20,7 @@ import kotlin.coroutines.CoroutineContext
 
 class BookmarkFragment : Fragment() {
     val db by inject<AppDatabase>()
-    val glideRequests by inject<GlideRequests>()
+    private val glideRequests by inject<GlideRequests>()
     val coroutineContext by inject<CoroutineContext>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

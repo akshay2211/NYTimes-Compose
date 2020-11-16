@@ -7,19 +7,18 @@
     <!-- Rich Media Demo Strings -->
     <string name="cat_card_rich_media_view_title">Title goes here</string>
     <string name="cat_card_rich_media_image_view_description">Card Image</string>
-    <string name="bookmarked_done">Story is bookmarked</string>
+    <string name="bookmarked_done">Bookmark Added</string>
+    <string name="bookmarked_removed">Bookmark Removed</string>
     <string name="delete_post_title">Remove Bookmark</string>
     <string name="confirm_to_delete">Kindly press ok to remove this story from your bookmarks</string>
     <string name="story_title">Story</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings_title">Settings</string>
 
     <string name="title_preference" translatable="false">Theme Selections</string>
     <string name="dialog_title_preference" translatable="false">Select Theme</string>
     <string name="cache_summary" translatable="false">Clear all stored values in local database</string>
     <string name="cache_title" translatable="false">Clear Storage</string>
-    <string name="main_image">main image</string>
-    <string name="divider">divider</string>
+    <string name="system_call_error">Error occurred during system call</string>
 
     <string-array name="entries">
         <item>Light Theme</item>
@@ -31,35 +30,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-    </string-array>
-
-    <string-array name="section_entries">
-        <item>arts</item>
-        <item>automobiles</item>
-        <item>books</item>
-        <item>business</item>
-        <item>fashion</item>
-        <item>food</item>
-        <item>health</item>
-        <item>home</item>
-        <item>insider</item>
-        <item>magazine</item>
-        <item>movies</item>
-        <item>nyregion</item>
-        <item>obituaries</item>
-        <item>opinion</item>
-        <item>politics</item>
-        <item>realestate</item>
-        <item>science</item>
-        <item>sports</item>
-        <item>sundayreview</item>
-        <item>technology</item>
-        <item>theater</item>
-        <item>t-magazine</item>
-        <item>travel</item>
-        <item>upshot</item>
-        <item>us</item>
-        <item>world</item>
     </string-array>
 
 </resources>

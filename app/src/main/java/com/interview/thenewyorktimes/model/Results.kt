@@ -22,5 +22,6 @@ data class Results(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     var id: Int = 0
+    var bookmarked: Boolean = false
 
 }

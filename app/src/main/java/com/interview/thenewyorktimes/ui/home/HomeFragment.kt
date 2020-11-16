@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.data.local.AppDatabase
 import com.interview.thenewyorktimes.ui.adapters.ViewPagerAdapter
+import com.interview.thenewyorktimes.utility.isNetworkAvailable
 import com.interview.thenewyorktimes.utility.startSettingsActivity
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.ext.android.inject
@@ -32,14 +33,6 @@ class HomeFragment : Fragment() {
         view.viewPager.adapter = ViewPagerAdapter(childFragmentManager)
         view.tabLayout.setupWithViewPager(view.viewPager)
         view.options.setOnClickListener { requireActivity().startSettingsActivity() }
-        view.viewPager.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_MOVE -> view.swipe_refresh.isEnabled = false
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> view.swipe_refresh.isEnabled =
-                    true
-            }
-            false
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,11 +45,16 @@ class HomeFragment : Fragment() {
 
         view.swipe_refresh.setOnRefreshListener {
             view.swipe_refresh.isRefreshing = true
-            db.deleteAll(coroutineContext)
-            Handler(Looper.getMainLooper()).postDelayed({
-                setup(view)
+            if (!requireActivity().isNetworkAvailable()) {
+                Snackbar.make(view, R.string.internet_error, Snackbar.LENGTH_LONG).show()
                 view.swipe_refresh.isRefreshing = false
-            }, 1000L)
+            } else {
+                db.deleteAll(coroutineContext)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    setup(view)
+                    view.swipe_refresh.isRefreshing = false
+                }, 1000L)
+            }
         }
     }
 }

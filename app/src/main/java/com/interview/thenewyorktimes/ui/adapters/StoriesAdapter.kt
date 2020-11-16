@@ -39,7 +39,13 @@ class StoriesAdapter(var list: List<Results>, var name: String, var glideRequest
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         list[position].let {
             var customHeight = 0
-
+            holder.itemView.bookmark_icon.setImageResource(
+                if (it.bookmarked) {
+                    R.drawable.ic_bookmark_filled
+                } else {
+                    R.drawable.ic_bookmark
+                }
+            )
 
             holder.itemView.story_card.visibility = if (it.url.isNullOrEmpty()) {
                 View.GONE

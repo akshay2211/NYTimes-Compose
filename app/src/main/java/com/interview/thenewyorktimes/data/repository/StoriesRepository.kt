@@ -18,6 +18,7 @@ import com.interview.thenewyorktimes.utility.resultsToBookmarks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
+import javax.net.ssl.SSLException
 import kotlin.coroutines.CoroutineContext
 
 
@@ -121,6 +122,9 @@ class StoriesRepository(
                     }
                     insertResultIntoDb(type, response.body())
                     networkState.postValue(NetworkState.LOADED)
+                } catch (e: SSLException) {
+                    e.printStackTrace()
+                    networkState.postValue(NetworkState.error(context.resources.getString(R.string.system_call_error)))
                 } catch (e: UnknownHostException) {
                     e.printStackTrace()
                     networkState.postValue(NetworkState.error(context.resources.getString(R.string.internet_error)))
@@ -145,9 +149,18 @@ class StoriesRepository(
         )
     }
 
-    fun storeBookMark(results: Results): Unit {
+    fun storeBookMark(results: Results, result: (Boolean) -> Unit) {
         CoroutineScope(this.coroutineContext).launch {
-            return@launch db.bookmarksDao().insert(results.resultsToBookmarks())
+            var bookmark = db.bookmarksDao().getBookmarksById(results.id)
+            if (bookmark != null) {
+                db.resultsDao().insert(results.apply { bookmarked = false })
+                db.bookmarksDao().deleteById(results.id)
+                result(false)
+            } else {
+                db.resultsDao().insert(results.apply { bookmarked = true })
+                db.bookmarksDao().insert(results.resultsToBookmarks())
+                result(true)
+            }
         }
     }
 
