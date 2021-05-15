@@ -13,7 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheNewYorkTimesApp">
-        <activity android:name=".ui.settings.SettingsActivity"></activity>
+        <activity
+            android:name=".MainComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.TheNewYorkTimesApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.singlepage.SingleActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

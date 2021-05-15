@@ -24,4 +24,13 @@
         <item name="fontFamily">@font/quicksand_regular</item>
         <item name="android:fontFamily">@font/quicksand_regular</item>
     </style>
+
+    <style name="Theme.TheNewYorkTimesApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.TheNewYorkTimesApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TheNewYorkTimesApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

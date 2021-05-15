@@ -5,5 +5,5 @@ package com.interview.thenewyorktimes.utility
  * akshay2211@github.io
  */
 object Constants {
-    const val API_KEY = "<Api Key>"
+    const val API_KEY = "BQEGoxoACSiuL2nvwioOVHCg2Z69coc2"
 }
