@@ -60,6 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:elevation="@dimen/cardview_default_elevation"
+
+                android:background="@color/background"
                 app:layout_constraintBottom_toTopOf="@+id/viewPager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
