@@ -4,12 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,10 +28,26 @@ class MainComposeActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
 
-                    NavHost(navController = navController, startDestination = "eng") {
-                        composable("eng") { Greeting("jon", navController) }
-                        composable("kor") { Greeting2("kim", navController) }
+                    val title = mutableStateOf("Top bar ")
+
+                    Scaffold(
+                        // TODO: 15/05/21 not working on back-pressed
+                        topBar = { Text(text = title.value, modifier = Modifier.padding(20.dp)) }
+                    ) {
+                        NavHost(navController = navController, startDestination = "eng") {
+                            composable("eng") {
+                                Greeting("jon", navController) {
+                                    title.value = it
+                                }
+                            }
+                            composable("kor") {
+                                Greeting2("kim", navController) {
+                                    title.value = it
+                                }
+                            }
+                        }
                     }
+
 
                 }
             }
@@ -39,9 +56,12 @@ class MainComposeActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, navController: NavController) {
+fun Greeting(name: String, navController: NavController, callback: (String) -> Unit) {
     Column {
-        Button(onClick = { navController.navigate("kor") }) {
+        Button(onClick = {
+            callback("korean top")
+            navController.navigate("kor")
+        }) {
             Text(text = "move to korean")
         }
 
@@ -50,11 +70,12 @@ fun Greeting(name: String, navController: NavController) {
 }
 
 @Composable
-fun Greeting2(name: String, navController: NavController) {
+fun Greeting2(name: String, navController: NavController, callback: (String) -> Unit) {
     Column {
 
         Text(text = "annyeonghaseyo $name!")
         Button(onClick = {
+            callback("English top")
             navController.navigate("eng") {
 
             }
