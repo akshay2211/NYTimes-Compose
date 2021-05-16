@@ -52,7 +52,7 @@ class ScreenSlidePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var data = liveViewModel.getStories(param1 ?: "")
-        data.pagedList.observe(requireActivity(), {
+        data.pagedList?.observe(requireActivity(), {
             view.recycler_view.adapter = StoriesAdapter(it, param1 ?: "", glideRequests).apply {
                 onStoriesClick = object : StoriesAdapter.OnStoriesClick {
                     override fun bookmarkMethod(results: Results, adapterPosition: Int) {
@@ -83,7 +83,7 @@ class ScreenSlidePageFragment : Fragment() {
                 }
             }
         })
-        data.networkState.observe(requireActivity(), {
+        data.networkState?.observe(requireActivity(), {
             when (it.State) {
                 State.RUNNING -> {
                     view.loading.visibility = View.VISIBLE
