@@ -1,6 +1,5 @@
 package com.interview.thenewyorktimes.data.repository
 
-//import com.interview.thenewyorktimes.data.local.AppDatabase
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import com.interview.thenewyorktimes.R
@@ -106,7 +105,7 @@ class StoriesRepository(
         }
 
         return LiveDataCollection(
-            pagedList2 = dao.getAllStories(),
+            pagedList = dao.getAllStories(),
             networkState2 = networkState
         )
     }

@@ -1,6 +1,6 @@
 package com.interview.thenewyorktimes.data.local
 
-import androidx.compose.runtime.MutableState
+
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.interview.thenewyorktimes.model.Bookmarks
@@ -26,7 +26,7 @@ interface ResultsDao {
     fun storiesByType(type: String): LiveData<List<Results>>
 
     @Query("SELECT * FROM results_table ORDER BY id ASC")
-    fun getAllStories(): MutableState<List<Results>>
+    fun getAllStories(): LiveData<List<Results>>
 
     @Query("SELECT COUNT(id) FROM results_table WHERE type = :type")
     fun getCount(type: String): Int
