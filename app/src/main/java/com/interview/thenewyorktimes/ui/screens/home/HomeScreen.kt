@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.model.Results
 import com.interview.thenewyorktimes.ui.home.StoriesViewModel
 
@@ -42,14 +45,17 @@ fun HomeScreenComposable(
             onCategoryClicked
         )
     }*/
-    ShowNotes(liveViewModel.getStories("Movies").pagedList.observeAsState(initial = listOf()))
+    ShowNotes(liveViewModel.getStories("Movies").pagedList.observeAsState(initial = listOf())) {
+        navController.navigate("kor")
+        callback(it.title ?: " sample ")
+    }
 
 
 }
 
 
 @Composable
-fun ShowNotes(resultList: State<List<Results>>) {
+fun ShowNotes(resultList: State<List<Results>>, clickCallback: (Results) -> Unit) {
     var swipestate = remember {
         false
     }
@@ -66,11 +72,18 @@ fun ShowNotes(resultList: State<List<Results>>) {
     ) {
         LazyColumn {
             items(resultList.value) {
-                Column(Modifier.fillMaxWidth()) {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { clickCallback(it) }) {
                     Log.e("url ", "-> ${it.url}")
-                    Card(elevation = 5.dp) {
+                    Card(elevation = 5.dp, modifier = Modifier.padding(0.dp, 16.dp)) {
                         Image(
-                            painter = rememberCoilPainter(request = it.url_large),
+                            painter = rememberCoilPainter(
+                                request = it.url_large,
+                                previewPlaceholder = R.drawable.gradient_bottom,
+                                fadeIn = true
+                            ),
                             contentDescription = it.title ?: "empty",
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -83,7 +96,7 @@ fun ShowNotes(resultList: State<List<Results>>) {
                 Text(
                     text = it.title ?: "empty",
                     modifier = Modifier
-                        .padding(4.dp, 4.dp, 4.dp, 16.dp)
+                        .padding(4.dp, 0.dp, 0.dp, 18.dp)
                         .fillMaxWidth()
                 )
             }

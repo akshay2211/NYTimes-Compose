@@ -81,7 +81,7 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.3.0-alpha07'
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
     def accompanist = "0.9.1"
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist"
     implementation "com.google.accompanist:accompanist-coil:$accompanist"
