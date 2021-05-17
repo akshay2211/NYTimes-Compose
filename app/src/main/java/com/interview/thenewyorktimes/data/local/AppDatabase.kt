@@ -1,5 +1,6 @@
 package com.interview.thenewyorktimes.data.local
 
+
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.interview.thenewyorktimes.model.Bookmarks
@@ -23,6 +24,9 @@ interface ResultsDao {
 
     @Query("SELECT * FROM results_table WHERE type = :type ORDER BY id ASC")
     fun storiesByType(type: String): LiveData<List<Results>>
+
+    @Query("SELECT * FROM results_table ORDER BY id ASC")
+    fun getAllStories(): LiveData<List<Results>>
 
     @Query("SELECT COUNT(id) FROM results_table WHERE type = :type")
     fun getCount(type: String): Int

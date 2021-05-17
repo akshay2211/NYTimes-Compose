@@ -1,8 +1,7 @@
 package com.interview.thenewyorktimes.data.repository
 
-//import com.interview.thenewyorktimes.data.local.AppDatabase
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import com.interview.thenewyorktimes.R
 import com.interview.thenewyorktimes.data.local.AppDatabase
 import com.interview.thenewyorktimes.data.remote.ApiList
@@ -77,36 +76,37 @@ class StoriesRepository(
 
     fun getStories(type: String): LiveDataCollection<Results> {
         var dao = db.resultsDao()
-
-        val networkState = MutableLiveData<NetworkState>()
+        val networkState = mutableStateOf(NetworkState.LOADING)
         CoroutineScope(this.coroutineContext).launch {
             if (dao.getCount(type) == 0) {
-                networkState.postValue(NetworkState.LOADING)
+                networkState.value = (NetworkState.LOADING)
                 try {
                     val response = apiList.getStories(type)
                     if (!response.isSuccessful) {
                         val error = response.errorBody()
-                        networkState.postValue(NetworkState.error(error?.extractMessage()))
+                        networkState.value = (NetworkState.error(error?.extractMessage()))
                         return@launch
                     }
                     insertResultIntoDb(type, response.body())
-                    networkState.postValue(NetworkState.LOADED)
+                    networkState.value = (NetworkState.LOADED)
                 } catch (e: SSLException) {
                     e.printStackTrace()
-                    networkState.postValue(NetworkState.error(context.resources.getString(R.string.system_call_error)))
+                    networkState.value =
+                        (NetworkState.error(context.resources.getString(R.string.system_call_error)))
                 } catch (e: UnknownHostException) {
                     e.printStackTrace()
-                    networkState.postValue(NetworkState.error(context.resources.getString(R.string.internet_error)))
+                    networkState.value =
+                        (NetworkState.error(context.resources.getString(R.string.internet_error)))
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    networkState.postValue(NetworkState.error(e.localizedMessage))
+                    networkState.value = (NetworkState.error(e.localizedMessage))
                 }
             }
         }
 
         return LiveDataCollection(
-            pagedList = dao.storiesByType(type),
-            networkState = networkState
+            pagedList = dao.getAllStories(),
+            networkState2 = networkState
         )
     }
 
