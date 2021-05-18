@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.interview.thenewyorktimes.ui.home.HomeFragment"
+        android:name="io.ak1.nytimes.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
-        android:name="com.interview.thenewyorktimes.ui.bookmarks.BookmarkFragment"
+        android:name="io.ak1.nytimes.ui.bookmarks.BookmarkFragment"
         android:label="fragment_bookmark"
         tools:layout="@layout/fragment_bookmark" />
 </navigation>
