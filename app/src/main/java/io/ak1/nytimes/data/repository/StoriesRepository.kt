@@ -1,8 +1,8 @@
 package io.ak1.nytimes.data.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
 import io.ak1.nytimes.model.BaseData
@@ -75,11 +75,12 @@ class StoriesRepository(
 
 
     fun getStories(type: String): LiveDataCollection<Results> {
+        Log.e("retrieving", "stories for $type")
         var dao = db.resultsDao()
         val networkState = mutableStateOf(NetworkState.LOADING)
         CoroutineScope(this.coroutineContext).launch {
             if (dao.getCount(type) == 0) {
-                networkState.value = (NetworkState.LOADING)
+                // networkState.value = (NetworkState.LOADING)
                 try {
                     val response = apiList.getStories(type)
                     if (!response.isSuccessful) {
@@ -88,18 +89,18 @@ class StoriesRepository(
                         return@launch
                     }
                     insertResultIntoDb(type, response.body())
-                    networkState.value = (NetworkState.LOADED)
+                    //  networkState.value = (NetworkState.LOADED)
                 } catch (e: SSLException) {
                     e.printStackTrace()
-                    networkState.value =
-                        (NetworkState.error(context.resources.getString(R.string.system_call_error)))
+                    // networkState.value =
+                    //     (NetworkState.error(context.resources.getString(R.string.system_call_error)))
                 } catch (e: UnknownHostException) {
                     e.printStackTrace()
-                    networkState.value =
-                        (NetworkState.error(context.resources.getString(R.string.internet_error)))
+                    //  networkState.value =
+                    //      (NetworkState.error(context.resources.getString(R.string.internet_error)))
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    networkState.value = (NetworkState.error(e.localizedMessage))
+                    // networkState.value = (NetworkState.error(e.localizedMessage))
                 }
             }
         }

@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_settings.*
  * provide lifecycle activity for preference manipulations
  * */
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         window.setUpStatusNavigationBarColors(
             isDarkThemeOn(),
             ContextCompat.getColor(this, R.color.background)
