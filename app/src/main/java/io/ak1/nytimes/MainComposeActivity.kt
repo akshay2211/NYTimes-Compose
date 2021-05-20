@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -15,6 +14,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -25,9 +25,12 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.ui.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.home.HomeScreenComposable
+import io.ak1.nytimes.ui.screens.home.components.PostElement
 import io.ak1.nytimes.ui.theme.TheNewYorkTimesAppTheme
 import org.koin.android.ext.android.inject
 
@@ -68,8 +71,13 @@ fun MainComponent(liveViewModel: StoriesViewModel, window: Window) {
                         topBarTitle.value = it
                     }
                 }
-                composable("kor") {
-                    Greeting2("kim", liveViewModel, navController) {
+                composable(
+                    "post/{postId}",
+                    arguments = listOf(navArgument("postId") { defaultValue = "0" })
+                ) {
+                    var data = it.arguments?.getString("postId") ?: "0"
+
+                    Greeting2(data, liveViewModel, navController) {
                         topBarTitle.value = it
                     }
                 }
@@ -81,17 +89,17 @@ fun MainComponent(liveViewModel: StoriesViewModel, window: Window) {
 
 @Composable
 fun Greeting2(
-    name: String,
+    postId: String,
     liveViewModel: StoriesViewModel,
     navController: NavController,
     callback: (String) -> Unit
 ) {
-
-
-    Text(
-        text = "Page: hello",
-        modifier = Modifier.fillMaxSize()
+    var story = liveViewModel.getStory(postId).observeAsState(
+        initial = null
     )
+    PostElement(results = story.value ?: Results()) {
+
+    }
 }
 
 @Preview(showBackground = true)

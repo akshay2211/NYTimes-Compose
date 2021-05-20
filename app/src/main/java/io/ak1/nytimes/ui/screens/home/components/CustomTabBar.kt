@@ -47,7 +47,6 @@ private val types = arrayOf(
     "fashion",
     "food",
     "health",
-    "home",
     "insider",
     "magazine",
     "movies",

@@ -9,11 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -41,14 +38,17 @@ fun HomeScreenComposable(
     val elements = liveViewModel.getStories(mainType.value.toLowerCase()).pagedList.observeAsState(
         initial = listOf()
     )
-
+    // TODO: 20/05/21 regain same post after returing from single post screen
+    LaunchedEffect(listState) {
+        listState.scrollToItem(listState.firstVisibleItemIndex)
+    }
     Scaffold(
         topBar = { CustomAppBar() }
     ) {
         Column {
             CustomTabBar(listState)
             ShowNotes(listState, elements) {
-                navController.navigate("kor")
+                navController.navigate("post/${it.id}")
                 callback(it.title ?: " sample ")
             }
 

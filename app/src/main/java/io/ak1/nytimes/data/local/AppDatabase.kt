@@ -25,6 +25,9 @@ interface ResultsDao {
     @Query("SELECT * FROM results_table WHERE type = :type ORDER BY id ASC")
     fun storiesByType(type: String): LiveData<List<Results>>
 
+    @Query("SELECT * FROM results_table WHERE id = :id")
+    fun getStoriesById(id: Int): LiveData<Results>
+
     @Query("SELECT * FROM results_table ORDER BY id ASC")
     fun getAllStories(): LiveData<List<Results>>
 
