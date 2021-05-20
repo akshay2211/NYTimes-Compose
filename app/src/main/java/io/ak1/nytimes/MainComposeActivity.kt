@@ -1,19 +1,27 @@
 package io.ak1.nytimes
 
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,110 +39,41 @@ class MainComposeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainComponent(liveViewModel)
+            MainComponent(liveViewModel, window)
 
         }
     }
 }
 
 
-
-
 @Composable
-fun MainComponent(liveViewModel: StoriesViewModel) {
+fun MainComponent(liveViewModel: StoriesViewModel, window: Window) {
     TheNewYorkTimesAppTheme {
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
+            !isSystemInDarkTheme()
+        window.statusBarColor = MaterialTheme.colors.primary.toArgb()
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
             val navController = rememberNavController().apply {
                 topBarTitle.value = this.currentDestination?.label?.toString() ?: ""
             }
-
-
-            Scaffold(
-                // TODO: 15/05/21 not working on back-pressed
-                topBar = {
-                    TopAppBar(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = topBarTitle.value,
-                            modifier = Modifier
-                                .width(100.dp)
-                                .padding(16.dp, 0.dp, 0.dp, 0.dp)
-                                .layoutId("ToolBarTitleId")
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painter = painterResource(R.drawable.ic_bookmark),
-                                contentDescription = "hie",
-                                //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
-                                modifier = Modifier
-                                    .padding(12.dp)
-                                    .layoutId("ToolBarBookmarkId")
-                            )
-                            Image(
-                                painter = painterResource(R.drawable.ic_settings),
-                                contentDescription = "hie",
-                                modifier = Modifier
-                                    .padding(12.dp)
-                                    .layoutId("ToolBarSettingsId")
-                            )
-                        }
-
-
-                        /* ConstraintLayout(constraintSet = decoupledConstraints(5.dp)) {
-                             Text(
-                                 text = topBarTitle.value,
-                                 modifier = Modifier.width(0.dp)
-                                     .layoutId("ToolBarTitleId")
-                             )
-                             Image(
-                                 painter = painterResource(R.drawable.ic_bookmark),
-                                 contentDescription = "hie",
-                                 //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
-                                 modifier = Modifier
-                                     .padding(12.dp)
-                                     .layoutId("ToolBarBookmarkId")
-                             )
-                             Image(
-                                 painter = painterResource(R.drawable.ic_settings),
-                                 contentDescription = "hie",
-                                 modifier = Modifier
-                                     .padding(12.dp)
-                                     .layoutId("ToolBarSettingsId")
-                             )
-                         }*/
-
-
-                    }
-
-                }
+            topBarTitle.value = "Home"
+            val listState = rememberLazyListState()
+            NavHost(
+                navController = navController,
+                startDestination = "eng"
             ) {
-                topBarTitle.value = "Home"
-                NavHost(
-                    navController = navController,
-                    startDestination = "eng",
-                    modifier = Modifier.padding(16.dp, 0.dp)
-                ) {
-                    composable("eng") {
-                        HomeScreenComposable(liveViewModel, navController) {
-                            topBarTitle.value = it
-                        }
+                composable("eng") {
+                    HomeScreenComposable(listState, liveViewModel, navController) {
+                        topBarTitle.value = it
                     }
-                    composable("kor") {
-                        Greeting2("kim", liveViewModel, navController) {
-                            topBarTitle.value = it
-                        }
+                }
+                composable("kor") {
+                    Greeting2("kim", liveViewModel, navController) {
+                        topBarTitle.value = it
                     }
                 }
             }
-
-
         }
     }
 }

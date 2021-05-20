@@ -1,6 +1,5 @@
 package io.ak1.nytimes.data.repository
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import io.ak1.nytimes.data.local.AppDatabase
@@ -27,10 +26,9 @@ import kotlin.coroutines.CoroutineContext
  * in [StoriesRepository] the lists retrieved from remote api is first stored in local database
  */
 class StoriesRepository(
-    var context: Context,
-    var db: AppDatabase,
-    var apiList: ApiList,
-    var coroutineContext: CoroutineContext
+    private val db: AppDatabase,
+    private val apiList: ApiList,
+    private val coroutineContext: CoroutineContext
 ) {
 
     /**
@@ -39,7 +37,7 @@ class StoriesRepository(
     private fun insertResultIntoDb(section: String, body: BaseData?) {
 
         body!!.results.let { stories ->
-            var list = stories.map {
+            val list = stories.map {
                 var height = 0
                 var width = 0
                 var urlMain = ""
@@ -76,7 +74,7 @@ class StoriesRepository(
 
     fun getStories(type: String): LiveDataCollection<Results> {
         Log.e("retrieving", "stories for $type")
-        var dao = db.resultsDao()
+        val dao = db.resultsDao()
         val networkState = mutableStateOf(NetworkState.LOADING)
         CoroutineScope(this.coroutineContext).launch {
             if (dao.getCount(type) == 0) {
@@ -106,14 +104,14 @@ class StoriesRepository(
         }
 
         return LiveDataCollection(
-            pagedList = dao.getAllStories(),
+            pagedList = dao.storiesByType(type),
             networkState2 = networkState
         )
     }
 
     fun storeBookMark(results: Results, result: (Boolean) -> Unit) {
         CoroutineScope(this.coroutineContext).launch {
-            var bookmark = db.bookmarksDao().getBookmarksById(results.id)
+            val bookmark = db.bookmarksDao().getBookmarksById(results.id)
             if (bookmark != null) {
                 db.resultsDao().insert(results.apply { bookmarked = false })
                 db.bookmarksDao().deleteById(results.id)

@@ -29,7 +29,7 @@ var databaseModule = module {
 var repoModule = module {
     single { getCoroutineContext() }
     single { getGlide(get()) }
-    single { StoriesRepository(get(), get(), get(), get()) }
+    single { StoriesRepository(get(), get(), get()) }
 }
 
 var viewModelModule = module {
