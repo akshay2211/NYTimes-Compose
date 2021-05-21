@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,6 +21,17 @@ import io.ak1.nytimes.ui.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.home.HomeScreenComposable
 import io.ak1.nytimes.ui.screens.post.PostScreenComposable
 import io.ak1.nytimes.ui.theme.TheNewYorkTimesAppTheme
+
+/**
+ * Destinations used.
+ */
+object MainDestinations {
+    const val HOME_ROUTE = "home"
+    const val POST_ROUTE = "post"
+    const val BOOKMARK_ROUTE = "bookmarks"
+    const val SETTINGS_ROUTE = "settings"
+    const val POST_ID_KEY = "postId"
+}
 
 
 @Composable
@@ -38,24 +50,52 @@ fun RootComponent(liveViewModel: StoriesViewModel, window: Window) {
             }
             NavHost(
                 navController = navController,
-                startDestination = "eng"
+                startDestination = MainDestinations.HOME_ROUTE
             ) {
-                composable("eng") {
+                composable(MainDestinations.HOME_ROUTE) {
                     HomeScreenComposable(clickPos, listState, liveViewModel, navController) {
                     }
                 }
                 composable(
-                    "post/{postId}",
-                    arguments = listOf(navArgument("postId") { type = NavType.IntType })
+                    "${MainDestinations.POST_ROUTE}/{${MainDestinations.POST_ID_KEY}}",
+                    arguments = listOf(navArgument(MainDestinations.POST_ID_KEY) {
+                        type = NavType.IntType
+                    })
                 ) {
                     val arguments = requireNotNull(it.arguments)
-                    val postId = arguments.getInt("postId")
+                    val postId = arguments.getInt(MainDestinations.POST_ID_KEY)
                     Log.e("saved state", "->  ${listState.firstVisibleItemIndex}")
                     PostScreenComposable(postId, liveViewModel, navController) {
 
                     }
                 }
+                composable(MainDestinations.SETTINGS_ROUTE) {
+                    SettingsScreenComposable(liveViewModel, navController) {
+                    }
+                }
+                composable(MainDestinations.BOOKMARK_ROUTE) {
+                    BookmarksScreenComposable(liveViewModel, navController) {
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+fun SettingsScreenComposable(
+    liveViewModel: StoriesViewModel,
+    navController: NavController,
+    callback: (String) -> Unit
+) {
+
+}
+
+@Composable
+fun BookmarksScreenComposable(
+    liveViewModel: StoriesViewModel,
+    navController: NavController,
+    callback: (String) -> Unit
+) {
+
 }

@@ -1,7 +1,9 @@
 package io.ak1.nytimes.ui.screens.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -11,10 +13,13 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import io.ak1.nytimes.R
+import io.ak1.nytimes.ui.home.StoriesViewModel
 
 @Composable
-fun CustomAppBar() {
+fun CustomAppBar(liveViewModel: StoriesViewModel, navController: NavController) {
     TopAppBar(
         elevation = 0.dp,
         modifier = Modifier
@@ -22,8 +27,10 @@ fun CustomAppBar() {
     ) {
         Text(
             text = stringResource(id = R.string.app_name),
+            style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .wrapContentSize()
+                .wrapContentHeight()
                 .padding(16.dp, 0.dp, 0.dp, 0.dp)
                 .layoutId("ToolBarTitleId")
         )
@@ -37,15 +44,21 @@ fun CustomAppBar() {
                 contentDescription = "hie",
                 //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
                 modifier = Modifier
-                    .padding(12.dp)
                     .layoutId("ToolBarBookmarkId")
+                    .clickable {
+                        navController.navigate(MainDestinations.BOOKMARK_ROUTE)
+                    }
+                    .padding(12.dp)
             )
             Image(
                 painter = painterResource(R.drawable.ic_settings),
                 contentDescription = "hie",
                 modifier = Modifier
-                    .padding(12.dp)
                     .layoutId("ToolBarSettingsId")
+                    .clickable {
+                        navController.navigate(MainDestinations.SETTINGS_ROUTE)
+                    }
+                    .padding(12.dp)
             )
         }
     }

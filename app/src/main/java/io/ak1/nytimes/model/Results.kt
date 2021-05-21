@@ -17,6 +17,8 @@ data class Results(
     var type: String? = "",
     var height: Int = 0,
     var width: Int = 0,
+    var byline: String? = "",
+    var des_facet: String = "",
     @SerializedName("abstract") var abstract_text: String? = ""
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)

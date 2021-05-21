@@ -39,7 +39,7 @@ fun PostElement(results: Results, clickCallback: (Results) -> Unit) {
         Text(
             text = results.title ?: "empty",
             modifier = Modifier
-                .padding(4.dp, 0.dp, 0.dp, 18.dp)
+                .padding(16.dp, 0.dp, 16.dp, 18.dp)
                 .fillMaxWidth()
         )
     }

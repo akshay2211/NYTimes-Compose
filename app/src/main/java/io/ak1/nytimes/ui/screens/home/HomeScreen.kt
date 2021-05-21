@@ -45,14 +45,11 @@ fun HomeScreenComposable(
     // TODO: 20/05/21 regain same post after returing from single post screen
 
     Scaffold(
-        topBar = { CustomAppBar() }
+        topBar = { CustomAppBar(liveViewModel, navController) }
     ) {
         Column {
             CustomTabBar(listState)
-
-
             Log.e("start", "-> ${listState.firstVisibleItemIndex}")
-
             SwipeRefresh(
                 modifier = Modifier.padding(0.dp, 0.dp),
                 state = rememberSwipeRefreshState(swipestate.value),
@@ -61,9 +58,10 @@ fun HomeScreenComposable(
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         Log.e("refresh called", "from inside")
+                        liveViewModel.deleteStories(mainType.value.toLowerCase(), coroutineScope)
                         swipestate.value = false
                     }, 2000L)
-                    liveViewModel.deleteStories(mainType.value.toLowerCase(), coroutineScope)
+
                     //listState.scrollToItem(pos1.value)
                 },
             ) {

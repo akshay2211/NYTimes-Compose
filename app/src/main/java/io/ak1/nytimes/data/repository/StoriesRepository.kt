@@ -50,6 +50,7 @@ class StoriesRepository(
                     urlThumb = it.multimedia[2].url ?: ""
                 }
 
+
                 Results(
                     it.title,
                     it.url,
@@ -59,12 +60,14 @@ class StoriesRepository(
                     section,
                     height,
                     width,
+                    it.byline,
+                    it.des_facet.joinToString { it },
                     it.abstract_text
                 )
             }
             db.runInTransaction {
-
                 CoroutineScope(this.coroutineContext).launch {
+                    Log.e("list", "-> ${list[0].des_facet}")
                     db.resultsDao().insert(list)
                 }
             }

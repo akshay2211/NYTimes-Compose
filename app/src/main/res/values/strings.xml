@@ -19,6 +19,7 @@
     <string name="system_call_error">Error occurred during system call</string>
     <string name="open_in_browser">Open in Browser</string>
     <string name="image_desc">generic image</string>
+    <string name="related_tags">Related Tags</string>
 
     <string-array name="entries">
         <item>Light Theme</item>

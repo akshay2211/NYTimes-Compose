@@ -81,7 +81,7 @@ fun Context.isDarkThemeOn(): Boolean {
 /**
  *  retrieves the formated time as name [timeAgo] suggests
  */
-fun String?.timeAgo(): CharSequence? {
+fun String?.timeAgo(): String {
     if (this.isNullOrEmpty()) {
         return ""
     }
@@ -92,7 +92,7 @@ fun String?.timeAgo(): CharSequence? {
         date.time,
         Calendar.getInstance().timeInMillis,
         DateUtils.MINUTE_IN_MILLIS
-    )
+    ).toString()
 }
 
 /**
