@@ -1,4 +1,4 @@
-package io.ak1.nytimes.ui.screens.home.components
+package io.ak1.nytimes.ui.screens.components
 
 
 import androidx.compose.foundation.lazy.LazyListState
@@ -27,7 +27,7 @@ fun CustomTabBar(listState: LazyListState) {
                 selected = tempIndex.value == index,
                 onClick = {
                     coroutineScope.launch {
-                        listState.scrollToItem(0)
+                        //    listState.scrollToItem(0)
                     }
                     tempIndex.value = index
                     mainType.value = title

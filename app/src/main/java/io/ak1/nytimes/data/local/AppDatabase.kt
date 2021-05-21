@@ -41,7 +41,7 @@ interface ResultsDao {
     suspend fun insert(images: Results)
 
     @Query("DELETE FROM results_table WHERE type = :type")
-    fun deleteBySectionType(type: String)
+    suspend fun deleteBySectionType(type: String)
 
     @Query("DELETE FROM results_table")
     suspend fun deleteTable()

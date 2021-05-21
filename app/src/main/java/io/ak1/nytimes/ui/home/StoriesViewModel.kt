@@ -6,6 +6,7 @@ import io.ak1.nytimes.data.repository.StoriesRepository
 import io.ak1.nytimes.model.Results
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -13,8 +14,11 @@ import kotlin.coroutines.CoroutineContext
  * akshay2211@github.io
  */
 class StoriesViewModel(private val storiesRepo: StoriesRepository) : ViewModel() {
-    fun getStory(postId: String) = storiesRepo.getLocalStory(postId)
+    fun getStory(postId: Int) = storiesRepo.getLocalStory(postId)
     fun getStories(type: String) = storiesRepo.getStories(type)
+    fun deleteStories(type: String, coroutineScope: CoroutineScope) =
+        coroutineScope.launch { storiesRepo.deleteStories(type) }
+
     fun bookmark(results: Results, result: (Boolean) -> Unit) =
         storiesRepo.storeBookMark(results, result)
 

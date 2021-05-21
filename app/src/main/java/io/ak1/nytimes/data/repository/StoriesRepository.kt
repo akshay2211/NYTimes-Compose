@@ -1,11 +1,8 @@
 package io.ak1.nytimes.data.repository
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
-import com.google.gson.Gson
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
 import io.ak1.nytimes.model.BaseData
@@ -74,16 +71,8 @@ class StoriesRepository(
         }
     }
 
-    fun getLocalStory(postId: String): LiveData<Results> {
-        val dao = db.resultsDao()
-        var res = dao.getStoriesById(postId.toInt())
-        Log.e("id is ", "->  $postId")
-        Handler(Looper.myLooper()!!).postDelayed({
-            Log.e("data", "->  ${Gson().toJson(res.value)}")
-        }, 1000L)
-        return res
-    }
-
+    suspend fun deleteStories(type: String) = db.resultsDao().deleteBySectionType(type)
+    fun getLocalStory(postId: Int): LiveData<Results> = db.resultsDao().getStoriesById(postId)
 
     fun getStories(type: String): LiveDataCollection<Results> {
         Log.e("retrieving", "stories for $type")

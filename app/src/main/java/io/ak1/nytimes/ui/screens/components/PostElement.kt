@@ -1,4 +1,4 @@
-package io.ak1.nytimes.ui.screens.home.components
+package io.ak1.nytimes.ui.screens.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
