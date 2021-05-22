@@ -24,7 +24,7 @@ import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
 import io.ak1.nytimes.ui.home.StoriesViewModel
 
-
+// TODO: 22/05/21 add smaller list with circular icons
 @Composable
 fun BookmarksScreenComposable(
     viewModel: StoriesViewModel,

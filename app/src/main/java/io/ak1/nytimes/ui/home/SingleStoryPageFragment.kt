@@ -83,8 +83,8 @@ class ScreenSlidePageFragment : Fragment() {
                 }
             }
         })
-        data.networkState?.observe(requireActivity(), {
-            when (it.State) {
+        data.networkState.observe(requireActivity(), {
+            when (it.state) {
                 State.RUNNING -> {
                     view.loading.visibility = View.VISIBLE
                     view.loading_view.visibility = View.VISIBLE

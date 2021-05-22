@@ -23,7 +23,7 @@ enum class State {
 }
 
 data class NetworkState private constructor(
-    val State: State,
+    val state: State,
     val msg: String? = null
 ) {
     companion object {
