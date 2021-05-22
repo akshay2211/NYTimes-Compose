@@ -15,8 +15,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import io.ak1.nytimes.ui.home.StoriesViewModel
+import io.ak1.nytimes.ui.screens.bookmark.BookmarksScreenComposable
 import io.ak1.nytimes.ui.screens.home.HomeScreenComposable
-import io.ak1.nytimes.ui.screens.navigation.BookmarksScreenComposable
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 import io.ak1.nytimes.ui.screens.navigation.SettingsScreenComposable
 import io.ak1.nytimes.ui.screens.post.PostScreenComposable

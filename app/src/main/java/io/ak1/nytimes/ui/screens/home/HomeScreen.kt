@@ -69,10 +69,8 @@ fun HomeScreenComposable(
                 LazyColumn(state = listState) {
 
                     itemsIndexed(resultList.value) { pos, element ->
-                        var bookmarked = rememberSaveable {
-                            false
-                        }
-                        Log.e("check pos", "->  ${pos}")
+
+                    Log.e("check pos", "->  ${pos}")
 
                         PostElement(element, viewModel) { result ->
                             navController.navigate("post/${result.id}")

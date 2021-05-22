@@ -30,6 +30,12 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
     ),
+    subtitle1 = TextStyle(
+        fontFamily = Satisfy,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+        letterSpacing = 0.15.sp
+    ),
     caption = TextStyle(
         fontFamily = QuickSand,
         fontSize = 12.sp,
@@ -38,8 +44,8 @@ val Typography = Typography(
         letterSpacing = 0.4.sp
     ),
     h6 = TextStyle(
-        fontFamily = Satisfy,
-        fontSize = 20.sp,
+        fontFamily = QuickSand,
+        fontSize = 18.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 24.sp
     ),

@@ -28,7 +28,7 @@ fun CustomAppBar(liveViewModel: StoriesViewModel, navController: NavController) 
     ) {
         Text(
             text = stringResource(id = R.string.app_name),
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
                 .wrapContentSize()
                 .wrapContentHeight()
