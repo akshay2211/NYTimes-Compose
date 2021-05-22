@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 @Entity(tableName = "results_table", indices = [Index(value = ["title"], unique = true)])
-data class Results(
+open class Results(
     //Make sure that the list contains a photo (if available), title and publication date / time of the article
     var title: String? = "",
     var url: String? = "",

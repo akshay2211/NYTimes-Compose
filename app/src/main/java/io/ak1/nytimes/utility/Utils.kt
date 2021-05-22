@@ -87,23 +87,26 @@ fun FragmentActivity.startSinglePageActivity(
 ) {
     var bookmark = if (result == null && bookmarks == null) {
         throw NullPointerException("Both the objects con not be null")
-    } else result?.resultsToBookmarks() ?: bookmarks
+    } else result?.toBookmarks() ?: bookmarks
     startActivity(Intent(this, SingleActivity::class.java).apply { putExtra("bookmark", bookmark) })
 }
 
 
-fun Results.resultsToBookmarks(): Bookmarks {
+fun Results.toBookmarks(): Bookmarks {
     return Bookmarks().apply {
-        this.title = this@resultsToBookmarks.title
-        this.url = this@resultsToBookmarks.url
-        this.published_date = this@resultsToBookmarks.published_date
-        this.url_thumb = this@resultsToBookmarks.url_thumb
-        this.url_large = this@resultsToBookmarks.url_large
-        this.type = this@resultsToBookmarks.type
-        this.height = this@resultsToBookmarks.height
-        this.width = this@resultsToBookmarks.width
-        this.id = this@resultsToBookmarks.id
-        this.abstract_text = this@resultsToBookmarks.abstract_text
+        this.title = this@toBookmarks.title
+        this.url = this@toBookmarks.url
+        this.published_date = this@toBookmarks.published_date
+        this.url_thumb = this@toBookmarks.url_thumb
+        this.url_large = this@toBookmarks.url_large
+        this.type = this@toBookmarks.type
+        this.height = this@toBookmarks.height
+        this.width = this@toBookmarks.width
+        this.id = this@toBookmarks.id
+        this.abstract_text = this@toBookmarks.abstract_text
+        this.byline = this@toBookmarks.byline
+        this.des_facet = this@toBookmarks.des_facet
     }
 }
+
 

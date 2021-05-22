@@ -31,7 +31,7 @@ fun PostScreenComposable(
                 //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
                 modifier = Modifier
                     .clickable {
-                        //  navController.navigate(MainDestinations.BOOKMARK_ROUTE)
+                        navController.navigateUp()
                     }
                     .padding(12.dp)
             )

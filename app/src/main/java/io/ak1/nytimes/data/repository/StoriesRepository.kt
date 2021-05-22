@@ -6,11 +6,12 @@ import androidx.lifecycle.LiveData
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
 import io.ak1.nytimes.model.BaseData
+import io.ak1.nytimes.model.Bookmarks
 import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.utility.LiveDataCollection
 import io.ak1.nytimes.utility.NetworkState
 import io.ak1.nytimes.utility.extractMessage
-import io.ak1.nytimes.utility.resultsToBookmarks
+import io.ak1.nytimes.utility.toBookmarks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
@@ -31,6 +32,8 @@ class StoriesRepository(
     private val apiList: ApiList,
     private val coroutineContext: CoroutineContext
 ) {
+    // TODO: 21/05/21 remove unnecessary methods and functionalities
+    // TODO: 21/05/21 adding state for loading and empty screen
 
     /**
      * Inserts the response into the database.
@@ -76,6 +79,7 @@ class StoriesRepository(
 
     suspend fun deleteStories(type: String) = db.resultsDao().deleteBySectionType(type)
     fun getLocalStory(postId: Int): LiveData<Results> = db.resultsDao().getStoriesById(postId)
+    fun getBookmarks(): LiveData<List<Bookmarks>> = db.bookmarksDao().getBookmarks()
 
     fun getStories(type: String): LiveDataCollection<Results> {
         Log.e("retrieving", "stories for $type")
@@ -123,11 +127,16 @@ class StoriesRepository(
                 result(false)
             } else {
                 db.resultsDao().insert(results.apply { bookmarked = true })
-                db.bookmarksDao().insert(results.resultsToBookmarks())
+                db.bookmarksDao().insert(results.toBookmarks())
                 result(true)
             }
         }
     }
+
+    fun checkBookmarked(title: String): LiveData<Boolean> = db.bookmarksDao().contains(title)
+    suspend fun deleteBookmark(title: String) = db.bookmarksDao().deleteByTitle(title)
+
+    suspend fun addBookmark(bookmark: Bookmarks) = db.bookmarksDao().insert(bookmark)
 
 }
 

@@ -96,5 +96,4 @@ fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
     }
     // TODO: 21/05/21 remove settings icon from here
     // TODO: 21/05/21 add external link and share icons with there functionalities
-    // TODO: 21/05/21 add implementation for back button
 }

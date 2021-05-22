@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun bookmarksDao(): BookmarksDao
 }
 
-
+// TODO: 21/05/21 create a service interface to have all desired method and inpliment on repo as well as viewmodel for consistency
 @Dao
 interface ResultsDao {
 
@@ -62,6 +62,14 @@ interface BookmarksDao {
     @Query("DELETE FROM bookmarks_table WHERE id = :id")
     suspend fun deleteById(id: Int)
 
+    @Query("DELETE FROM bookmarks_table WHERE title = :title")
+    suspend fun deleteByTitle(title: String)
+
     @Query("DELETE FROM bookmarks_table")
     suspend fun deleteTable()
+
+    //SELECT EXISTS(SELECT * FROM yourTableName WHERE yourCondition);
+
+    @Query("SELECT EXISTS(SELECT * FROM bookmarks_table WHERE title = :title)")
+    fun contains(title: String): LiveData<Boolean>
 }
