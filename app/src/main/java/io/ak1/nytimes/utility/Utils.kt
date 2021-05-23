@@ -1,12 +1,9 @@
 package io.ak1.nytimes.utility
 
 import android.content.Context
-import android.content.Intent
 import android.util.DisplayMetrics
-import androidx.fragment.app.FragmentActivity
 import io.ak1.nytimes.model.Bookmarks
 import io.ak1.nytimes.model.Results
-import io.ak1.nytimes.ui.singlepage.SingleActivity
 import okhttp3.ResponseBody
 import org.json.JSONObject
 
@@ -79,16 +76,6 @@ fun Int.getDesiredHeight(width: Int = ScreenDimensions.WidthPX, actualWidth: Int
     } else {
         (this * width) / actualWidth
     }
-}
-
-fun FragmentActivity.startSinglePageActivity(
-    result: Results? = null,
-    bookmarks: Bookmarks? = null
-) {
-    var bookmark = if (result == null && bookmarks == null) {
-        throw NullPointerException("Both the objects con not be null")
-    } else result?.toBookmarks() ?: bookmarks
-    startActivity(Intent(this, SingleActivity::class.java).apply { putExtra("bookmark", bookmark) })
 }
 
 

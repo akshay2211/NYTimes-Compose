@@ -2,7 +2,7 @@ package io.ak1.nytimes.ui.screens.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import io.ak1.nytimes.ui.home.StoriesViewModel
+import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 
 /**
  * Destinations used.

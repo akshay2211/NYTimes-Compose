@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
-import io.ak1.nytimes.ui.home.StoriesViewModel
+import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 
 // TODO: 22/05/21 add smaller list with circular icons
 @Composable

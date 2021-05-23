@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
 }
 
 
@@ -60,37 +59,28 @@ android {
 
 dependencies {
     // Core
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-
-    // Design
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Compose
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.3.0-alpha07'
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
     def accompanist = "0.9.1"
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist"
     implementation "com.google.accompanist:accompanist-coil:$accompanist"
-    implementation "com.google.accompanist:accompanist-pager:$accompanist"
-
-
 
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Multidex
     def multidex_version = "2.0.1"
@@ -104,19 +94,18 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
 
     //Koin
-    def koin_version = "2.1.6"
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+// Koin main features for Android (Scope,ViewModel ...)
+    implementation "io.insert-koin:koin-android:$koin_version"
+// Koin Android - experimental builder extensions
+    implementation "io.insert-koin:koin-android-ext:$koin_version"
+// Koin for Jetpack WorkManager
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
+// Koin for Jetpack Compose (unstable version)
+    //implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
 
     //Android Components
-    //Paging
-    def paging_version = '3.0.0'
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-
     def nav_version = '2.3.5'
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Preference
     implementation 'androidx.preference:preference-ktx:1.1.1'
@@ -141,12 +130,6 @@ dependencies {
     // WorkManager
     def work_version = '2.5.0'
     implementation "androidx.work:work-runtime-ktx:$work_version"
-
-
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
-
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

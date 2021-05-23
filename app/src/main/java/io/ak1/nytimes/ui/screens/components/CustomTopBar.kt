@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import io.ak1.nytimes.R
-import io.ak1.nytimes.ui.home.StoriesViewModel
+import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 
 @Composable

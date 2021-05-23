@@ -20,7 +20,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import io.ak1.nytimes.ui.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.components.CustomAppBar
 import io.ak1.nytimes.ui.screens.components.CustomTabBar
 import io.ak1.nytimes.ui.screens.components.PostElement

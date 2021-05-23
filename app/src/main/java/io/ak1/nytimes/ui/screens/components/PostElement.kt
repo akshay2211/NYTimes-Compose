@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
 import io.ak1.nytimes.model.Results
-import io.ak1.nytimes.ui.home.StoriesViewModel
+import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 
 @Composable
 fun PostElement(

@@ -23,7 +23,7 @@ class App : MultiDexApplication() {
             // use Android logger - Level.INFO by default
             // androidLogger(Level.DEBUG)
             koin.loadModules(listOf(databaseModule, networkModule, viewModelModule, repoModule))
-            koin.createRootScope()
+
         }
         PreferenceManager.getDefaultSharedPreferences(this).setupTheme("list_theme", resources)
     }

@@ -1,15 +1,7 @@
 <resources>
     <string name="app_name">The NewYork Times</string>
-    <string name="home_title">Home</string>
     <string name="bookmarks_title">Bookmarks</string>
     <string name="internet_error">Internet Not Available</string>
-    <string name="cat_card_rich_media_view_title">Title goes here</string>
-    <string name="cat_card_rich_media_image_view_description">Card Image</string>
-    <string name="bookmarked_done">Bookmark Added</string>
-    <string name="bookmarked_removed">Bookmark Removed</string>
-    <string name="delete_post_title">Remove Bookmark</string>
-    <string name="confirm_to_delete">Kindly press OK to remove this story from your bookmarks</string>
-    <string name="story_title">Story</string>
     <string name="settings_title">Settings</string>
 
     <string name="title_preference" translatable="false">Theme Selections</string>
@@ -19,7 +11,6 @@
     <string name="system_call_error">Error occurred during system call</string>
     <string name="open_in_browser">Open in Browser</string>
     <string name="image_desc">generic image</string>
-    <string name="related_tags">Related Tags</string>
 
     <string-array name="entries">
         <item>Light Theme</item>

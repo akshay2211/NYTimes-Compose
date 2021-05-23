@@ -1,4 +1,4 @@
-package io.ak1.nytimes.ui.home
+package io.ak1.nytimes.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import io.ak1.nytimes.data.local.AppDatabase

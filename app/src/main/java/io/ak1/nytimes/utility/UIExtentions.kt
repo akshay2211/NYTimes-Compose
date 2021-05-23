@@ -13,10 +13,7 @@ import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.ConnectivityManagerCompat
-import androidx.navigation.NavController
-import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.ak1.nytimes.ui.settings.SettingsActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,16 +24,6 @@ import java.util.*
  * akshay2211@github.io
  */
 
-/**
- * extension [setNavigation] is a mediator
- * to interact between [BottomNavigationView] and [NavController]
- */
-fun BottomNavigationView.setNavigation(navController: NavController) {
-    NavigationUI.setupWithNavController(
-        this,
-        navController
-    )
-}
 
 /**
  * extension [setUpStatusNavigationBarColors] to setup color codes
@@ -86,7 +73,7 @@ fun String?.timeAgo(): String {
         return ""
     }
     //2020-11-14T05:00:17-05:00
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss-zz:zz", Locale.ENGLISH)
     var date = inputFormat.parse(this) ?: Date()
     return DateUtils.getRelativeTimeSpanString(
         date.time,

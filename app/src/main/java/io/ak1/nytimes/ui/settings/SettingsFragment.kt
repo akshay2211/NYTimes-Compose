@@ -3,12 +3,8 @@ package io.ak1.nytimes.ui.settings
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.bumptech.glide.Glide
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
@@ -32,7 +28,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             preferenceScreen.findPreference<Preference>("dialog_clear_cache")
 
         dialogPreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            MaterialAlertDialogBuilder(requireContext()).apply {
+            /*MaterialAlertDialogBuilder(requireContext()).apply {
                 setTitle(R.string.cache_title)
                 setMessage(R.string.cache_summary).setPositiveButton(
                     "Yes"
@@ -49,7 +45,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         db.resultsDao().deleteTable()
                     }
                 }.setNegativeButton("Cancel", null).show()
-            }
+            }*/
             true
         }
 

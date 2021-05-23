@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.ak1.nytimes.R
 import io.ak1.nytimes.model.Results
-import io.ak1.nytimes.ui.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.components.PostElementExpanded
+import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 
 @Composable
 fun PostScreenComposable(

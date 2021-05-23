@@ -5,8 +5,6 @@ import androidx.room.Room
 import io.ak1.nytimes.BuildConfig
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
-import io.ak1.nytimes.utility.GlideApp
-import io.ak1.nytimes.utility.GlideRequests
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -58,9 +56,6 @@ fun getDb(context: Context): AppDatabase {
     }
 }
 
-fun getGlide(context: Context): GlideRequests {
-    return GlideApp.with(context)
-}
 
 fun getCoroutineContext(): CoroutineContext {
     return Dispatchers.IO

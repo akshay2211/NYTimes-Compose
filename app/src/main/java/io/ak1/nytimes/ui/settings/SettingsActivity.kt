@@ -2,6 +2,7 @@ package io.ak1.nytimes.ui.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
@@ -9,7 +10,6 @@ import io.ak1.nytimes.R
 import io.ak1.nytimes.utility.isDarkThemeOn
 import io.ak1.nytimes.utility.setUpStatusNavigationBarColors
 import io.ak1.nytimes.utility.setupTheme
-import kotlinx.android.synthetic.main.activity_settings.*
 
 /**
  * [SettingsActivity] container of preference fragment
@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                 .replace(R.id.container, SettingsFragment.newInstance())
                 .commitNow()
         }
-        back.setOnClickListener { finish() }
+        findViewById<ImageView>(R.id.back).setOnClickListener { finish() }
         sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this /* Activity context */)
 
