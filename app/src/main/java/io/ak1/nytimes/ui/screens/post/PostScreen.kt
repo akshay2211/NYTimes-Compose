@@ -1,7 +1,5 @@
 package io.ak1.nytimes.ui.screens.post
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,7 +8,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -30,7 +27,7 @@ fun PostScreenComposable(
     val bookmarked =
         viewModel.checkBookMark(story.value.title ?: "").observeAsState(initial = false)
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
+
 
     Column {
         Row(modifier = Modifier.padding(4.dp)) {
@@ -68,11 +65,7 @@ fun PostScreenComposable(
                     contentDescription = "share link",
                     modifier = Modifier
                         .clickable {
-                            Intent(Intent.ACTION_VIEW, Uri.parse(story.value.url ?: "")).let {
-                                if (it.resolveActivity(context.packageManager) != null) {
-                                    context.startActivity(it)
-                                }
-                            }
+
                         }
                         .padding(12.dp)
                 )

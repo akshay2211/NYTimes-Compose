@@ -1,5 +1,7 @@
 package io.ak1.nytimes.ui.screens.components
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,6 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
@@ -22,6 +28,7 @@ import io.ak1.nytimes.utility.timeAgo
 
 @Composable
 fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
+    val context = LocalContext.current
     Column {
         Card(elevation = 5.dp, modifier = Modifier.padding(16.dp, 0.dp)) {
             Image(
@@ -93,7 +100,26 @@ fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
 
             }
         }
+        Button(onClick = {
+            Log.e("external", "url ${results.url}")
+            Intent(Intent.ACTION_VIEW, Uri.parse(results.url ?: "")).let {
+                if (it.resolveActivity(context.packageManager) != null) {
+                    context.startActivity(it)
+                }
+            }
+        }) {
+            Image(
+                painter = painterResource(R.drawable.ic_external_link),
+                contentDescription = "hie",
+                modifier = Modifier.padding(12.dp)
+            )
+            Text(
+                text = stringResource(id = R.string.open_in_browser),
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier
+                    .padding(16.dp, 0.dp, 16.dp, 8.dp)
+                    .fillMaxWidth()
+            )
+        }
     }
-    // TODO: 21/05/21 remove settings icon from here
-    // TODO: 21/05/21 add external link and share icons with there functionalities
 }

@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
-import io.ak1.nytimes.model.BaseData
 import io.ak1.nytimes.model.Bookmarks
 import io.ak1.nytimes.model.Results
+import io.ak1.nytimes.model.StoriesResponse
 import io.ak1.nytimes.utility.LiveDataCollection
 import io.ak1.nytimes.utility.NetworkState
 import io.ak1.nytimes.utility.extractMessage
@@ -41,7 +41,7 @@ class StoriesRepository(
     /**
      * Inserts the response into the database.
      */
-    private fun insertResultIntoDb(section: String, body: BaseData?) {
+    private fun insertResultIntoDb(section: String, body: StoriesResponse?) {
 
         body!!.results.let { stories ->
             val list = stories.map {

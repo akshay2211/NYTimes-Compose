@@ -1,7 +1,7 @@
 package io.ak1.nytimes.data.remote
 
 
-import io.ak1.nytimes.model.BaseData
+import io.ak1.nytimes.model.StoriesResponse
 import io.ak1.nytimes.utility.Constants.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
@@ -19,7 +19,7 @@ interface ApiList {
     suspend fun getStories(
         @Path("section") section: String = "home",
         @Query("api-key") key: String = API_KEY
-    ): Response<BaseData>
+    ): Response<StoriesResponse>
 
     companion object {
         const val BASE_PATH = "https://api.nytimes.com/svc/topstories/v2/"
