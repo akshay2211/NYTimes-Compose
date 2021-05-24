@@ -10,5 +10,7 @@ data class LiveDataCollection<T>(
     // the LiveData of paged lists for the UI to observe
     val pagedList: LiveData<List<T>>,
     // represents the network request status to show to the user
-    val networkState: LiveData<NetworkState>
+    val networkState: LiveData<NetworkState>,
+    val refreshState: LiveData<NetworkState>,
+    val refresh: () -> Unit
 )

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
 import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
@@ -15,6 +16,7 @@ import io.ak1.nytimes.utility.NetworkState
 import io.ak1.nytimes.utility.extractMessage
 import io.ak1.nytimes.utility.toBookmarks
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 import javax.net.ssl.SSLException
@@ -88,6 +90,11 @@ class StoriesRepository(
         Log.e("retrieving", "stories for $type")
         val dao = db.resultsDao()
         val networkState = MutableLiveData<NetworkState>()
+        networkState.postValue(NetworkState.LOADING)
+        val refreshTrigger = MutableLiveData<Unit?>()
+        val refreshState = refreshTrigger.switchMap {
+            refresh(type)
+        }
         CoroutineScope(this.coroutineContext).launch {
             if (dao.getCount(type) == 0) {
                 networkState.postValue(NetworkState.LOADING)
@@ -110,12 +117,20 @@ class StoriesRepository(
                     e.printStackTrace()
                     networkState.postValue(NetworkState.error(e.localizedMessage))
                 }
+            } else {
+                networkState.postValue(NetworkState.LOADED)
+                /*Text(textAlign = TextAlign.Center, text = "error",style = MaterialTheme.typography.h3,modifier = Modifier.padding(12.dp)
+                    .fillMaxSize())*/
             }
         }
 
         return LiveDataCollection(
             pagedList = dao.storiesByType(type),
-            networkState = networkState
+            networkState = networkState,
+            refreshState = refreshState,
+            refresh = {
+                refreshTrigger.postValue(null)
+            },
         )
     }
 
@@ -139,6 +154,31 @@ class StoriesRepository(
 
     suspend fun addBookmark(bookmark: Bookmarks) = db.bookmarksDao().insert(bookmark)
 
+    fun refresh(type: String): LiveData<NetworkState> {
+        Log.e("refreshing", "stories for $type")
+        val networkState = MutableLiveData<NetworkState>()
+        CoroutineScope(this.coroutineContext).launch {
+            networkState.postValue(NetworkState.LOADING)
+            try {
+
+                val response = apiList.getStories(type)
+                if (!response.isSuccessful) {
+                    val error = response.errorBody()
+                    networkState.postValue(NetworkState.LOADED)
+                    return@launch
+                }
+                deleteStories(type)
+                insertResultIntoDb(type, response.body())
+                delay(1000L)
+                networkState.postValue(NetworkState.LOADED)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                networkState.postValue(NetworkState.error(e.localizedMessage))
+            }
+
+        }
+        return networkState
+    }
 }
 
 

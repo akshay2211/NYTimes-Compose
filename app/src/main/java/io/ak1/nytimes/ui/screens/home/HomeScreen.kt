@@ -1,7 +1,5 @@
 package io.ak1.nytimes.ui.screens.home
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -42,14 +40,17 @@ fun HomeScreenComposable(
 
     val resultList = stories.pagedList.observeAsState(initial = listOf())
     val networkState = stories.networkState.observeAsState(initial = NetworkState.LOADING)
+    val refreshState = stories.refreshState.observeAsState(initial = NetworkState.LOADED)
     var swipestate = rememberSaveable {
         mutableStateOf(false)
     }
+
     // TODO: 20/05/21 regain same post after returning from single post screen
 
     Scaffold(
         topBar = { CustomAppBar(viewModel, navController) }
     ) {
+        swipestate.value = refreshState.value.state != State.SUCCESS
         Column {
             CustomTabBar(listState)
             Log.e("start", "-> ${listState.firstVisibleItemIndex}")
@@ -70,23 +71,18 @@ fun HomeScreenComposable(
                 modifier = Modifier.padding(0.dp, 0.dp),
                 state = rememberSwipeRefreshState(swipestate.value),
                 onRefresh = {
-                    swipestate.value = true
-                    viewModel.deleteStories(mainType.value.toLowerCase(), coroutineScope)
+                    stories.refresh.invoke()
 
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        Log.e("refresh called", "from inside")
-                        swipestate.value = false
-                    }, 2000L)
 
-                    //listState.scrollToItem(pos1.value)
                 },
             ) {
+                //      Log.e("refresh status", "->  ${refreshState.value.state == State.RUNNING}")
 
                 LazyColumn(state = listState) {
 
                     itemsIndexed(resultList.value) { pos, element ->
 
-                    Log.e("check pos", "->  ${pos}")
+                        Log.e("check pos", "->  ${pos}")
 
                         PostElement(element, viewModel) { result ->
                             navController.navigate("post/${result.id}")
