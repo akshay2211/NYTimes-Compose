@@ -18,8 +18,8 @@ import io.ak1.nytimes.ui.screens.bookmark.BookmarksScreenComposable
 import io.ak1.nytimes.ui.screens.home.HomeScreenComposable
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
-import io.ak1.nytimes.ui.screens.navigation.SettingsScreenComposable
 import io.ak1.nytimes.ui.screens.post.PostScreenComposable
+import io.ak1.nytimes.ui.screens.settings.SettingsScreen
 import io.ak1.nytimes.ui.theme.TheNewYorkTimesAppTheme
 
 
@@ -52,8 +52,7 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
                     }
                 }
                 composable(MainDestinations.SETTINGS_ROUTE) {
-                    SettingsScreenComposable(viewModel, navController) {
-                    }
+                    SettingsScreen(viewModel, navController)
                 }
                 composable(MainDestinations.BOOKMARK_ROUTE) {
                     BookmarksScreenComposable(viewModel, navController) {

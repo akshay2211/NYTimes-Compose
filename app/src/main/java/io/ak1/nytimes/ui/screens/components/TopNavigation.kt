@@ -1,5 +1,7 @@
 package io.ak1.nytimes.ui.screens.components
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,11 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import io.ak1.nytimes.R
-import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 
 @Composable
-fun CustomAppBar(liveViewModel: StoriesViewModel, navController: NavController) {
+fun HomeAppBar(navController: NavController) {
     TopAppBar(
         elevation = 0.dp,
         modifier = Modifier
@@ -62,5 +63,29 @@ fun CustomAppBar(liveViewModel: StoriesViewModel, navController: NavController) 
                     .padding(12.dp)
             )
         }
+    }
+}
+
+@Composable
+fun DefaultAppBar(
+    @DrawableRes iconId: Int = R.drawable.ic_arrow_left,
+    @StringRes titleId: Int,
+    navController: NavController
+) {
+    Row(modifier = Modifier.padding(4.dp)) {
+        Image(
+            painter = painterResource(iconId),
+            contentDescription = "hie",
+            //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
+            modifier = Modifier
+                .clickable {
+                    navController.navigateUp()
+                }
+                .padding(12.dp)
+        )
+        Text(
+            text = stringResource(id = titleId),
+            style = MaterialTheme.typography.h6, modifier = Modifier.padding(0.dp, 9.dp)
+        )
     }
 }

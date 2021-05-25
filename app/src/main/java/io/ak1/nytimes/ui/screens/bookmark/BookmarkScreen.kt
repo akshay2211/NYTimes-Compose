@@ -15,14 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
+import io.ak1.nytimes.ui.screens.components.DefaultAppBar
 import io.ak1.nytimes.ui.screens.components.PlaceHolder
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
@@ -38,22 +37,7 @@ fun BookmarksScreenComposable(
     Scaffold(
         Modifier.fillMaxSize(),
         topBar = {
-            Row(modifier = Modifier.padding(4.dp)) {
-                Image(
-                    painter = painterResource(R.drawable.ic_arrow_left),
-                    contentDescription = "hie",
-                    //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
-                    modifier = Modifier
-                        .clickable {
-                            navController.navigateUp()
-                        }
-                        .padding(12.dp)
-                )
-                Text(
-                    text = stringResource(id = R.string.bookmarks_title),
-                    style = MaterialTheme.typography.h6, modifier = Modifier.padding(0.dp, 9.dp)
-                )
-            }
+            DefaultAppBar(titleId = R.string.bookmarks_title, navController = navController)
         }
     ) {
 

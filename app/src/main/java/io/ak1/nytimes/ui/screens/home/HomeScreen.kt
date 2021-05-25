@@ -1,6 +1,5 @@
 package io.ak1.nytimes.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -10,24 +9,16 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.ak1.nytimes.R
-import io.ak1.nytimes.ui.screens.components.CustomAppBar
-import io.ak1.nytimes.ui.screens.components.CustomTabBar
-import io.ak1.nytimes.ui.screens.components.PlaceHolder
-import io.ak1.nytimes.ui.screens.components.PostElement
+import io.ak1.nytimes.ui.screens.components.*
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 import io.ak1.nytimes.utility.NetworkState
 import io.ak1.nytimes.utility.State
@@ -53,18 +44,15 @@ fun HomeScreenComposable(
 
     // TODO: 24/05/21 add status for 429 Too Many Requests
     Scaffold(
-        topBar = { CustomAppBar(viewModel, navController) }
+        topBar = { HomeAppBar(navController) }
     ) {
         swipestate.value = refreshState.value == NetworkState.LOADING
         Column(modifier = Modifier.fillMaxSize()) {
             CustomTabBar(listState)
             SwipeRefresh(
-                modifier = Modifier.padding(0.dp, 0.dp),
                 state = rememberSwipeRefreshState(swipestate.value),
                 onRefresh = {
                     stories.refresh.invoke()
-
-
                 },
             ) {
                 when (networkState.value.state) {
@@ -104,14 +92,8 @@ fun HomeScreenComposable(
                         }
                     }
                     State.SUCCESS -> {
-                        //      Log.e("refresh status", "->  ${refreshState.value.state == State.RUNNING}")
-
                         LazyColumn(state = listState) {
-
                             itemsIndexed(resultList.value) { pos, element ->
-
-                                Log.e("check pos", "->  ${pos}")
-
                                 PostElement(element, viewModel) { result ->
                                     navController.navigate("${MainDestinations.POST_ROUTE}/${result.id}")
                                 }
@@ -119,36 +101,14 @@ fun HomeScreenComposable(
                         }
                     }
                     State.FAILED -> {
-                        PlaceHolder(R.drawable.ic_undraw_empty_xct9, R.string.internet_error)
+                        PlaceHolder(R.drawable.ic_undraw_not_found_60pq, R.string.internet_error)
                     }
                 }
 
             }
-
-
-            Log.e("end", "-> ${listState.firstVisibleItemIndex}")
-
-
         }
 
     }
-}
-
-@Composable
-fun Shimmer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val context = LocalContext.current
-    val shimmer = remember {
-        ShimmerFrameLayout(context).apply {
-            addView(ComposeView(context).apply {
-                setContent(content)
-            })
-        }
-    }
-
-    AndroidView(
-        modifier = modifier,
-        factory = { shimmer }
-    ) { it.startShimmer() }
 }
 
 

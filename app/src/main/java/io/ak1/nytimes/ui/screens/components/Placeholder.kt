@@ -7,11 +7,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.facebook.shimmer.ShimmerFrameLayout
 
 @Composable
 fun PlaceHolder(
@@ -53,4 +58,21 @@ fun PlaceHolder(
             )
         }
     }
+}
+
+@Composable
+fun Shimmer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val context = LocalContext.current
+    val shimmer = remember {
+        ShimmerFrameLayout(context).apply {
+            addView(ComposeView(context).apply {
+                setContent(content)
+            })
+        }
+    }
+
+    AndroidView(
+        modifier = modifier,
+        factory = { shimmer }
+    ) { it.startShimmer() }
 }
