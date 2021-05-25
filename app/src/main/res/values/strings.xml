@@ -11,6 +11,8 @@
     <string name="system_call_error">Error occurred during system call</string>
     <string name="open_in_browser">Open in Browser</string>
     <string name="image_desc">generic image</string>
+    <string name="no_bookmarks">No Bookmarks</string>
+    <string name="add_bookmarks">Your bookmarks will apear here</string>
 
     <string-array name="entries">
         <item>Light Theme</item>

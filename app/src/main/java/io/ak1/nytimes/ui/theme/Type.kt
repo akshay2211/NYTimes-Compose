@@ -46,7 +46,7 @@ val Typography = Typography(
     h6 = TextStyle(
         fontFamily = QuickSand,
         fontSize = 18.sp,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         lineHeight = 24.sp
     ),
 

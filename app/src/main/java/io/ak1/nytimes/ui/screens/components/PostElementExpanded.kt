@@ -29,8 +29,8 @@ import io.ak1.nytimes.utility.timeAgo
 @Composable
 fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
     val context = LocalContext.current
-    Column {
-        Card(elevation = 5.dp, modifier = Modifier.padding(16.dp, 0.dp)) {
+    Column(Modifier.padding(16.dp)) {
+        Card(elevation = 5.dp) {
             Image(
                 painter = rememberCoilPainter(
                     request = results.url_large,
@@ -44,33 +44,36 @@ fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
                 contentScale = ContentScale.Crop
             )
         }
+        Spacer(Modifier.height(16.dp))
+
+
         Text(
             text = results.title ?: "empty",
             style = MaterialTheme.typography.h5,
             modifier = Modifier
-                .padding(16.dp, 16.dp, 16.dp, 12.dp)
                 .fillMaxWidth()
         )
+        Spacer(Modifier.height(16.dp))
+
         Text(
             text = results.abstract_text ?: "empty",
             style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .padding(16.dp, 0.dp, 16.dp, 8.dp)
                 .fillMaxWidth()
         )
-
+        Spacer(Modifier.height(8.dp))
         Text(
             text = results.byline?.trim() ?: "",
             style = MaterialTheme.typography.caption,
             modifier = Modifier
-                .padding(16.dp, 0.dp, 16.dp, 8.dp)
                 .wrapContentWidth(Alignment.End)
         )
+
+        Spacer(Modifier.height(8.dp))
         Text(
             text = results.published_date.timeAgo(),
             style = MaterialTheme.typography.caption,
             modifier = Modifier
-                .padding(16.dp, 0.dp, 16.dp, 24.dp)
                 .wrapContentWidth(Alignment.End)
         )
 
@@ -100,14 +103,18 @@ fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
 
             }
         }
-        Button(onClick = {
-            Log.e("external", "url ${results.url}")
-            Intent(Intent.ACTION_VIEW, Uri.parse(results.url ?: "")).let {
-                if (it.resolveActivity(context.packageManager) != null) {
-                    context.startActivity(it)
+        Spacer(Modifier.height(16.dp))
+        Button(
+            onClick = {
+                Log.e("external", "url ${results.url}")
+                Intent(Intent.ACTION_VIEW, Uri.parse(results.url ?: "")).let {
+                    if (it.resolveActivity(context.packageManager) != null) {
+                        context.startActivity(it)
+                    }
                 }
-            }
-        }) {
+            },
+            modifier = Modifier.wrapContentWidth()
+        ) {
             Image(
                 painter = painterResource(R.drawable.ic_external_link),
                 contentDescription = "hie",

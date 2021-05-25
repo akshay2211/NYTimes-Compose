@@ -27,5 +27,3 @@ class MainComposeActivity : ComponentActivity() {
 
     }
 }
-// TODO: 21/05/21 add Bookmarking page
-// TODO: 21/05/21 add settings page

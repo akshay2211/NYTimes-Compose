@@ -4,13 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
@@ -26,8 +30,9 @@ fun PostElement(
     Column(
         Modifier
             .fillMaxWidth()
+            .padding(0.dp, 8.dp)
             .clickable { clickCallback(results) }) {
-        Card(elevation = 5.dp, modifier = Modifier.padding(16.dp, 16.dp)) {
+        Card(elevation = 5.dp, modifier = Modifier.padding(16.dp, 8.dp)) {
             Image(
                 painter = rememberCoilPainter(
                     request = results.url_large,
@@ -41,22 +46,29 @@ fun PostElement(
                 contentScale = ContentScale.Crop
             )
         }
-        Row {
+
+        Row(
+            modifier = Modifier
+                .padding(16.dp, 8.dp),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+
+            ) {
+
             Text(
-                text = results.title ?: "empty",
-                modifier = Modifier
-                    .padding(16.dp, 0.dp, 16.dp, 18.dp)
-                    .width(250.dp)
+                results.title ?: "empty",
+                style = MaterialTheme.typography.h6,
+                maxLines = 2,
+                textAlign = TextAlign.Start,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f, true)
             )
             Image(
                 painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
                 contentDescription = "hie",
                 //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
                 modifier = Modifier
-                    .requiredWidth(72.dp)
                     .clickable {
-
-
                         if (bookmarked.value) {
                             viewModel.deleteBookmark(results, coroutineScope)
                         } else {
@@ -64,8 +76,10 @@ fun PostElement(
                         }
                         //navController.navigate(MainDestinations.BOOKMARK_ROUTE)
                     }
-                    .padding(12.dp)
+                    .requiredWidth(56.dp)
+                    .padding(12.dp),
             )
+
 
         }
 

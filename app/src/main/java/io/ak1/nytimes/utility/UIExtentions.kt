@@ -73,7 +73,7 @@ fun String?.timeAgo(): String {
         return ""
     }
     //2020-11-14T05:00:17-05:00
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss-zz:zz", Locale.ENGLISH)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.ENGLISH)
     var date = inputFormat.parse(this) ?: Date()
     return DateUtils.getRelativeTimeSpanString(
         date.time,

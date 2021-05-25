@@ -38,7 +38,6 @@ class StoriesRepository(
     private val coroutineContext: CoroutineContext
 ) {
     // TODO: 21/05/21 remove unnecessary methods and functionalities
-    // TODO: 21/05/21 adding state for loading and empty screen
 
     /**
      * Inserts the response into the database.
@@ -119,8 +118,7 @@ class StoriesRepository(
                 }
             } else {
                 networkState.postValue(NetworkState.LOADED)
-                /*Text(textAlign = TextAlign.Center, text = "error",style = MaterialTheme.typography.h3,modifier = Modifier.padding(12.dp)
-                    .fillMaxSize())*/
+
             }
         }
 

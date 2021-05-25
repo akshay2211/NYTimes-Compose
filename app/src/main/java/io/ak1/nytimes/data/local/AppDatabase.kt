@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun bookmarksDao(): BookmarksDao
 }
 
-// TODO: 21/05/21 create a service interface to have all desired method and inpliment on repo as well as viewmodel for consistency
+// TODO: 21/05/21 create a service interface to have all desired method and implement on repo as well as viewmodel for consistency
 @Dao
 interface ResultsDao {
 

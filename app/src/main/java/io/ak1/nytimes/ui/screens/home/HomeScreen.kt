@@ -1,26 +1,34 @@
 package io.ak1.nytimes.ui.screens.home
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import io.ak1.nytimes.R
 import io.ak1.nytimes.ui.screens.components.CustomAppBar
 import io.ak1.nytimes.ui.screens.components.CustomTabBar
+import io.ak1.nytimes.ui.screens.components.PlaceHolder
 import io.ak1.nytimes.ui.screens.components.PostElement
+import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 import io.ak1.nytimes.utility.NetworkState
 import io.ak1.nytimes.utility.State
 
@@ -34,10 +42,7 @@ fun HomeScreenComposable(
     viewModel: StoriesViewModel,
     navController: NavController
 ) {
-    //val bookmarks = liveViewModel.getBookmarks ?: HashMap()
-    val coroutineScope = rememberCoroutineScope()
     val stories = viewModel.getStories(mainType.value.toLowerCase())
-
     val resultList = stories.pagedList.observeAsState(initial = listOf())
     val networkState = stories.networkState.observeAsState(initial = NetworkState.LOADING)
     val refreshState = stories.refreshState.observeAsState(initial = NetworkState.LOADED)
@@ -45,28 +50,14 @@ fun HomeScreenComposable(
         mutableStateOf(false)
     }
 
-    // TODO: 20/05/21 regain same post after returning from single post screen
 
+    // TODO: 24/05/21 add status for 429 Too Many Requests
     Scaffold(
         topBar = { CustomAppBar(viewModel, navController) }
     ) {
-        swipestate.value = refreshState.value.state != State.SUCCESS
-        Column {
+        swipestate.value = refreshState.value == NetworkState.LOADING
+        Column(modifier = Modifier.fillMaxSize()) {
             CustomTabBar(listState)
-            Log.e("start", "-> ${listState.firstVisibleItemIndex}")
-            Log.e("State", "-> ${networkState.value.state.name}")
-            // TODO: 22/05/21 loading state not getting called on clearing database
-            // TODO: 22/05/21 add shimmer on loading
-            when (networkState.value.state) {
-
-                State.RUNNING -> {
-                }
-                State.SUCCESS -> {
-                }
-                State.FAILED -> {
-                }
-            }
-
             SwipeRefresh(
                 modifier = Modifier.padding(0.dp, 0.dp),
                 state = rememberSwipeRefreshState(swipestate.value),
@@ -76,20 +67,65 @@ fun HomeScreenComposable(
 
                 },
             ) {
-                //      Log.e("refresh status", "->  ${refreshState.value.state == State.RUNNING}")
+                when (networkState.value.state) {
+                    State.RUNNING -> {
+                        Shimmer {
+                            Column {
+                                Card(
+                                    backgroundColor = colorResource(id = android.R.color.darker_gray),
+                                    elevation = 5.dp, modifier = Modifier
+                                        .padding(16.dp, 16.dp)
+                                        .requiredHeight(300.dp)
+                                        .fillMaxWidth()
+                                ) {
 
-                LazyColumn(state = listState) {
+                                }
 
-                    itemsIndexed(resultList.value) { pos, element ->
+                                Card(
+                                    backgroundColor = colorResource(id = android.R.color.darker_gray),
+                                    elevation = 5.dp, modifier = Modifier
+                                        .padding(16.dp, 0.dp)
+                                        .requiredHeight(50.dp)
+                                        .fillMaxWidth()
+                                ) {
 
-                        Log.e("check pos", "->  ${pos}")
+                                }
 
-                        PostElement(element, viewModel) { result ->
-                            navController.navigate("post/${result.id}")
+                                Card(
+                                    backgroundColor = colorResource(id = android.R.color.darker_gray),
+                                    elevation = 5.dp, modifier = Modifier
+                                        .padding(16.dp, 16.dp)
+                                        .requiredHeight(50.dp)
+                                        .fillMaxWidth()
+                                ) {
+
+                                }
+                            }
                         }
                     }
+                    State.SUCCESS -> {
+                        //      Log.e("refresh status", "->  ${refreshState.value.state == State.RUNNING}")
+
+                        LazyColumn(state = listState) {
+
+                            itemsIndexed(resultList.value) { pos, element ->
+
+                                Log.e("check pos", "->  ${pos}")
+
+                                PostElement(element, viewModel) { result ->
+                                    navController.navigate("${MainDestinations.POST_ROUTE}/${result.id}")
+                                }
+                            }
+                        }
+                    }
+                    State.FAILED -> {
+                        PlaceHolder(R.drawable.ic_undraw_empty_xct9, R.string.internet_error)
+                    }
                 }
+
             }
+
+
             Log.e("end", "-> ${listState.firstVisibleItemIndex}")
 
 
@@ -97,6 +133,24 @@ fun HomeScreenComposable(
 
     }
 }
+
+@Composable
+fun Shimmer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val context = LocalContext.current
+    val shimmer = remember {
+        ShimmerFrameLayout(context).apply {
+            addView(ComposeView(context).apply {
+                setContent(content)
+            })
+        }
+    }
+
+    AndroidView(
+        modifier = modifier,
+        factory = { shimmer }
+    ) { it.startShimmer() }
+}
+
 
 
 
