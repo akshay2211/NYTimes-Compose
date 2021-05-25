@@ -1,6 +1,7 @@
-package io.ak1.nytimes.utility
+package io.ak1.nytimes.model
 
 import androidx.lifecycle.LiveData
+import io.ak1.nytimes.utility.NetworkState
 
 /**
  * Created by akshay on 14,November,2020

@@ -66,18 +66,6 @@ fun Context.clearDatabaseAfterTTL() {
     )*/
 }
 
-val Int.dp: Int
-    get() = if (this == 0) 0 else kotlin.math.floor(ScreenDimensions.DENSITY * this.toDouble())
-        .toInt()
-
-fun Int.getDesiredHeight(width: Int = ScreenDimensions.WidthPX, actualWidth: Int): Int {
-    return if (actualWidth == 0) {
-        0
-    } else {
-        (this * width) / actualWidth
-    }
-}
-
 
 fun Results.toBookmarks(): Bookmarks {
     return Bookmarks().apply {

@@ -12,7 +12,9 @@ import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.ConnectivityManagerCompat
-import androidx.preference.PreferenceManager
+import androidx.datastore.preferences.core.intPreferencesKey
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,18 +48,19 @@ fun Window.setUpStatusNavigationBarColors(isLight: Boolean = false, colorCode: I
     }
 }
 
+val themePreferenceKey = intPreferencesKey("list_theme")
+
 /**
  * extension [isDarkThemeOn] checks the saved theme from preference
  * and returns boolean
  */
-fun Context.isDarkThemeOn(): Boolean {
-    return when (PreferenceManager.getDefaultSharedPreferences(this).getString("list_theme", "1")) {
-        "2" -> true
-        "1" -> false
-        else -> return resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-    }
+fun Context.isDarkThemeOn(): Flow<Int> {
 
+    return dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[themePreferenceKey] ?: 0
+        }
 }
 
 /**

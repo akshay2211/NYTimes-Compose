@@ -1,13 +1,17 @@
 package io.ak1.nytimes.ui.screens.components
 
+import android.content.res.Configuration
 import android.util.Log
 import android.view.Window
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,11 +25,36 @@ import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 import io.ak1.nytimes.ui.screens.post.PostScreenComposable
 import io.ak1.nytimes.ui.screens.settings.SettingsScreen
 import io.ak1.nytimes.ui.theme.TheNewYorkTimesAppTheme
+import io.ak1.nytimes.utility.isDarkThemeOn
 
 
 @Composable
 fun RootComponent(viewModel: StoriesViewModel, window: Window) {
-    TheNewYorkTimesAppTheme {
+
+    // TODO: 25/05/21 theme management has to be integrated
+    val context = LocalContext.current
+    var theme = context.isDarkThemeOn().collectAsState(initial = 0)
+    var isthemeDark = when (theme.value) {
+        2 -> true
+        1 -> false
+        else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
+    val def = if (context.resources.configuration.uiMode and
+        Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    ) {
+        AppCompatDelegate.MODE_NIGHT_YES
+
+    } else {
+        AppCompatDelegate.MODE_NIGHT_NO
+    }
+
+    when (theme.value) {
+        2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        else -> AppCompatDelegate.setDefaultNightMode(def)
+    }
+
+    TheNewYorkTimesAppTheme(isthemeDark) {
         val listState = rememberLazyListState()
         window.setupStatusBar()
         // A surface container using the 'background' color from the theme
