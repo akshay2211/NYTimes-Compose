@@ -49,5 +49,11 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         lineHeight = 24.sp
     ),
-
+    overline = TextStyle(
+        fontFamily = QuickSand,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp,
+        letterSpacing = 1.5.sp
     )
+
+)

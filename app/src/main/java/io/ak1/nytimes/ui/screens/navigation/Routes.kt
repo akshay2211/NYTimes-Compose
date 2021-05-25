@@ -10,5 +10,3 @@ object MainDestinations {
     const val SETTINGS_ROUTE = "settings"
     const val POST_ID_KEY = "postId"
 }
-
-

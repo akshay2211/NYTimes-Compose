@@ -20,6 +20,7 @@ import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
 import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
+import io.ak1.nytimes.utility.timeAgo
 
 @Composable
 fun PostElement(
@@ -36,7 +37,7 @@ fun PostElement(
             Image(
                 painter = rememberCoilPainter(
                     request = results.url_large,
-                    previewPlaceholder = R.drawable.gradient_bottom,
+                    previewPlaceholder = android.R.color.darker_gray,
                     fadeIn = true
                 ),
                 contentDescription = results.title ?: "empty",
@@ -55,17 +56,23 @@ fun PostElement(
 
             ) {
 
-            Text(
-                results.title ?: "empty",
-                style = MaterialTheme.typography.h6,
-                maxLines = 2,
-                textAlign = TextAlign.Start,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f, true)
-            )
+            Column(modifier = Modifier.weight(1f, true)) {
+                Text(
+                    results.title ?: "empty",
+                    style = MaterialTheme.typography.h6,
+                    maxLines = 2,
+                    textAlign = TextAlign.Start,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    results.published_date.timeAgo().toUpperCase(),
+                    style = MaterialTheme.typography.overline,
+                    textAlign = TextAlign.Start,
+                )
+            }
             Image(
                 painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
-                contentDescription = "hie",
+                contentDescription = "bookmark icon",
                 //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
                 modifier = Modifier
                     .clickable {
@@ -74,7 +81,6 @@ fun PostElement(
                         } else {
                             viewModel.addBookmark(results, coroutineScope)
                         }
-                        //navController.navigate(MainDestinations.BOOKMARK_ROUTE)
                     }
                     .requiredWidth(56.dp)
                     .padding(12.dp),

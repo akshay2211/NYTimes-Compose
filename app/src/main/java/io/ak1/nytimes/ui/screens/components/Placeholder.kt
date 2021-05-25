@@ -1,9 +1,11 @@
 package io.ak1.nytimes.ui.screens.components
 
+import android.R
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -59,7 +62,6 @@ fun PlaceHolder(
         }
     }
 }
-
 @Composable
 fun Shimmer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val context = LocalContext.current
@@ -75,4 +77,41 @@ fun Shimmer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
         modifier = modifier,
         factory = { shimmer }
     ) { it.startShimmer() }
+}
+
+@Composable
+fun ShimmerPlaceholder() {
+    Shimmer {
+        Column {
+            Card(
+                backgroundColor = colorResource(id = R.color.darker_gray),
+                elevation = 5.dp, modifier = Modifier
+                    .padding(16.dp, 16.dp)
+                    .requiredHeight(300.dp)
+                    .fillMaxWidth()
+            ) {
+
+            }
+
+            Card(
+                backgroundColor = colorResource(id = R.color.darker_gray),
+                elevation = 5.dp, modifier = Modifier
+                    .padding(16.dp, 0.dp)
+                    .requiredHeight(50.dp)
+                    .fillMaxWidth()
+            ) {
+
+            }
+
+            Card(
+                backgroundColor = colorResource(id = R.color.darker_gray),
+                elevation = 5.dp, modifier = Modifier
+                    .padding(16.dp, 16.dp)
+                    .requiredHeight(50.dp)
+                    .fillMaxWidth()
+            ) {
+
+            }
+        }
+    }
 }

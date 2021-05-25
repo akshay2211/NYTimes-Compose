@@ -1,7 +1,6 @@
 package io.ak1.nytimes.utility
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -14,7 +13,6 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.ConnectivityManagerCompat
 import androidx.preference.PreferenceManager
-import io.ak1.nytimes.ui.settings.SettingsActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,10 +28,8 @@ import java.util.*
  * and themes according to themes
  */
 fun Window.setUpStatusNavigationBarColors(isLight: Boolean = false, colorCode: Int = Color.WHITE) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        statusBarColor = colorCode
-        navigationBarColor = colorCode
-    }
+    statusBarColor = colorCode
+    navigationBarColor = colorCode
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         setDecorFitsSystemWindows(isLight)
     } else {
@@ -55,8 +51,7 @@ fun Window.setUpStatusNavigationBarColors(isLight: Boolean = false, colorCode: I
  * and returns boolean
  */
 fun Context.isDarkThemeOn(): Boolean {
-    var key = PreferenceManager.getDefaultSharedPreferences(this).getString("list_theme", "1")
-    return when (key) {
+    return when (PreferenceManager.getDefaultSharedPreferences(this).getString("list_theme", "1")) {
         "2" -> true
         "1" -> false
         else -> return resources.configuration.uiMode and
@@ -66,15 +61,15 @@ fun Context.isDarkThemeOn(): Boolean {
 }
 
 /**
- *  retrieves the formated time as name [timeAgo] suggests
+ *  retrieves the formatted time as name [timeAgo] suggests
  */
 fun String?.timeAgo(): String {
     if (this.isNullOrEmpty()) {
         return ""
     }
     //2020-11-14T05:00:17-05:00
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.ENGLISH)
-    var date = inputFormat.parse(this) ?: Date()
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+    val date = inputFormat.parse(this) ?: Date()
     return DateUtils.getRelativeTimeSpanString(
         date.time,
         Calendar.getInstance().timeInMillis,
@@ -83,18 +78,11 @@ fun String?.timeAgo(): String {
 }
 
 /**
- * extension [startSettingsActivity] starts [SettingsActivity]
- */
-fun Context.startSettingsActivity() {
-    startActivity(Intent(this, SettingsActivity::class.java))
-}
-
-/**
  * extension [setupTheme] calls the [AppCompatDelegate] methods which
  * setup the theme whenever the configuration is changed
  */
 fun SharedPreferences?.setupTheme(key: String?, resources: Resources) {
-    var value = this?.getString(key, "3")
+    val value = this?.getString(key, "3")
     val def = if (resources.configuration.uiMode and
         Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     ) {

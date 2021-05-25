@@ -34,7 +34,7 @@ fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
             Image(
                 painter = rememberCoilPainter(
                     request = results.url_large,
-                    previewPlaceholder = R.drawable.gradient_bottom,
+                    previewPlaceholder = android.R.color.darker_gray,
                     fadeIn = true
                 ),
                 contentDescription = results.title ?: "empty",
