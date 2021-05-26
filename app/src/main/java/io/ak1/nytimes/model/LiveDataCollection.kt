@@ -1,7 +1,6 @@
 package io.ak1.nytimes.model
 
 import androidx.lifecycle.LiveData
-import io.ak1.nytimes.utility.NetworkState
 
 /**
  * Created by akshay on 14,November,2020
@@ -15,3 +14,20 @@ data class LiveDataCollection<T>(
     val refreshState: LiveData<NetworkState>,
     val refresh: () -> Unit
 )
+
+enum class State {
+    RUNNING,
+    SUCCESS,
+    FAILED
+}
+
+data class NetworkState internal constructor(
+    val state: State,
+    val msg: String? = null
+) {
+    companion object {
+        val LOADED = NetworkState(State.SUCCESS)
+        val LOADING = NetworkState(State.RUNNING)
+        fun error(msg: String?) = NetworkState(State.FAILED, msg)
+    }
+}

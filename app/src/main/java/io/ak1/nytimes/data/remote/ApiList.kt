@@ -2,7 +2,7 @@ package io.ak1.nytimes.data.remote
 
 
 import io.ak1.nytimes.model.StoriesResponse
-import io.ak1.nytimes.utility.Constants.API_KEY
+import io.ak1.nytimes.utility.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

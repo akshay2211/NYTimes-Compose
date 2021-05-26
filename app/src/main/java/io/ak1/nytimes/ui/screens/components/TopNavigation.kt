@@ -29,7 +29,6 @@ import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 
 @Composable
 fun HomeAppBar(navController: NavController) {
-
     TopAppBar(
         elevation = 0.dp,
         modifier = Modifier
