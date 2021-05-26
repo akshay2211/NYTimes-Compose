@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import io.ak1.nytimes.ui.screens.components.RootComponent
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
-import io.ak1.nytimes.utility.getScreenSize
 import org.koin.android.ext.android.inject
 
 
@@ -15,11 +14,6 @@ class MainComposeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            /* window.setUpStatusNavigationBarColors(
-                 isDarkThemeOn(),
-                 ContextCompat.getColor(this, io.ak1.nytimes.R.color.background)
-             )*/
-            resources.displayMetrics.getScreenSize()
             RootComponent(liveViewModel, window)
         }
 

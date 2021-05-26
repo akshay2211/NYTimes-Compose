@@ -9,11 +9,7 @@ import androidx.lifecycle.switchMap
 import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
-import io.ak1.nytimes.model.Bookmarks
-import io.ak1.nytimes.model.LiveDataCollection
-import io.ak1.nytimes.model.Results
-import io.ak1.nytimes.model.StoriesResponse
-import io.ak1.nytimes.utility.NetworkState
+import io.ak1.nytimes.model.*
 import io.ak1.nytimes.utility.extractMessage
 import io.ak1.nytimes.utility.toBookmarks
 import kotlinx.coroutines.CoroutineScope

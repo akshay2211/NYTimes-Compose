@@ -15,10 +15,10 @@ import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import io.ak1.nytimes.R
+import io.ak1.nytimes.model.NetworkState
+import io.ak1.nytimes.model.State
 import io.ak1.nytimes.ui.screens.components.*
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
-import io.ak1.nytimes.utility.NetworkState
-import io.ak1.nytimes.utility.State
 import java.util.*
 
 val mainType = mutableStateOf("home")
