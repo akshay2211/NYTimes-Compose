@@ -11,6 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +27,7 @@ import io.ak1.nytimes.utility.timeAgo
 fun PostElement(
     results: Results, viewModel: StoriesViewModel, clickCallback: (Results) -> Unit
 ) {
-    val bookmarked = viewModel.checkBookMark(results.title ?: "").observeAsState(initial = false)
+    val bookmarked = viewModel.isBookmarked(results.title ?: "").observeAsState(initial = false)
     val coroutineScope = rememberCoroutineScope()
     Column(
         Modifier
@@ -73,7 +74,7 @@ fun PostElement(
             Image(
                 painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
                 contentDescription = "bookmark icon",
-                //colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
+                colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
                     .clickable {
                         if (bookmarked.value) {

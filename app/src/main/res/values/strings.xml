@@ -13,6 +13,10 @@
     <string name="image_desc">generic image</string>
     <string name="no_bookmarks">No Bookmarks</string>
     <string name="add_bookmarks">Your bookmarks will apear here</string>
+    <string name="light_mode_selected">Light mode is Selected</string>
+    <string name="dark_mode_selected">Dark mode is Selected</string>
+    <string name="default_theme">Default theme is Selected</string>
+    <string name="custom_theme">Custom theme is Selected</string>
 
     <string-array name="entries">
         <item>Light Theme</item>

@@ -61,7 +61,7 @@ fun BookmarksScreenComposable(
                         Image(
                             painter = rememberCoilPainter(
                                 request = element.url_large,
-                                previewPlaceholder = R.drawable.gradient_bottom,
+                                previewPlaceholder = android.R.color.darker_gray,
                                 fadeIn = true
                             ), contentDescription = "hie",
                             contentScale = ContentScale.Crop,

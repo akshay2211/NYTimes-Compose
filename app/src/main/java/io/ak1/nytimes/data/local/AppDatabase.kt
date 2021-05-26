@@ -22,7 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
 @Dao
 interface ResultsDao {
 
-    @Query("SELECT * FROM results_table WHERE type = :type ORDER BY id ASC")
+    // TODO: 26/05/21 accending order is not poper
+    @Query("SELECT * FROM results_table WHERE type = :type ORDER BY published_date ASC")
     fun storiesByType(type: String): LiveData<List<Results>>
 
     @Query("SELECT * FROM results_table WHERE id = :id")

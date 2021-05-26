@@ -152,7 +152,7 @@ class StoriesRepository(
 
     suspend fun addBookmark(bookmark: Bookmarks) = db.bookmarksDao().insert(bookmark)
 
-    fun refresh(type: String): LiveData<NetworkState> {
+    private fun refresh(type: String): LiveData<NetworkState> {
         Log.e("refreshing", "stories for $type")
         val networkState = MutableLiveData<NetworkState>()
         CoroutineScope(this.coroutineContext).launch {

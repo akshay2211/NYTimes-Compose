@@ -3,8 +3,6 @@ package io.ak1.nytimes.ui.screens.components
 import android.content.res.Configuration
 import android.util.Log
 import android.view.Window
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -32,31 +30,19 @@ import io.ak1.nytimes.utility.isDarkThemeOn
 fun RootComponent(viewModel: StoriesViewModel, window: Window) {
 
     // TODO: 25/05/21 theme management has to be integrated
-    val context = LocalContext.current
+   val context = LocalContext.current
     var theme = context.isDarkThemeOn().collectAsState(initial = 0)
     var isthemeDark = when (theme.value) {
         2 -> true
         1 -> false
         else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
-    val def = if (context.resources.configuration.uiMode and
-        Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-    ) {
-        AppCompatDelegate.MODE_NIGHT_YES
 
-    } else {
-        AppCompatDelegate.MODE_NIGHT_NO
-    }
-
-    when (theme.value) {
-        2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        else -> AppCompatDelegate.setDefaultNightMode(def)
-    }
+    // context.setupTheme(theme.value)
 
     TheNewYorkTimesAppTheme(isthemeDark) {
         val listState = rememberLazyListState()
-        window.setupStatusBar()
+        window.setupStatusBar(isthemeDark)
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
             val navController = rememberNavController()
@@ -76,9 +62,7 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
                     val arguments = requireNotNull(it.arguments)
                     val postId = arguments.getInt(MainDestinations.POST_ID_KEY)
                     Log.e("saved state", "->  ${listState.firstVisibleItemIndex}")
-                    PostScreenComposable(postId, viewModel, navController) {
-
-                    }
+                    PostScreenComposable(postId, viewModel, navController)
                 }
                 composable(MainDestinations.SETTINGS_ROUTE) {
                     SettingsScreen(viewModel, navController)
@@ -93,8 +77,8 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
 }
 
 @Composable
-fun Window.setupStatusBar() {
+fun Window.setupStatusBar(darkTheme: Boolean) {
     WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars =
-        !isSystemInDarkTheme()
+        !darkTheme
     this.statusBarColor = MaterialTheme.colors.primary.toArgb()
 }

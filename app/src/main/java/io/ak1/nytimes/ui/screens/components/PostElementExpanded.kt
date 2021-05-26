@@ -27,7 +27,7 @@ import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.utility.timeAgo
 
 @Composable
-fun PostElementExpanded(results: Results, clickCallback: (Results) -> Unit) {
+fun PostElementExpanded(results: Results) {
     val context = LocalContext.current
     Column(Modifier.padding(16.dp)) {
         Card(elevation = 5.dp) {

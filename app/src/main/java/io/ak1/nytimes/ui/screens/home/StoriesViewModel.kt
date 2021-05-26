@@ -18,13 +18,9 @@ class StoriesViewModel(private val storiesRepo: StoriesRepository) : ViewModel()
     fun getStory(postId: Int) = storiesRepo.getLocalStory(postId)
     fun getStories(type: String) = storiesRepo.getStories(type)
     val bookmarks = storiesRepo.getBookmarks()
-    fun deleteStories(type: String, coroutineScope: CoroutineScope) =
-        coroutineScope.launch { storiesRepo.deleteStories(type) }
 
-    fun bookmark(results: Results, result: (Boolean) -> Unit) =
-        storiesRepo.storeBookMark(results, result)
+    fun isBookmarked(title: String) = storiesRepo.checkBookmarked(title)
 
-    fun checkBookMark(title: String) = storiesRepo.checkBookmarked(title)
     fun deleteBookmark(results: Results, coroutineScope: CoroutineScope) =
         coroutineScope.launch { storiesRepo.deleteBookmark(results.title ?: "") }
 
