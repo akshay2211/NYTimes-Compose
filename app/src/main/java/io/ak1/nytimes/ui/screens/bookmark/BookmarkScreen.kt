@@ -18,7 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.google.accompanist.coil.rememberCoilPainter
 import io.ak1.nytimes.R
 import io.ak1.nytimes.ui.screens.components.DefaultAppBar
@@ -49,7 +48,7 @@ fun BookmarksScreenComposable(
 
         } else {
             LazyColumn {
-                itemsIndexed(resultList.value) { pos, element ->
+                itemsIndexed(resultList.value) { _, element ->
 
                     Row(modifier = Modifier
                         .clickable {

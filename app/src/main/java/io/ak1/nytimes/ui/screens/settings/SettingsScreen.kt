@@ -1,11 +1,11 @@
 package io.ak1.nytimes.ui.screens.settings
 
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.navigation.NavController
 import io.ak1.nytimes.R
+import io.ak1.nytimes.ui.screens.components.CustomAlertDialog
 import io.ak1.nytimes.ui.screens.components.DefaultAppBar
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.utility.dataStore
@@ -23,10 +24,12 @@ import io.ak1.nytimes.utility.isDarkThemeOn
 import io.ak1.nytimes.utility.themePreferenceKey
 import kotlinx.coroutines.launch
 
-// TODO: 25/05/21 add day-night theme & menu settings
-
 @Composable
 fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
+
+    // Default is false (not showing)
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+
     Scaffold(
         Modifier.fillMaxSize(),
         topBar = {
@@ -71,7 +74,6 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
                     onCheckedChange = {
                         coroutineScope.launch {
                             context.dataStore.edit { settings ->
-                                Log.e("checked ", "boolean $it")
                                 settings[themePreferenceKey] = if (it) 1 else 0
                             }
                         }
@@ -121,6 +123,39 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
                         }, checked = theme.value == 2
                     )
                 }
+            }
+            Row(
+                modifier = Modifier
+                    .clickable {
+                        setShowDialog(true)
+                    }
+                    .padding(16.dp, 8.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                Column(modifier = Modifier.weight(1f, true)) {
+                    Text(
+                        stringResource(
+                            id = R.string.cache_title
+                        ),
+                        style = MaterialTheme.typography.h6,
+                        maxLines = 2,
+                        textAlign = TextAlign.Start,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Text(
+                        stringResource(
+                            id = R.string.cache_summary
+                        ),
+                        style = MaterialTheme.typography.overline,
+                        textAlign = TextAlign.Start,
+                    )
+                }
+            }
+            CustomAlertDialog(showDialog = showDialog, setShowDialog = setShowDialog) {
+                liveModel.deleteAll()
+                Toast.makeText(context, R.string.storage_cleared, Toast.LENGTH_LONG).show()
             }
         }
     }

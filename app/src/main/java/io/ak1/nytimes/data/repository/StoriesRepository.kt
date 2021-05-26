@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
+
 import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
@@ -174,6 +175,13 @@ class StoriesRepository(
 
         }
         return networkState
+    }
+
+    fun deleteAll() {
+        CoroutineScope(this.coroutineContext).launch {
+            db.resultsDao().deleteTable()
+            db.bookmarksDao().deleteTable()
+        }
     }
 }
 

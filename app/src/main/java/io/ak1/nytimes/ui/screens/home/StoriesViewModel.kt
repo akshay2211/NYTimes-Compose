@@ -26,6 +26,8 @@ class StoriesViewModel(private val storiesRepo: StoriesRepository) : ViewModel()
 
     fun addBookmark(results: Results, coroutineScope: CoroutineScope) =
         coroutineScope.launch { storiesRepo.addBookmark(results.toBookmarks()) }
+
+    fun deleteAll() = storiesRepo.deleteAll()
 }
 
 fun AppDatabase.deleteBookmark(id: Int, coroutineContext: CoroutineContext) {

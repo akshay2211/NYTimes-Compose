@@ -17,6 +17,7 @@
     <string name="dark_mode_selected">Dark mode is Selected</string>
     <string name="default_theme">Default theme is Selected</string>
     <string name="custom_theme">Custom theme is Selected</string>
+    <string name="storage_cleared">Local storage cleared</string>
 
     <string-array name="entries">
         <item>Light Theme</item>
