@@ -43,7 +43,7 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
         Column {
             Row(
                 modifier = Modifier
-                    .padding(16.dp, 8.dp),
+                    .padding(16.dp, 16.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
 
@@ -84,7 +84,7 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
 
                 Row(
                     modifier = Modifier
-                        .padding(16.dp, 8.dp),
+                        .padding(16.dp, 16.dp),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
 
@@ -107,7 +107,7 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
                                     else -> R.string.default_theme
                                 }
                             ),
-                            style = MaterialTheme.typography.overline,
+                            style = MaterialTheme.typography.caption,
                             textAlign = TextAlign.Start,
                         )
                     }
@@ -129,7 +129,7 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
                     .clickable {
                         setShowDialog(true)
                     }
-                    .padding(16.dp, 8.dp),
+                    .padding(16.dp, 16.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -148,7 +148,7 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
                         stringResource(
                             id = R.string.cache_summary
                         ),
-                        style = MaterialTheme.typography.overline,
+                        style = MaterialTheme.typography.caption,
                         textAlign = TextAlign.Start,
                     )
                 }

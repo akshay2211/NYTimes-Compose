@@ -21,7 +21,7 @@ enum class State {
     FAILED
 }
 
-data class NetworkState internal constructor(
+data class NetworkState private constructor(
     val state: State,
     val msg: String? = null
 ) {
