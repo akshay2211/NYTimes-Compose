@@ -5,6 +5,10 @@ plugins {
 }
 
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -27,6 +31,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
+        }
+        defaultConfig {
+            // should correspond to key/value pairs inside the file
+            buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
         }
     }
 
