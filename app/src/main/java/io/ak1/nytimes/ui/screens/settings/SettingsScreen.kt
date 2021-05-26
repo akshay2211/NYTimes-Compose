@@ -34,7 +34,7 @@ fun SettingsScreen(liveModel: StoriesViewModel, navController: NavController) {
         }
     ) {
         val context = LocalContext.current
-        var theme = context.isDarkThemeOn().collectAsState(initial = 0)
+        val theme = context.isDarkThemeOn().collectAsState(initial = 0)
 
         val coroutineScope = rememberCoroutineScope()
         Column {

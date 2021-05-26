@@ -30,8 +30,7 @@ import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 @Composable
 fun BookmarksScreenComposable(
     viewModel: StoriesViewModel,
-    navController: NavController,
-    callback: (String) -> Unit
+    navController: NavController
 ) {
     val resultList = viewModel.bookmarks.observeAsState(initial = listOf())
     Scaffold(

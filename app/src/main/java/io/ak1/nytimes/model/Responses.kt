@@ -9,7 +9,9 @@ import java.util.*
 
 class StoriesResponse : Serializable {
     var status: String? = ""
-    var last_updated: String? = ""
+
+    @SerializedName("last_updated")
+    var lastUpdated: String? = ""
     var results: List<ResultsWrapper> = ArrayList()
 }
 
@@ -18,10 +20,13 @@ data class ResultsWrapper(
     var title: String? = "",
     var url: String? = "",
     var byline: String? = "",
-    var published_date: String? = "",
-    @SerializedName("abstract") var abstract_text: String? = "",
+    @SerializedName("published_date")
+    var publishedDate: String? = "",
+    @SerializedName("abstract")
+    var abstract_text: String? = "",
     var multimedia: ArrayList<Images>,
-    var des_facet: ArrayList<String>
+    @SerializedName("des_facet")
+    var desFacet: ArrayList<String>
 ) : Serializable
 
 class Images : Serializable {

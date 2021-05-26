@@ -108,9 +108,7 @@ fun PostElementExpanded(results: Results) {
             onClick = {
                 Log.e("external", "url ${results.url}")
                 Intent(Intent.ACTION_VIEW, Uri.parse(results.url ?: "")).let {
-                    if (it.resolveActivity(context.packageManager) != null) {
-                        context.startActivity(it)
-                    }
+                    context.startActivity(it)
                 }
             },
             modifier = Modifier.wrapContentWidth()

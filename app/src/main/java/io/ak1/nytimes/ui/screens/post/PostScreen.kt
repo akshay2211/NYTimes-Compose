@@ -17,7 +17,7 @@ fun PostScreenComposable(
     viewModel: StoriesViewModel,
     navController: NavController
 ) {
-    var story = viewModel.getStory(postId).observeAsState(Results())
+    val story = viewModel.getStory(postId).observeAsState(Results())
 
     Column(Modifier.fillMaxSize()) {
         CustomAppBar(navController = navController, viewModel = viewModel, story = story.value)

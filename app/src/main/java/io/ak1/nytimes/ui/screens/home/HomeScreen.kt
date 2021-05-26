@@ -20,6 +20,7 @@ import io.ak1.nytimes.ui.screens.components.*
 import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 import io.ak1.nytimes.utility.NetworkState
 import io.ak1.nytimes.utility.State
+import java.util.*
 
 val mainType = mutableStateOf("home")
 val tempIndex = mutableStateOf(0)
@@ -31,7 +32,7 @@ fun HomeScreenComposable(
     viewModel: StoriesViewModel,
     navController: NavController
 ) {
-    val stories = viewModel.getStories(mainType.value.toLowerCase())
+    val stories = viewModel.getStories(mainType.value.toLowerCase(Locale.getDefault()))
     val resultList = stories.pagedList.observeAsState(initial = listOf())
     val networkState = stories.networkState.observeAsState(initial = NetworkState.LOADING)
     val refreshState = stories.refreshState.observeAsState(initial = NetworkState.LOADED)

@@ -1,7 +1,6 @@
 package io.ak1.nytimes.ui.screens.components
 
 import android.content.res.Configuration
-import android.util.Log
 import android.view.Window
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
@@ -30,9 +29,9 @@ import io.ak1.nytimes.utility.isDarkThemeOn
 fun RootComponent(viewModel: StoriesViewModel, window: Window) {
 
     // TODO: 25/05/21 theme management has to be integrated
-   val context = LocalContext.current
-    var theme = context.isDarkThemeOn().collectAsState(initial = 0)
-    var isthemeDark = when (theme.value) {
+    val context = LocalContext.current
+    val theme = context.isDarkThemeOn().collectAsState(initial = 0)
+    val isthemeDark = when (theme.value) {
         2 -> true
         1 -> false
         else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
@@ -42,7 +41,7 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
 
     TheNewYorkTimesAppTheme(isthemeDark) {
         val listState = rememberLazyListState()
-        window.setupStatusBar(isthemeDark)
+        window.StatusBarConfig(isthemeDark)
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
             val navController = rememberNavController()
@@ -59,17 +58,14 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
                         type = NavType.IntType
                     })
                 ) {
-                    val arguments = requireNotNull(it.arguments)
-                    val postId = arguments.getInt(MainDestinations.POST_ID_KEY)
-                    Log.e("saved state", "->  ${listState.firstVisibleItemIndex}")
+                    val postId = requireNotNull(it.arguments).getInt(MainDestinations.POST_ID_KEY)
                     PostScreenComposable(postId, viewModel, navController)
                 }
                 composable(MainDestinations.SETTINGS_ROUTE) {
                     SettingsScreen(viewModel, navController)
                 }
                 composable(MainDestinations.BOOKMARK_ROUTE) {
-                    BookmarksScreenComposable(viewModel, navController) {
-                    }
+                    BookmarksScreenComposable(viewModel, navController)
                 }
             }
         }
@@ -77,7 +73,7 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
 }
 
 @Composable
-fun Window.setupStatusBar(darkTheme: Boolean) {
+fun Window.StatusBarConfig(darkTheme: Boolean) {
     WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars =
         !darkTheme
     this.statusBarColor = MaterialTheme.colors.primary.toArgb()

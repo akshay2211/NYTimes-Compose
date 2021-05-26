@@ -17,7 +17,7 @@ import kotlin.coroutines.CoroutineContext
 class StoriesViewModel(private val storiesRepo: StoriesRepository) : ViewModel() {
     fun getStory(postId: Int) = storiesRepo.getLocalStory(postId)
     fun getStories(type: String) = storiesRepo.getStories(type)
-    val bookmarks = storiesRepo.getBookmarks()
+    val bookmarks = storiesRepo.getBookmarks
 
     fun isBookmarked(title: String) = storiesRepo.checkBookmarked(title)
 
@@ -26,9 +26,6 @@ class StoriesViewModel(private val storiesRepo: StoriesRepository) : ViewModel()
 
     fun addBookmark(results: Results, coroutineScope: CoroutineScope) =
         coroutineScope.launch { storiesRepo.addBookmark(results.toBookmarks()) }
-
-
-    // val getBookmarks = storiesRepo.getBookmarks().value?.map { it.id to it }?.toMap()
 }
 
 fun AppDatabase.deleteBookmark(id: Int, coroutineContext: CoroutineContext) {

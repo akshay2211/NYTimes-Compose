@@ -1,6 +1,5 @@
 package io.ak1.nytimes.ui.screens.components
 
-import android.R
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -84,7 +83,7 @@ fun ShimmerPlaceholder() {
     Shimmer {
         Column {
             Card(
-                backgroundColor = colorResource(id = R.color.darker_gray),
+                backgroundColor = colorResource(id = android.R.color.darker_gray),
                 elevation = 5.dp, modifier = Modifier
                     .padding(16.dp, 16.dp)
                     .requiredHeight(300.dp)
@@ -94,7 +93,7 @@ fun ShimmerPlaceholder() {
             }
 
             Card(
-                backgroundColor = colorResource(id = R.color.darker_gray),
+                backgroundColor = colorResource(id = android.R.color.darker_gray),
                 elevation = 5.dp, modifier = Modifier
                     .padding(16.dp, 0.dp)
                     .requiredHeight(50.dp)
@@ -104,7 +103,7 @@ fun ShimmerPlaceholder() {
             }
 
             Card(
-                backgroundColor = colorResource(id = R.color.darker_gray),
+                backgroundColor = colorResource(id = android.R.color.darker_gray),
                 elevation = 5.dp, modifier = Modifier
                     .padding(16.dp, 16.dp)
                     .requiredHeight(50.dp)

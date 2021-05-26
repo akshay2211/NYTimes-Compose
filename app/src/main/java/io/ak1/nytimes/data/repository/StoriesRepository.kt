@@ -37,8 +37,6 @@ class StoriesRepository(
     private val apiList: ApiList,
     private val coroutineContext: CoroutineContext
 ) {
-    // TODO: 21/05/21 remove unnecessary methods and functionalities
-
     /**
      * Inserts the response into the database.
      */
@@ -61,14 +59,14 @@ class StoriesRepository(
                 Results(
                     it.title,
                     it.url,
-                    it.published_date,
+                    it.publishedDate,
                     urlThumb,
                     urlMain,
                     section,
                     height,
                     width,
                     it.byline,
-                    it.des_facet.joinToString { it },
+                    it.desFacet.joinToString { it },
                     it.abstract_text
                 )
             }
@@ -81,9 +79,9 @@ class StoriesRepository(
         }
     }
 
-    suspend fun deleteStories(type: String) = db.resultsDao().deleteBySectionType(type)
+    private suspend fun deleteStories(type: String) = db.resultsDao().deleteBySectionType(type)
     fun getLocalStory(postId: Int): LiveData<Results> = db.resultsDao().getStoriesById(postId)
-    fun getBookmarks(): LiveData<List<Bookmarks>> = db.bookmarksDao().getBookmarks()
+    val getBookmarks: LiveData<List<Bookmarks>> = db.bookmarksDao().getBookmarks()
 
     fun getStories(type: String): LiveDataCollection<Results> {
         Log.e("retrieving", "stories for $type")

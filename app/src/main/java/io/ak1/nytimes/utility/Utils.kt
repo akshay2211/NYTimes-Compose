@@ -1,6 +1,5 @@
 package io.ak1.nytimes.utility
 
-import android.content.Context
 import android.util.DisplayMetrics
 import io.ak1.nytimes.model.Bookmarks
 import io.ak1.nytimes.model.Results
@@ -19,7 +18,7 @@ enum class State {
     FAILED
 }
 
-data class NetworkState private constructor(
+data class NetworkState internal constructor(
     val state: State,
     val msg: String? = null
 ) {
@@ -56,15 +55,16 @@ fun DisplayMetrics.getScreenSize() {
     ScreenDimensions.DENSITY = density
 }
 
+/*
 //clears database after a specific time of 45 minutes
 fun Context.clearDatabaseAfterTTL() {
-    /*WorkManager.getInstance(this).enqueueUniqueWork(
-        "clearDatabase", ExistingWorkPolicy.REPLACE,
-        OneTimeWorkRequestBuilder<ClearDatabase>().setInitialDelay(45, TimeUnit.MINUTES)
-            .addTag("clearDatabase1")
-            .build()
-    )*/
-}
+  WorkManager.getInstance(this).enqueueUniqueWork(
+       "clearDatabase", ExistingWorkPolicy.REPLACE,
+       OneTimeWorkRequestBuilder<ClearDatabase>().setInitialDelay(45, TimeUnit.MINUTES)
+           .addTag("clearDatabase1")
+           .build()
+   )
+}*/
 
 
 fun Results.toBookmarks(): Bookmarks {

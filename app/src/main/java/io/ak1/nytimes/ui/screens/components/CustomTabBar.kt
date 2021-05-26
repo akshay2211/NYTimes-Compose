@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import io.ak1.nytimes.ui.screens.home.mainType
 import io.ak1.nytimes.ui.screens.home.tempIndex
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun CustomTabBar(listState: LazyListState) {
@@ -23,11 +24,11 @@ fun CustomTabBar(listState: LazyListState) {
         // Add tabs for all of our pages
         types.forEachIndexed { index, title ->
             Tab(
-                text = { Text("" + title.toUpperCase()) },
+                text = { Text("" + title.toUpperCase(Locale.getDefault())) },
                 selected = tempIndex.value == index,
                 onClick = {
                     coroutineScope.launch {
-                            listState.scrollToItem(0)
+                        listState.scrollToItem(0)
                     }
                     tempIndex.value = index
                     mainType.value = title

@@ -22,6 +22,7 @@ import io.ak1.nytimes.R
 import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.utility.timeAgo
+import java.util.*
 
 @Composable
 fun PostElement(
@@ -66,7 +67,7 @@ fun PostElement(
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    results.published_date.timeAgo().toUpperCase(),
+                    results.published_date.timeAgo().toUpperCase(Locale.getDefault()),
                     style = MaterialTheme.typography.overline,
                     textAlign = TextAlign.Start,
                 )
