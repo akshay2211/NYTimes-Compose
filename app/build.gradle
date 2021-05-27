@@ -2,16 +2,19 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
 }
 
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "io.ak1.thenewyorktimes"
+        applicationId "io.ak1.nytimes"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -20,14 +23,18 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
+        }
+        defaultConfig {
+            // should correspond to key/value pairs inside the file
+            buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
         }
     }
 
@@ -60,36 +67,28 @@ android {
 
 dependencies {
     // Core
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-
-    // Design
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Compose
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.0-alpha07'
-    implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
+    implementation 'androidx.activity:activity-compose:1.3.0-alpha08'
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha01"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
-    def accompanist = "0.9.1"
+    def accompanist = "0.10.0"
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist"
     implementation "com.google.accompanist:accompanist-coil:$accompanist"
 
-
-
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Multidex
     def multidex_version = "2.0.1"
@@ -103,22 +102,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
 
     //Koin
-    def koin_version = "2.1.6"
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
 
     //Android Components
-    //Paging
-    def paging_version = '3.0.0'
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-
-    def nav_version = '2.3.5'
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-
-    // Preference
-    implementation 'androidx.preference:preference-ktx:1.1.1'
     // Room
     def room_version = '2.3.0'
     implementation "androidx.room:room-runtime:$room_version"
@@ -135,17 +121,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0'
-
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
+    //Datastore Preferences
+    implementation("androidx.datastore:datastore-preferences:1.0.0-beta01")
     // WorkManager
-    def work_version = '2.5.0'
+    def work_version = '2.7.0-alpha03'
     implementation "androidx.work:work-runtime-ktx:$work_version"
-
-
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
-
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

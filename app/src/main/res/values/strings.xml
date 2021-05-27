@@ -1,15 +1,7 @@
 <resources>
     <string name="app_name">The NewYork Times</string>
-    <string name="home_title">Home</string>
     <string name="bookmarks_title">Bookmarks</string>
     <string name="internet_error">Internet Not Available</string>
-    <string name="cat_card_rich_media_view_title">Title goes here</string>
-    <string name="cat_card_rich_media_image_view_description">Card Image</string>
-    <string name="bookmarked_done">Bookmark Added</string>
-    <string name="bookmarked_removed">Bookmark Removed</string>
-    <string name="delete_post_title">Remove Bookmark</string>
-    <string name="confirm_to_delete">Kindly press OK to remove this story from your bookmarks</string>
-    <string name="story_title">Story</string>
     <string name="settings_title">Settings</string>
 
     <string name="title_preference" translatable="false">Theme Selections</string>
@@ -19,6 +11,13 @@
     <string name="system_call_error">Error occurred during system call</string>
     <string name="open_in_browser">Open in Browser</string>
     <string name="image_desc">generic image</string>
+    <string name="no_bookmarks">No Bookmarks</string>
+    <string name="add_bookmarks">Your bookmarks will apear here</string>
+    <string name="light_mode_selected">Light mode is Selected</string>
+    <string name="dark_mode_selected">Dark mode is Selected</string>
+    <string name="default_theme">Default theme is Selected</string>
+    <string name="custom_theme">Custom theme is Selected</string>
+    <string name="storage_cleared">Local storage cleared</string>
 
     <string-array name="entries">
         <item>Light Theme</item>
@@ -31,6 +30,5 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-    <string name="title_activity_main_compose">MainComposeActivity</string>
 
 </resources>

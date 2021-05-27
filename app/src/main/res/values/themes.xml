@@ -11,26 +11,9 @@
         <item name="colorOnSecondary">@color/headingBackgroundColor</item>
     </style>
 
-    <style name="TabBarTextStyle">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/headingColor</item>
-        <item name="fontFamily">@font/quicksand_regular</item>
-        <item name="android:fontFamily">@font/quicksand_regular</item>
-    </style>
-
-    <style name="BottomNavigationViewTextStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/headingColor</item>
-        <item name="fontFamily">@font/quicksand_regular</item>
-        <item name="android:fontFamily">@font/quicksand_regular</item>
-    </style>
-
     <style name="Theme.TheNewYorkTimesApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.TheNewYorkTimesApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.TheNewYorkTimesApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
