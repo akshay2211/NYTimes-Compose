@@ -5,8 +5,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.toArgb
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -63,9 +61,3 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
     }
 }
 
-@Composable
-fun Window.StatusBarConfig(darkTheme: Boolean) {
-    WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars =
-        !darkTheme
-    this.statusBarColor = MaterialTheme.colors.primary.toArgb()
-}
