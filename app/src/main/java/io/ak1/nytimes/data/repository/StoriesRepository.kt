@@ -42,32 +42,29 @@ class StoriesRepository(
                 var height = 0
                 var width = 0
                 var urlMain = ""
-                var urlThumb = ""
                 if (!it.multimedia.isNullOrEmpty()) {
                     height = it.multimedia[0].height
                     width = it.multimedia[0].width
                     urlMain = it.multimedia[0].url ?: ""
-                    urlThumb = it.multimedia[2].url ?: ""
                 }
 
 
                 Results(
-                    it.title,
-                    it.url,
-                    it.publishedDate,
-                    urlThumb,
-                    urlMain,
-                    section,
-                    height,
-                    width,
-                    it.byline,
-                    it.desFacet.joinToString { it },
-                    it.abstract_text
+                    title = it.title,
+                    shortUrl = it.shortUrl,
+                    publishedDate = it.publishedDate,
+                    urlLarge = urlMain,
+                    type = section,
+                    height = height,
+                    width = width,
+                    byline = it.byline,
+                    desFacet = it.desFacet.joinToString { it },
+                    abstractText = it.abstractText
                 )
             }
             db.runInTransaction {
                 CoroutineScope(this.coroutineContext).launch {
-                    Log.e("list", "-> ${list[0].des_facet}")
+                    Log.e("list", "-> ${list[0].desFacet}")
                     db.resultsDao().insert(list)
                 }
             }

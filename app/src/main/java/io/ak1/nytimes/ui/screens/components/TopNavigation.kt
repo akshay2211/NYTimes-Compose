@@ -122,7 +122,7 @@ fun CustomAppBar(
                 .clickable {
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, story.value.url ?: "")
+                        putExtra(Intent.EXTRA_TEXT, story.value.shortUrl ?: "")
                         type = "text/plain"
                     }
 

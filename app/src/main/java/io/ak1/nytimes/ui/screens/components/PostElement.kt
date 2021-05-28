@@ -38,7 +38,7 @@ fun PostElement(
         Card(elevation = 5.dp, modifier = Modifier.padding(16.dp, 8.dp)) {
             Image(
                 painter = rememberCoilPainter(
-                    request = results.url_large,
+                    request = results.urlLarge,
                     previewPlaceholder = android.R.color.darker_gray,
                     fadeIn = true
                 ),
@@ -67,7 +67,7 @@ fun PostElement(
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    results.published_date.timeAgo().toUpperCase(Locale.getDefault()),
+                    results.publishedDate.timeAgo().toUpperCase(Locale.getDefault()),
                     style = MaterialTheme.typography.overline,
                     textAlign = TextAlign.Start,
                 )

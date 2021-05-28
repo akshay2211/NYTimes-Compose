@@ -22,7 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
 @Dao
 interface ResultsDao {
 
-    @Query("SELECT * FROM results_table WHERE type = :type ORDER BY published_date DESC")
+    @Query("SELECT * FROM results_table WHERE type = :type ORDER BY publishedDate DESC")
     fun storiesByType(type: String): LiveData<List<Results>>
 
     @Query("SELECT * FROM results_table WHERE id = :id")

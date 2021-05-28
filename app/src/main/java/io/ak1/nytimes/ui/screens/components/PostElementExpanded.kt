@@ -34,7 +34,7 @@ fun PostElementExpanded(results: State<Results>) {
         Card(elevation = 5.dp) {
             Image(
                 painter = rememberCoilPainter(
-                    request = story.url_large,
+                    request = story.urlLarge,
                     previewPlaceholder = android.R.color.darker_gray,
                     fadeIn = true
                 ),
@@ -57,7 +57,7 @@ fun PostElementExpanded(results: State<Results>) {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = story.abstract_text ?: "empty",
+            text = story.abstractText ?: "empty",
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,13 +72,13 @@ fun PostElementExpanded(results: State<Results>) {
 
         Spacer(Modifier.height(8.dp))
         Text(
-            text = story.published_date.timeAgo(),
+            text = story.publishedDate.timeAgo(),
             style = MaterialTheme.typography.caption,
             modifier = Modifier
                 .wrapContentWidth(Alignment.End)
         )
 
-        val tags = story.des_facet.trim().split(",")
+        val tags = story.desFacet.trim().split(",")
         if (false) {
             LazyRow(
                 modifier = Modifier
@@ -106,7 +106,7 @@ fun PostElementExpanded(results: State<Results>) {
         Spacer(Modifier.height(16.dp))
         Button(
             onClick = {
-                Intent(Intent.ACTION_VIEW, Uri.parse(story.url ?: "")).let {
+                Intent(Intent.ACTION_VIEW, Uri.parse(story.shortUrl ?: "")).let {
                     context.startActivity(it)
                 }
             },

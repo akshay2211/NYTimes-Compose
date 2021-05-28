@@ -89,17 +89,16 @@ fun Context.clearDatabaseAfterTTL() {
 fun Results.toBookmarks(): Bookmarks {
     return Bookmarks().apply {
         this.title = this@toBookmarks.title
-        this.url = this@toBookmarks.url
-        this.published_date = this@toBookmarks.published_date
-        this.url_thumb = this@toBookmarks.url_thumb
-        this.url_large = this@toBookmarks.url_large
+        this.shortUrl = this@toBookmarks.shortUrl
+        this.publishedDate = this@toBookmarks.publishedDate
+        this.urlLarge = this@toBookmarks.urlLarge
         this.type = this@toBookmarks.type
         this.height = this@toBookmarks.height
         this.width = this@toBookmarks.width
         this.id = this@toBookmarks.id
-        this.abstract_text = this@toBookmarks.abstract_text
+        this.abstractText = this@toBookmarks.abstractText
         this.byline = this@toBookmarks.byline
-        this.des_facet = this@toBookmarks.des_facet
+        this.desFacet = this@toBookmarks.desFacet
     }
 }
 
