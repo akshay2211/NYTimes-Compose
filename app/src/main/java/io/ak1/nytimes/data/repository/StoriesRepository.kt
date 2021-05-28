@@ -5,13 +5,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-
 import io.ak1.nytimes.R
 import io.ak1.nytimes.data.local.AppDatabase
 import io.ak1.nytimes.data.remote.ApiList
 import io.ak1.nytimes.model.*
 import io.ak1.nytimes.utility.extractMessage
-import io.ak1.nytimes.utility.toBookmarks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -127,21 +125,6 @@ class StoriesRepository(
         )
     }
 
-    fun storeBookMark(results: Results, result: (Boolean) -> Unit) {
-        CoroutineScope(this.coroutineContext).launch {
-            val bookmark = db.bookmarksDao().getBookmarksById(results.id)
-            if (bookmark != null) {
-                db.resultsDao().insert(results.apply { bookmarked = false })
-                db.bookmarksDao().deleteById(results.id)
-                result(false)
-            } else {
-                db.resultsDao().insert(results.apply { bookmarked = true })
-                db.bookmarksDao().insert(results.toBookmarks())
-                result(true)
-            }
-        }
-    }
-
     fun checkBookmarked(title: String): LiveData<Boolean> = db.bookmarksDao().contains(title)
     suspend fun deleteBookmark(title: String) = db.bookmarksDao().deleteByTitle(title)
 
@@ -179,6 +162,8 @@ class StoriesRepository(
             db.bookmarksDao().deleteTable()
         }
     }
+
+    fun getLocalBookmark(postId: Int) = db.bookmarksDao().getBookmarksById(postId)
 }
 
 

@@ -2,7 +2,6 @@ package io.ak1.nytimes.ui.screens.components
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +13,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,17 +27,18 @@ import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.utility.timeAgo
 
 @Composable
-fun PostElementExpanded(results: Results) {
+fun PostElementExpanded(results: State<Results>) {
+    val story = results.value
     val context = LocalContext.current
     Column(Modifier.padding(16.dp)) {
         Card(elevation = 5.dp) {
             Image(
                 painter = rememberCoilPainter(
-                    request = results.url_large,
+                    request = story.url_large,
                     previewPlaceholder = android.R.color.darker_gray,
                     fadeIn = true
                 ),
-                contentDescription = results.title ?: "empty",
+                contentDescription = story.title ?: "empty",
                 modifier = Modifier
                     .fillMaxWidth()
                     .requiredHeight(300.dp),
@@ -48,7 +49,7 @@ fun PostElementExpanded(results: Results) {
 
 
         Text(
-            text = results.title ?: "empty",
+            text = story.title ?: "empty",
             style = MaterialTheme.typography.h5,
             modifier = Modifier
                 .fillMaxWidth()
@@ -56,14 +57,14 @@ fun PostElementExpanded(results: Results) {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = results.abstract_text ?: "empty",
+            text = story.abstract_text ?: "empty",
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .fillMaxWidth()
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = results.byline?.trim() ?: "",
+            text = story.byline?.trim() ?: "",
             style = MaterialTheme.typography.caption,
             modifier = Modifier
                 .wrapContentWidth(Alignment.End)
@@ -71,14 +72,13 @@ fun PostElementExpanded(results: Results) {
 
         Spacer(Modifier.height(8.dp))
         Text(
-            text = results.published_date.timeAgo(),
+            text = story.published_date.timeAgo(),
             style = MaterialTheme.typography.caption,
             modifier = Modifier
                 .wrapContentWidth(Alignment.End)
         )
 
-        val tags = results.des_facet.trim().split(",")
-        Log.e("all data ", "-> ${results.des_facet.trim()} ${tags.size}")
+        val tags = story.des_facet.trim().split(",")
         if (false) {
             LazyRow(
                 modifier = Modifier
@@ -106,8 +106,7 @@ fun PostElementExpanded(results: Results) {
         Spacer(Modifier.height(16.dp))
         Button(
             onClick = {
-                Log.e("external", "url ${results.url}")
-                Intent(Intent.ACTION_VIEW, Uri.parse(results.url ?: "")).let {
+                Intent(Intent.ACTION_VIEW, Uri.parse(story.url ?: "")).let {
                     context.startActivity(it)
                 }
             },

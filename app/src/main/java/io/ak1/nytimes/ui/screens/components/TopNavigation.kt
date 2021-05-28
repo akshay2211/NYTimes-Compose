@@ -1,6 +1,5 @@
 package io.ak1.nytimes.ui.screens.components
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -11,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -77,11 +77,11 @@ fun HomeAppBar(navController: NavController) {
 @Composable
 fun CustomAppBar(
     navController: NavController, viewModel: StoriesViewModel,
-    story: Results
+    story: State<Results>
 ) {
     val context = LocalContext.current
     val bookmarked =
-        viewModel.isBookmarked(story.title ?: "").observeAsState(initial = false)
+        viewModel.isBookmarked(story.value.title ?: "").observeAsState(initial = false)
     val coroutineScope = rememberCoroutineScope()
     Row(
         modifier = Modifier
@@ -107,9 +107,9 @@ fun CustomAppBar(
             modifier = Modifier
                 .clickable {
                     if (bookmarked.value) {
-                        viewModel.deleteBookmark(story, coroutineScope)
+                        viewModel.deleteBookmark(story.value, coroutineScope)
                     } else {
-                        viewModel.addBookmark(story, coroutineScope)
+                        viewModel.addBookmark(story.value, coroutineScope)
                     }
                 }
                 .padding(12.dp)
@@ -120,13 +120,15 @@ fun CustomAppBar(
             contentDescription = "share link",
             modifier = Modifier
                 .clickable {
-                    try {
-                        Intent(Intent.ACTION_SEND).let {
-                            context.startActivity(Intent.createChooser(it, story.url))
-                        }
-                    } catch (e: ActivityNotFoundException) {
-                        e.printStackTrace()
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, story.value.url ?: "")
+                        type = "text/plain"
                     }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    context.startActivity(shareIntent)
+
 
                 }
                 .padding(12.dp)

@@ -61,7 +61,7 @@ fun HomeScreenComposable(
                         LazyColumn(state = listState) {
                             itemsIndexed(resultList.value) { _, element ->
                                 PostElement(element, viewModel) { result ->
-                                    navController.navigate("${MainDestinations.POST_ROUTE}/${result.id}")
+                                    navController.navigate("${MainDestinations.POST_ROUTE}/${result.id}/${MainDestinations.HOME_ROUTE}")
                                 }
                             }
                         }

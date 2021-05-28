@@ -1,14 +1,11 @@
 package io.ak1.nytimes.ui.screens.components
 
-import android.content.res.Configuration
 import android.view.Window
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,26 +19,15 @@ import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 import io.ak1.nytimes.ui.screens.post.PostScreenComposable
 import io.ak1.nytimes.ui.screens.settings.SettingsScreen
 import io.ak1.nytimes.ui.theme.TheNewYorkTimesAppTheme
-import io.ak1.nytimes.utility.isDarkThemeOn
 
 
 @Composable
 fun RootComponent(viewModel: StoriesViewModel, window: Window) {
 
-    // TODO: 25/05/21 theme management has to be integrated
-    val context = LocalContext.current
-    val theme = context.isDarkThemeOn().collectAsState(initial = 0)
-    val isthemeDark = when (theme.value) {
-        2 -> true
-        1 -> false
-        else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-    }
-
-    // context.setupTheme(theme.value)
-
-    TheNewYorkTimesAppTheme(isthemeDark) {
+    val isDark = isSystemInDarkThemeCustom()
+    TheNewYorkTimesAppTheme(isDark) {
         val listState = rememberLazyListState()
-        window.StatusBarConfig(isthemeDark)
+        window.StatusBarConfig(isDark)
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
             val navController = rememberNavController()
@@ -53,13 +39,18 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
                     HomeScreenComposable(listState, viewModel, navController)
                 }
                 composable(
-                    "${MainDestinations.POST_ROUTE}/{${MainDestinations.POST_ID_KEY}}",
+                    "${MainDestinations.POST_ROUTE}/{${MainDestinations.POST_ID_KEY}}/{${MainDestinations.POST_FROM_KEY}}",
                     arguments = listOf(navArgument(MainDestinations.POST_ID_KEY) {
                         type = NavType.IntType
+                    }, navArgument(MainDestinations.POST_FROM_KEY) {
+                        type = NavType.StringType
                     })
                 ) {
-                    val postId = requireNotNull(it.arguments).getInt(MainDestinations.POST_ID_KEY)
-                    PostScreenComposable(postId, viewModel, navController)
+                    var arg = requireNotNull(it.arguments)
+                    val postId = arg.getInt(MainDestinations.POST_ID_KEY)
+                    val postFrom =
+                        arg.getString(MainDestinations.POST_FROM_KEY) ?: MainDestinations.HOME_ROUTE
+                    PostScreenComposable(postFrom, postId, viewModel, navController)
                 }
                 composable(MainDestinations.SETTINGS_ROUTE) {
                     SettingsScreen(viewModel, navController)

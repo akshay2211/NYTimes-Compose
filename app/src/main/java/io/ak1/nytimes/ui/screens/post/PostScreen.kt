@@ -10,18 +10,26 @@ import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.ui.screens.components.CustomAppBar
 import io.ak1.nytimes.ui.screens.components.PostElementExpanded
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
+import io.ak1.nytimes.ui.screens.navigation.MainDestinations
 
 @Composable
 fun PostScreenComposable(
+    from: String,
     postId: Int,
     viewModel: StoriesViewModel,
     navController: NavController
 ) {
-    val story = viewModel.getStory(postId).observeAsState(Results())
+    val story = viewModel.let {
+        if (from == MainDestinations.HOME_ROUTE) {
+            it.getStory(postId)
+        } else {
+            it.getBookmark(postId)
+        }
+    }.observeAsState(initial = Results())
 
     Column(Modifier.fillMaxSize()) {
-        CustomAppBar(navController = navController, viewModel = viewModel, story = story.value)
-        PostElementExpanded(results = story.value)
+        CustomAppBar(navController = navController, viewModel = viewModel, story = story)
+        PostElementExpanded(results = story)
     }
 
 }

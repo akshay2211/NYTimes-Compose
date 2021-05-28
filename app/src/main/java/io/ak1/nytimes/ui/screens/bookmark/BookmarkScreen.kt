@@ -52,7 +52,7 @@ fun BookmarksScreenComposable(
 
                     Row(modifier = Modifier
                         .clickable {
-                            navController.navigate("${MainDestinations.POST_ROUTE}/${element.id}")
+                            navController.navigate("${MainDestinations.POST_ROUTE}/${element.id}/${MainDestinations.BOOKMARK_ROUTE}")
                         }
                         .padding(16.dp, 0.dp)
                         .height(88.dp)) {
