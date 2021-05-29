@@ -5,8 +5,6 @@
     <string name="settings_title">Settings</string>
     <string name="internet_error">Internet Not Available</string>
 
-    <string name="title_preference" translatable="false">Theme Selections</string>
-    <string name="dialog_title_preference" translatable="false">Select Theme</string>
     <string name="cache_summary" translatable="false">Clear all stored values in local database</string>
     <string name="cache_title" translatable="false">Clear Storage</string>
     <string name="system_call_error">Error occurred during system call</string>
@@ -21,17 +19,5 @@
     <string name="storage_cleared">Local storage cleared</string>
     <string name="navigate_back">navigate back</string>
     <string name="share_title">Share Post</string>
-
-    <string-array name="entries">
-        <item>Light Theme</item>
-        <item>Dark Theme</item>
-        <item>Auto</item>
-    </string-array>
-
-    <string-array name="entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
 
 </resources>

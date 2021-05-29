@@ -137,7 +137,7 @@ class StoriesRepository(
                 val response = apiList.getStories(type)
                 if (!response.isSuccessful) {
                     val error = response.errorBody()
-                    networkState.postValue(NetworkState.LOADED)
+                    networkState.postValue(NetworkState.error(error.extractMessage()))
                     return@launch
                 }
                 deleteStories(type)

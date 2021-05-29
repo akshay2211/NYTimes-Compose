@@ -37,6 +37,7 @@ fun PostElementExpanded(results: State<Results>) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
+        val keepTagsHidden = true
         item {
             Card(elevation = 5.dp) {
                 Image(
@@ -86,7 +87,7 @@ fun PostElementExpanded(results: State<Results>) {
             )
 
             val tags = story.desFacet.trim().split(",")
-            if (false) {
+            if (!keepTagsHidden) {
                 LazyRow(
                     modifier = Modifier
                         .padding(0.dp, 0.dp, 0.dp, 16.dp)

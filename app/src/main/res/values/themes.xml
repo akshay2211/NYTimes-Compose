@@ -1,19 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.TheNewYorkTimesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryColor</item>
-        <item name="colorOnPrimary">@color/headingColor</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/primaryColor</item>
-        <item name="colorSecondaryVariant">@color/primaryColor</item>
-        <item name="colorOnSecondary">@color/headingBackgroundColor</item>
-    </style>
+    <style name="Theme.TheNewYorkTimesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar"></style>
 
-    <style name="Theme.TheNewYorkTimesApp.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
 </resources>

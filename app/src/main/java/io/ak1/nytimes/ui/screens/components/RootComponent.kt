@@ -44,7 +44,7 @@ fun RootComponent(viewModel: StoriesViewModel, window: Window) {
                         type = NavType.StringType
                     })
                 ) {
-                    var arg = requireNotNull(it.arguments)
+                    val arg = requireNotNull(it.arguments)
                     val postId = arg.getInt(MainDestinations.POST_ID_KEY)
                     val postFrom =
                         arg.getString(MainDestinations.POST_FROM_KEY) ?: MainDestinations.HOME_ROUTE

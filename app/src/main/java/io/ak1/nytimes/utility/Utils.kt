@@ -61,7 +61,7 @@ fun Context.isNetworkAvailable(): Boolean {
     return !ConnectivityManagerCompat.isActiveNetworkMetered(cm)
 }
 
-//extracts the error message from the errorbody from response
+//extracts the error message from the error-body from response
 fun ResponseBody?.extractMessage(): String? {
     if (this == null) {
         return ""
