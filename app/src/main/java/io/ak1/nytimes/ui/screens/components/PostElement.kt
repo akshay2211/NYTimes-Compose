@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -22,7 +24,6 @@ import io.ak1.nytimes.R
 import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.ui.screens.home.StoriesViewModel
 import io.ak1.nytimes.utility.timeAgo
-import java.util.*
 
 @Composable
 fun PostElement(
@@ -33,26 +34,34 @@ fun PostElement(
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(0.dp, 8.dp)
+            .padding(0.dp, 4.dp)
             .clickable { clickCallback(results) }) {
         Card(elevation = 5.dp, modifier = Modifier.padding(16.dp, 8.dp)) {
             Image(
                 painter = rememberCoilPainter(
-                    request = results.url_large,
+                    request = results.urlLarge,
                     previewPlaceholder = android.R.color.darker_gray,
                     fadeIn = true
                 ),
                 contentDescription = results.title ?: "empty",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .requiredHeight(300.dp),
+                    .height(214.dp),
                 contentScale = ContentScale.Crop
             )
         }
+        Text(
+            modifier = Modifier.padding(16.dp, 2.dp),
+            text = results.title ?: "empty",
+            style = MaterialTheme.typography.h6,
+            maxLines = 2,
+            textAlign = TextAlign.Start,
+            overflow = TextOverflow.Ellipsis,
+        )
 
         Row(
             modifier = Modifier
-                .padding(16.dp, 8.dp),
+                .padding(16.dp, 0.dp),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,
 
@@ -60,21 +69,19 @@ fun PostElement(
 
             Column(modifier = Modifier.weight(1f, true)) {
                 Text(
-                    results.title ?: "empty",
-                    style = MaterialTheme.typography.h6,
-                    maxLines = 2,
+                    text = results.byline ?: "",
+                    style = MaterialTheme.typography.overline,
                     textAlign = TextAlign.Start,
-                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    results.published_date.timeAgo().toUpperCase(Locale.getDefault()),
+                    text = results.publishedDate.timeAgo(),
                     style = MaterialTheme.typography.overline,
                     textAlign = TextAlign.Start,
                 )
             }
             Image(
                 painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
-                contentDescription = "bookmark icon",
+                contentDescription = stringResource(id = R.string.bookmarks_title),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
                     .clickable {
@@ -90,6 +97,7 @@ fun PostElement(
 
 
         }
+        Divider(Modifier.height(1.dp))
 
     }
 }

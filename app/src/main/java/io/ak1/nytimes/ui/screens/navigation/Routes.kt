@@ -9,4 +9,5 @@ object MainDestinations {
     const val BOOKMARK_ROUTE = "bookmarks"
     const val SETTINGS_ROUTE = "settings"
     const val POST_ID_KEY = "postId"
+    const val POST_FROM_KEY = "postFrom"
 }

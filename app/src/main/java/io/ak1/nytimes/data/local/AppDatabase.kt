@@ -22,24 +22,17 @@ abstract class AppDatabase : RoomDatabase() {
 @Dao
 interface ResultsDao {
 
-    // TODO: 26/05/21 accending order is not poper
-    @Query("SELECT * FROM results_table WHERE type = :type ORDER BY published_date ASC")
+    @Query("SELECT * FROM results_table WHERE type = :type ORDER BY publishedDate DESC")
     fun storiesByType(type: String): LiveData<List<Results>>
 
     @Query("SELECT * FROM results_table WHERE id = :id")
     fun getStoriesById(id: Int): LiveData<Results>
-
-    @Query("SELECT * FROM results_table ORDER BY id ASC")
-    fun getAllStories(): LiveData<List<Results>>
 
     @Query("SELECT COUNT(id) FROM results_table WHERE type = :type")
     fun getCount(type: String): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(images: List<Results>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(images: Results)
 
     @Query("DELETE FROM results_table WHERE type = :type")
     suspend fun deleteBySectionType(type: String)
@@ -55,21 +48,16 @@ interface BookmarksDao {
     fun getBookmarks(): LiveData<List<Bookmarks>>
 
     @Query("SELECT * FROM bookmarks_table WHERE id = :id")
-    fun getBookmarksById(id: Int): Bookmarks?
+    fun getBookmarksById(id: Int): LiveData<Bookmarks>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(bookmark: Bookmarks)
-
-    @Query("DELETE FROM bookmarks_table WHERE id = :id")
-    suspend fun deleteById(id: Int)
 
     @Query("DELETE FROM bookmarks_table WHERE title = :title")
     suspend fun deleteByTitle(title: String)
 
     @Query("DELETE FROM bookmarks_table")
     suspend fun deleteTable()
-
-    //SELECT EXISTS(SELECT * FROM yourTableName WHERE yourCondition);
 
     @Query("SELECT EXISTS(SELECT * FROM bookmarks_table WHERE title = :title)")
     fun contains(title: String): LiveData<Boolean>

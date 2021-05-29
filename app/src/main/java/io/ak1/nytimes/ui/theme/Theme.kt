@@ -13,6 +13,7 @@ private val DarkColorPalette = darkColors(
     secondaryVariant = Color.White,
     secondary = Teal200,
     onPrimary = Color.White,
+    onSecondary = Black200,
 )
 
 private val LightColorPalette = lightColors(

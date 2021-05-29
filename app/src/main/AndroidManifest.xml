@@ -10,14 +10,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheNewYorkTimesApp">
         <activity
             android:name="io.ak1.nytimes.MainComposeActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.TheNewYorkTimesApp.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

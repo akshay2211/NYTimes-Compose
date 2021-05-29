@@ -1,6 +1,5 @@
 package io.ak1.nytimes.ui.screens.components
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -11,12 +10,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,13 +34,12 @@ fun HomeAppBar(navController: NavController) {
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(id = R.string.app_name),
+            text = stringResource(id = R.string.the_new_york_times),
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
                 .wrapContentSize()
                 .wrapContentHeight()
                 .padding(16.dp, 0.dp, 0.dp, 0.dp)
-                .layoutId("ToolBarTitleId")
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -50,10 +48,9 @@ fun HomeAppBar(navController: NavController) {
         ) {
             Image(
                 painter = painterResource(R.drawable.ic_bookmark),
-                contentDescription = "hie",
+                contentDescription = stringResource(id = R.string.bookmarks_title),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
-                    .layoutId("ToolBarBookmarkId")
                     .clickable {
                         navController.navigate(MainDestinations.BOOKMARK_ROUTE)
                     }
@@ -61,10 +58,9 @@ fun HomeAppBar(navController: NavController) {
             )
             Image(
                 painter = painterResource(R.drawable.ic_settings),
-                contentDescription = "hie",
+                contentDescription = stringResource(id = R.string.settings_title),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
-                    .layoutId("ToolBarSettingsId")
                     .clickable {
                         navController.navigate(MainDestinations.SETTINGS_ROUTE)
                     }
@@ -77,11 +73,11 @@ fun HomeAppBar(navController: NavController) {
 @Composable
 fun CustomAppBar(
     navController: NavController, viewModel: StoriesViewModel,
-    story: Results
+    story: State<Results>
 ) {
     val context = LocalContext.current
     val bookmarked =
-        viewModel.isBookmarked(story.title ?: "").observeAsState(initial = false)
+        viewModel.isBookmarked(story.value.title ?: "").observeAsState(initial = false)
     val coroutineScope = rememberCoroutineScope()
     Row(
         modifier = Modifier
@@ -91,7 +87,7 @@ fun CustomAppBar(
     ) {
         Image(
             painter = painterResource(R.drawable.ic_arrow_left),
-            contentDescription = "hie",
+            contentDescription = stringResource(id = R.string.navigate_back),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {
@@ -102,14 +98,14 @@ fun CustomAppBar(
         Spacer(modifier = Modifier.weight(1f, true))
         Image(
             painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
-            contentDescription = "hie",
+            contentDescription = stringResource(id = R.string.bookmarks_title),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {
                     if (bookmarked.value) {
-                        viewModel.deleteBookmark(story, coroutineScope)
+                        viewModel.deleteBookmark(story.value, coroutineScope)
                     } else {
-                        viewModel.addBookmark(story, coroutineScope)
+                        viewModel.addBookmark(story.value, coroutineScope)
                     }
                 }
                 .padding(12.dp)
@@ -117,16 +113,18 @@ fun CustomAppBar(
         Image(
             painter = painterResource(R.drawable.ic_share),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
-            contentDescription = "share link",
+            contentDescription = stringResource(id = R.string.share_title),
             modifier = Modifier
                 .clickable {
-                    try {
-                        Intent(Intent.ACTION_SEND).let {
-                            context.startActivity(Intent.createChooser(it, story.url))
-                        }
-                    } catch (e: ActivityNotFoundException) {
-                        e.printStackTrace()
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, story.value.shortUrl ?: "")
+                        type = "text/plain"
                     }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    context.startActivity(shareIntent)
+
 
                 }
                 .padding(12.dp)
@@ -143,7 +141,7 @@ fun DefaultAppBar(
     Row(modifier = Modifier.padding(4.dp)) {
         Image(
             painter = painterResource(iconId),
-            contentDescription = "hie",
+            contentDescription = stringResource(id = R.string.navigate_back),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {
