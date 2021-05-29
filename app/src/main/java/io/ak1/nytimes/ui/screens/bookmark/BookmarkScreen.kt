@@ -61,7 +61,7 @@ fun BookmarksScreenComposable(
                                 request = element.urlLarge,
                                 previewPlaceholder = android.R.color.darker_gray,
                                 fadeIn = true
-                            ), contentDescription = "hie",
+                            ), contentDescription = element.title,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .size(72.dp)

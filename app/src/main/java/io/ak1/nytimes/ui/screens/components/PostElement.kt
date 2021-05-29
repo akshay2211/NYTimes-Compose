@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -80,7 +81,7 @@ fun PostElement(
             }
             Image(
                 painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
-                contentDescription = "bookmark icon",
+                contentDescription = stringResource(id = R.string.bookmarks_title),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
                     .clickable {

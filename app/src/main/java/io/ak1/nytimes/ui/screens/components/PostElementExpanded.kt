@@ -122,7 +122,7 @@ fun PostElementExpanded(results: State<Results>) {
                 Image(
                     painter = painterResource(R.drawable.ic_external_link),
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
-                    contentDescription = "hie",
+                    contentDescription = stringResource(id = R.string.open_in_browser),
                     modifier = Modifier.padding(12.dp)
                 )
                 Text(

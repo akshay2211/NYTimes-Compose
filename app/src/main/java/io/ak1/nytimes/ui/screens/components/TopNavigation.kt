@@ -16,7 +16,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,7 +40,6 @@ fun HomeAppBar(navController: NavController) {
                 .wrapContentSize()
                 .wrapContentHeight()
                 .padding(16.dp, 0.dp, 0.dp, 0.dp)
-                .layoutId("ToolBarTitleId")
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -50,10 +48,9 @@ fun HomeAppBar(navController: NavController) {
         ) {
             Image(
                 painter = painterResource(R.drawable.ic_bookmark),
-                contentDescription = "hie",
+                contentDescription = stringResource(id = R.string.bookmarks_title),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
-                    .layoutId("ToolBarBookmarkId")
                     .clickable {
                         navController.navigate(MainDestinations.BOOKMARK_ROUTE)
                     }
@@ -61,10 +58,9 @@ fun HomeAppBar(navController: NavController) {
             )
             Image(
                 painter = painterResource(R.drawable.ic_settings),
-                contentDescription = "hie",
+                contentDescription = stringResource(id = R.string.settings_title),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
                 modifier = Modifier
-                    .layoutId("ToolBarSettingsId")
                     .clickable {
                         navController.navigate(MainDestinations.SETTINGS_ROUTE)
                     }
@@ -91,7 +87,7 @@ fun CustomAppBar(
     ) {
         Image(
             painter = painterResource(R.drawable.ic_arrow_left),
-            contentDescription = "hie",
+            contentDescription = stringResource(id = R.string.navigate_back),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {
@@ -102,7 +98,7 @@ fun CustomAppBar(
         Spacer(modifier = Modifier.weight(1f, true))
         Image(
             painter = painterResource(if (bookmarked.value) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark),
-            contentDescription = "hie",
+            contentDescription = stringResource(id = R.string.bookmarks_title),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {
@@ -117,7 +113,7 @@ fun CustomAppBar(
         Image(
             painter = painterResource(R.drawable.ic_share),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
-            contentDescription = "share link",
+            contentDescription = stringResource(id = R.string.share_title),
             modifier = Modifier
                 .clickable {
                     val sendIntent: Intent = Intent().apply {
@@ -145,7 +141,7 @@ fun DefaultAppBar(
     Row(modifier = Modifier.padding(4.dp)) {
         Image(
             painter = painterResource(iconId),
-            contentDescription = "hie",
+            contentDescription = stringResource(id = R.string.navigate_back),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {

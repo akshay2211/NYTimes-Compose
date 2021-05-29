@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.facebook.shimmer.ShimmerFrameLayout
+import io.ak1.nytimes.R
 
 @Composable
 fun PlaceHolder(
@@ -36,7 +37,7 @@ fun PlaceHolder(
         imageId?.let {
             Image(
                 painter = painterResource(it),
-                contentDescription = "hie",
+                contentDescription = stringResource(R.string.image_desc),
                 modifier = Modifier
                     .padding(12.dp)
                     .size(200.dp)
