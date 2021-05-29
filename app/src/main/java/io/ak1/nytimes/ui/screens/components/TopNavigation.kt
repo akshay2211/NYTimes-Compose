@@ -35,7 +35,7 @@ fun HomeAppBar(navController: NavController) {
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(id = R.string.app_name),
+            text = stringResource(id = R.string.the_new_york_times),
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
                 .wrapContentSize()
