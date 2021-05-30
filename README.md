@@ -1,2 +1,9 @@
-# TheNewYorkTimesApp
-Android Application sample built on MVVM pattern with Coroutines, to demonstrate the usage of Android Architecture components like Room, Navigation, Preference, Live data and ViewModel
+<img src="media/banner.png"/>
+
+# The NewYork Times App
+
+An offline first application in Jetpack Compose with MVVM architecture, representing a minimalistic implementation of Top Stories API. 
+Built with components like DataStore, Coroutines, ViewModel, LiveData, Room, Navigation-Compose, etc.
+
+
+
