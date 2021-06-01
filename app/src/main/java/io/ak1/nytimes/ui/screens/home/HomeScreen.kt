@@ -33,7 +33,7 @@ fun HomeScreenComposable(
 ) {
     val stories = viewModel.getStories(mainType.value.toLowerCase(Locale.getDefault()))
     val resultList = stories.pagedList.observeAsState(initial = listOf())
-    val networkState = stories.networkState.observeAsState(initial = NetworkState.LOADING)
+    val networkState = stories.networkState.observeAsState(initial = NetworkState.LOADED)
     val refreshState = stories.refreshState.observeAsState(initial = NetworkState.LOADED)
     val swipeState = rememberSaveable {
         mutableStateOf(false)

@@ -76,39 +76,29 @@ class StoriesRepository(
     val getBookmarks: LiveData<List<Bookmarks>> = db.bookmarksDao().getBookmarks()
 
     fun getStories(type: String): LiveDataCollection<Results> {
-        Log.e("retrieving", "stories for $type")
         val dao = db.resultsDao()
         val networkState = MutableLiveData<NetworkState>()
-        networkState.postValue(NetworkState.LOADING)
         val refreshTrigger = MutableLiveData<Unit?>()
         val refreshState = refreshTrigger.switchMap {
             refresh(type)
         }
         CoroutineScope(this.coroutineContext).launch {
-            if (dao.getCount(type) == 0) {
-                networkState.postValue(NetworkState.LOADING)
-                try {
-                    val response = apiList.getStories(type)
-                    if (!response.isSuccessful) {
-                        val error = response.errorBody()
-                        networkState.postValue(NetworkState.error(error?.extractMessage()))
-                        return@launch
+            when {
+                dao.getCount(type, 0) == 0 -> {
+                    networkState.postValue(NetworkState.LOADING)
+                    getResponse(type) {
+                        networkState.postValue(it)
                     }
-                    insertResultIntoDb(type, response.body())
-                    networkState.postValue(NetworkState.LOADED)
-                } catch (e: SSLException) {
-                    e.printStackTrace()
-                    networkState.postValue(NetworkState.error(context.resources.getString(R.string.system_call_error)))
-                } catch (e: UnknownHostException) {
-                    e.printStackTrace()
-                    networkState.postValue(NetworkState.error(context.resources.getString(R.string.internet_error)))
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    networkState.postValue(NetworkState.error(e.localizedMessage))
                 }
-            } else {
-                networkState.postValue(NetworkState.LOADED)
+                dao.getCount(type) == 0 -> {
+                    getResponse(type) {
+                        networkState.postValue(it)
+                    }
+                }
+                else -> {
+                    networkState.postValue(NetworkState.LOADED)
 
+                }
             }
         }
 
@@ -120,6 +110,28 @@ class StoriesRepository(
                 refreshTrigger.postValue(null)
             },
         )
+    }
+
+    private suspend fun getResponse(type: String, function: (NetworkState) -> Unit) {
+        try {
+            val response = apiList.getStories(type)
+            if (!response.isSuccessful) {
+                val error = response.errorBody()
+                function(NetworkState.error(error?.extractMessage()))
+                return
+            }
+            insertResultIntoDb(type, response.body())
+            function(NetworkState.LOADED)
+        } catch (e: SSLException) {
+            e.printStackTrace()
+            function(NetworkState.error(context.resources.getString(R.string.system_call_error)))
+        } catch (e: UnknownHostException) {
+            e.printStackTrace()
+            function(NetworkState.error(context.resources.getString(R.string.internet_error)))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            function(NetworkState.error(e.localizedMessage))
+        }
     }
 
     fun checkBookmarked(title: String): LiveData<Boolean> = db.bookmarksDao().contains(title)

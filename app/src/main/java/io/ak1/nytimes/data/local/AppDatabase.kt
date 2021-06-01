@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.ak1.nytimes.model.Bookmarks
 import io.ak1.nytimes.model.Results
+import io.ak1.nytimes.utility.calenderDate
 
 /**
  * Created by akshay on 14,November,2020
@@ -18,7 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun bookmarksDao(): BookmarksDao
 }
 
-// TODO: 21/05/21 create a service interface to have all desired method and implement on repo as well as viewModel for consistency
+
 @Dao
 interface ResultsDao {
 
@@ -28,8 +29,8 @@ interface ResultsDao {
     @Query("SELECT * FROM results_table WHERE id = :id")
     fun getStoriesById(id: Int): LiveData<Results>
 
-    @Query("SELECT COUNT(id) FROM results_table WHERE type = :type")
-    fun getCount(type: String): Int
+    @Query("SELECT COUNT(id) FROM results_table WHERE type = :type AND entryDate >= :filterDate")
+    fun getCount(type: String, filterDate: Long = calenderDate): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(images: List<Results>)

@@ -60,7 +60,7 @@ open class Results(
     @SerializedName("id")
     var id: Int = 0
     var bookmarked: Boolean = false
-
+    var entryDate = Date().time
 }
 
 @Entity(tableName = "bookmarks_table", inheritSuperIndices = true)
