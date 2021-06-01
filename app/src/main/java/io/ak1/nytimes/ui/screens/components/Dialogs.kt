@@ -1,5 +1,6 @@
 package io.ak1.nytimes.ui.screens.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,13 +18,18 @@ import io.ak1.nytimes.R
 
 
 @Composable
-fun CustomAlertDialog(showDialog: Boolean, setShowDialog: (Boolean) -> Unit, callback: () -> Unit) {
+fun CustomAlertDialog(
+    @StringRes titleId: Int = R.string.cache_summary,
+    showDialog: Boolean,
+    setShowDialog: (Boolean) -> Unit,
+    callback: () -> Unit
+) {
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { setShowDialog(false) }, title = {
                 Text(
                     text = stringResource(
-                        id = R.string.cache_summary
+                        id = titleId
                     ),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier
