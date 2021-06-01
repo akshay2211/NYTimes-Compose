@@ -22,10 +22,17 @@ import java.util.*
  * akshay2211@github.io
  */
 
+const val dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+val inputFormat = SimpleDateFormat(dateFormatPattern, Locale.ENGLISH)
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 val themePreferenceKey = intPreferencesKey("list_theme")
+
+val calenderDate = Calendar.getInstance().apply {
+    add(Calendar.HOUR, -2)
+}.time.time
 
 /**
  * extension [isDarkThemeOn] checks the saved theme from preference
@@ -46,7 +53,6 @@ fun String?.timeAgo(): String {
         return ""
     }
     //2020-11-14T05:00:17-05:00
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
     val date = inputFormat.parse(this) ?: Date()
     return DateUtils.getRelativeTimeSpanString(
         date.time,
