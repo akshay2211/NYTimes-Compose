@@ -73,7 +73,8 @@ fun HomeAppBar(navController: NavController) {
 @Composable
 fun CustomAppBar(
     navController: NavController, viewModel: StoriesViewModel,
-    story: State<Results>
+    story: State<Results>,
+    callback: (Boolean) -> Unit
 ) {
     val context = LocalContext.current
     val bookmarked =
@@ -102,11 +103,7 @@ fun CustomAppBar(
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
             modifier = Modifier
                 .clickable {
-                    if (bookmarked.value) {
-                        viewModel.deleteBookmark(story.value, coroutineScope)
-                    } else {
-                        viewModel.addBookmark(story.value, coroutineScope)
-                    }
+                    callback(bookmarked.value)
                 }
                 .padding(12.dp)
         )
