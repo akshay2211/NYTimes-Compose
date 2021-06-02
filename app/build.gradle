@@ -6,10 +6,18 @@ plugins {
 
 
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
-def apikeyProperties = new Properties()
-apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+def properties = new Properties()
+properties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/akshay/nytimescompose.jks')
+            storePassword properties['STORE_PASSWORD']
+            keyAlias properties['KEY_ALIAS']
+            keyPassword properties['KEY_PASSWORD']
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -34,13 +42,14 @@ android {
         }
         defaultConfig {
             // should correspond to key/value pairs inside the file
-            buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+            buildConfigField("String", "API_KEY", properties['API_KEY'])
         }
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
