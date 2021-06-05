@@ -58,7 +58,7 @@ class StoriesRepository(
                     height = height,
                     width = width,
                     byline = it.byline,
-                    desFacet = it.desFacet.joinToString { it },
+                    desFacet = it.desFacet.joinToString { string -> string },
                     abstractText = it.abstractText
                 )
             }

@@ -1,6 +1,8 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.TheNewYorkTimesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar"></style>
+    <style name="Theme.TheNewYorkTimesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    </style>
 
 
 </resources>
