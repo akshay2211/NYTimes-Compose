@@ -3,13 +3,17 @@ package io.ak1.nytimes.ui.screens.post
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.ak1.nytimes.R
 import io.ak1.nytimes.model.Results
@@ -45,7 +49,13 @@ fun PostScreenComposable(
                 viewModel.addBookmark(story.value, coroutineScope)
             }
         }
-        PostElementExpanded(results = story)
+        PostElementExpanded(
+            results = story,
+            modifier = Modifier
+                .width(600.dp)
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+        )
     }
     CustomAlertDialog(
         titleId = R.string.deletion_confirmation,

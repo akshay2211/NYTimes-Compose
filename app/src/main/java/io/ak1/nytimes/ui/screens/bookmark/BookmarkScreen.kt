@@ -47,42 +47,50 @@ fun BookmarksScreenComposable(
             )
 
         } else {
-            LazyColumn {
-                itemsIndexed(resultList.value) { _, element ->
+            Column(Modifier.fillMaxWidth()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .width(600.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    itemsIndexed(resultList.value) { _, element ->
 
-                    Row(modifier = Modifier
-                        .clickable {
-                            navController.navigate("${MainDestinations.POST_ROUTE}/${element.id}/${MainDestinations.BOOKMARK_ROUTE}")
+                        Row(modifier = Modifier
+                            .clickable {
+                                navController.navigate("${MainDestinations.POST_ROUTE}/${element.id}/${MainDestinations.BOOKMARK_ROUTE}")
+                            }
+
+                            .padding(16.dp, 0.dp)
+                            .height(88.dp)) {
+                            Image(
+                                painter = rememberCoilPainter(
+                                    request = element.urlLarge,
+                                    previewPlaceholder = android.R.color.darker_gray,
+                                    fadeIn = true
+                                ), contentDescription = element.title,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(72.dp)
+                                    .clip(CircleShape)
+                                    .align(Alignment.CenterVertically)
+                            )
+                            Text(
+                                text = element.title ?: "empty",
+                                style = MaterialTheme.typography.h6,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier
+                                    .padding(16.dp, 0.dp, 0.dp, 0.dp)
+                                    .align(Alignment.CenterVertically)
+                                    .fillMaxWidth()
+
+                            )
+
                         }
-                        .padding(16.dp, 0.dp)
-                        .height(88.dp)) {
-                        Image(
-                            painter = rememberCoilPainter(
-                                request = element.urlLarge,
-                                previewPlaceholder = android.R.color.darker_gray,
-                                fadeIn = true
-                            ), contentDescription = element.title,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .size(72.dp)
-                                .clip(CircleShape)
-                                .align(Alignment.CenterVertically)
-                        )
-                        Text(
-                            text = element.title ?: "empty",
-                            style = MaterialTheme.typography.h6,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier
-                                .padding(16.dp, 0.dp, 0.dp, 0.dp)
-                                .align(Alignment.CenterVertically)
-                                .fillMaxWidth()
-
-                        )
+                        Spacer(Modifier.height(16.dp))
 
                     }
-                    Spacer(Modifier.height(16.dp))
-
                 }
             }
         }

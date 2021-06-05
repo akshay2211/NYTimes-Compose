@@ -29,17 +29,16 @@ import io.ak1.nytimes.model.Results
 import io.ak1.nytimes.utility.timeAgo
 
 @Composable
-fun PostElementExpanded(results: State<Results>) {
+fun PostElementExpanded(results: State<Results>, modifier: Modifier) {
     val story = results.value
     val context = LocalContext.current
-    LazyColumn(
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
+    LazyColumn(modifier) {
         val keepTagsHidden = true
         item {
-            Card(elevation = 5.dp) {
+            Card(
+                elevation = 5.dp, modifier = Modifier
+                    .padding(16.dp)
+            ) {
                 Image(
                     painter = rememberCoilPainter(
                         request = story.urlLarge,
@@ -53,72 +52,74 @@ fun PostElementExpanded(results: State<Results>) {
                     contentScale = ContentScale.Crop
                 )
             }
-            Spacer(Modifier.height(16.dp))
+            Column(Modifier.padding(16.dp, 0.dp)) {
 
-
-            Text(
-                text = story.title ?: "empty",
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(16.dp))
-
-            Text(
-                text = story.abstractText ?: "empty",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = story.byline?.trim() ?: "",
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier
-                    .wrapContentWidth(Alignment.End)
-            )
-
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = story.publishedDate.timeAgo(),
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier
-                    .wrapContentWidth(Alignment.End)
-            )
-
-            val tags = story.desFacet.trim().split(",")
-            if (!keepTagsHidden) {
-                LazyRow(
+                Text(
+                    text = story.title ?: "empty",
+                    style = MaterialTheme.typography.h5,
                     modifier = Modifier
-                        .padding(0.dp, 0.dp, 0.dp, 16.dp)
-                ) {
-                    items(tags) {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.caption,
-                            modifier = Modifier
-                                .padding(16.dp, 0.dp, 0.dp, 0.dp)
-                                .wrapContentSize()
-                                .background(
-                                    MaterialTheme.colors.secondary,
-                                    RoundedCornerShape(20.dp)
-                                )
-                                .padding(18.dp, 10.dp)
-                        )
+                        .fillMaxWidth()
+                )
+                Spacer(Modifier.height(16.dp))
+
+                Text(
+                    text = story.abstractText ?: "empty",
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = story.byline?.trim() ?: "",
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier
+                        .wrapContentWidth(Alignment.End)
+                )
+
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = story.publishedDate.timeAgo(),
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier
+                        .wrapContentWidth(Alignment.End)
+                )
+
+                val tags = story.desFacet.trim().split(",")
+                if (!keepTagsHidden) {
+                    LazyRow(
+                        modifier = Modifier
+                            .padding(0.dp, 0.dp, 0.dp, 16.dp)
+                    ) {
+                        items(tags) {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.caption,
+                                modifier = Modifier
+                                    .padding(16.dp, 0.dp, 0.dp, 0.dp)
+                                    .wrapContentSize()
+                                    .background(
+                                        MaterialTheme.colors.secondary,
+                                        RoundedCornerShape(20.dp)
+                                    )
+                                    .padding(18.dp, 10.dp)
+                            )
+
+                        }
+
 
                     }
-
-
                 }
+
             }
-            Spacer(Modifier.height(16.dp))
+
             Button(
                 onClick = {
                     Intent(Intent.ACTION_VIEW, Uri.parse(story.shortUrl ?: "")).let {
                         context.startActivity(it)
                     }
-                },
-                modifier = Modifier.wrapContentWidth()
+                }, modifier = Modifier
+                    .padding(16.dp)
+                    .wrapContentWidth()
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_external_link),
