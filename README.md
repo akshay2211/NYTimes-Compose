@@ -1,6 +1,6 @@
 <img src="media/banner.png"/>
 
-# The NewYork Times App (work-in-progress)
+# The NewYork Times App
 [![](https://androidweekly.net/issues/issue-478/badge?style=flat-square)](https://androidweekly.net/issues/issue-478)
 
 An offline first application in [Jetpack Compose](https://developer.android.com/jetpack/compose) with [MVVM architecture](https://developer.android.com/jetpack/guide), representing a minimalistic implementation of [Top Stories API](https://developer.nytimes.com/docs/top-stories-product/1/overview). 
