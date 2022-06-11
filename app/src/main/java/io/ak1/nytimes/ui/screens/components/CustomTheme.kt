@@ -1,7 +1,6 @@
 package io.ak1.nytimes.ui.screens.components
 
 import android.content.res.Configuration
-import android.util.Log
 import android.view.Window
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -20,11 +19,9 @@ import kotlinx.coroutines.runBlocking
 fun isSystemInDarkThemeCustom(): Boolean {
 
     val context = LocalContext.current
-    val exampleData = runBlocking { context.dataStore.data.first() }
-    val theme =
-        context.isDarkThemeOn().collectAsState(initial = exampleData[themePreferenceKey] ?: 0)
-    Log.e("isDarkThemeOn", "collectAsState  ${theme.value}")
-    return when (theme.value) {
+    val prefs = runBlocking { context.dataStore.data.first() }
+    return when (context.isDarkThemeOn()
+        .collectAsState(initial = prefs[themePreferenceKey] ?: 0).value) {
         2 -> true
         1 -> false
         else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
